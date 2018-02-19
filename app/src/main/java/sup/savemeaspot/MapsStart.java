@@ -55,6 +55,6 @@ public class MapsStart extends AppCompatActivity implements OnMapReadyCallback {
             Log.e(simpl_MS, "Can't find style. Error: ", e);
         }
         // Position the map's camera near Sydney, Australia.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(-34, 151)));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(59.254974,15.249242)));
     }
 }
