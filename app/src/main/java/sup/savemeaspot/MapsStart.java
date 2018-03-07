@@ -1,5 +1,6 @@
 package sup.savemeaspot;
 
+import android.app.ActionBar;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,7 +55,7 @@ public class MapsStart extends AppCompatActivity implements OnMapReadyCallback {
         } catch (Resources.NotFoundException e) {
             Log.e(simpl_MS, "Can't find style. Error: ", e);
         }
-        // Position the map's camera near Sydney, Australia.
+        // Camera position Örebro University.
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(59.254974,15.249242)));
     }
 }
