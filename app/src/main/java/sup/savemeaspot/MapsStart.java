@@ -35,6 +35,7 @@ import java.util.List;
 
 public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
+    private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
     private LocationManager locationManager;
 
@@ -45,6 +46,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_start);
+
+       ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -135,7 +140,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         mMap.addMarker(new MarkerOptions().position(latLng).title(adr));
 
                         //Kameraposition på markör
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8.2f));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.2f));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -189,7 +194,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
@@ -201,6 +205,26 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
             }
         } catch (Resources.NotFoundException e) {
             Log.e(simpl_MS, "Can't find style. Error: ", e);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 }
