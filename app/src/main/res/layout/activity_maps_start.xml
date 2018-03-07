@@ -21,34 +21,34 @@
 
         <Button
             android:id="@+id/menuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="61dp"
             android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
-            android:background="@color/colorPrimary"
             android:onClick="openMainMenu"
-            android:padding="2pt"
+            android:padding="1dp"
             android:text="@string/button_menu_en"
+            android:background="@drawable/roundbutton_save"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="@color/menuButtonTextColor"
-            android:textSize="10pt" />
+            android:textSize="12dp" />
 
         <Button
             android:id="@+id/map_Savebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/menuButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignBottom="@+id/menuButton"
             android:layout_centerHorizontal="true"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/roundbutton_save"
             android:onClick="saveSpotDialogueView"
-            android:padding="2pt"
+            android:padding="1dp"
             android:text="@string/button_save_en"
             android:textColor="@color/menuButtonTextColor"
-            android:textSize="12pt" />
+            android:textSize="30dp" />
     </RelativeLayout>
 
 </FrameLayout>
