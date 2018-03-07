@@ -1,10 +1,12 @@
 package sup.savemeaspot;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,10 +16,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+import java.lang.reflect.Array;
+
 public class MapsStart extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final String simpl_MS = MapsStart.class.getSimpleName();
+    public static final String EXTRA_MESSAGE = "sup.savemeaspot.COORDINATES";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,22 @@ public class MapsStart extends AppCompatActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
     }
 
+    /** Detta körs vid Menu-knapptryck, öppnar huvudmenyn*/
+    public void openMainMenu(View view){
+        //Ny intent
+        Intent intent = new Intent(this, MainMenuScreen.class);
+        startActivity(intent);
+    }
+
+    /** Öppnar en ny dialogruta för att spara en Spot,
+     * skickar med koordinater till den nya aktiviteten
+     */
+    public void saveSpotDialogueView(View view){
+        Intent intent = new Intent(this, SaveSpotCategory.class);
+        //Array coordinates = getCurrentCoordinates();
+        //intent.putExtra("COORDINATES", coordinates);
+        startActivity(intent);
+    }
 
     /**
      * Manipulates the map once available.

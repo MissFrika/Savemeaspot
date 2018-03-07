@@ -25,15 +25,30 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:textSize="12pt"
-            android:padding="2pt"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="61dp"
             android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
             android:background="@color/colorPrimary"
-            android:text="@string/button_menu"
-            android:textColor="@color/menuButtonTextColor" />
+            android:onClick="openMainMenu"
+            android:padding="2pt"
+            android:text="@string/button_menu_en"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/menuButtonTextColor"
+            android:textSize="10pt" />
+
+        <Button
+            android:id="@+id/map_Savebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/menuButton"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorPrimary"
+            android:onClick="saveSpotDialogueView"
+            android:padding="2pt"
+            android:text="@string/button_save_en"
+            android:textColor="@color/menuButtonTextColor"
+            android:textSize="12pt" />
     </RelativeLayout>
 
 </FrameLayout>
