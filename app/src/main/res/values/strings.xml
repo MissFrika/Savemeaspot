@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Save me a spot</string>
     <string name="title_activity_maps_start">Map Overview</string>
-    <string name="button_menu">Menu</string>
+    <string name="button_menu_en">Menu</string>
+    <string name="button_save_en">+</string>
 </resources>
