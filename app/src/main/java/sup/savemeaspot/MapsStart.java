@@ -35,27 +35,22 @@ import java.util.List;
 
 public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
-    private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private GoogleMap mMap;
     private LocationManager locationManager;
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
     public static final String EXTRA_MESSAGE = "sup.savemeaspot.COORDINATES";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_start);
 
-       ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
         //Hämtar en användares position och uppdaterar positionen på kartan
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
         String context = Context.LOCATION_SERVICE;
         locationManager = (LocationManager) getSystemService(context);
         //Hur ofta plats skall hämtas
@@ -93,7 +88,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         mMap.addMarker(new MarkerOptions().position(latLng).title(adr));
 
                         //Kameraposition på markör
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8.2f));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.2f));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -119,7 +114,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
         //Om inget nätverk är tillgängligt, kontrollera GPS-tillgänglighet
         else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, new LocationListener() {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     //Hämta latitud och longitud
@@ -162,6 +157,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
                 }
             });
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
         }
     }
 
