@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
@@ -43,6 +44,17 @@ public abstract class SpotDatabase extends RoomDatabase {
         }
         //Annars returnerar databas
         return INSTANCE;
+    }
+    public static boolean checkDatabase(){
+        SQLiteDatabase checkDB = null;
+        try{
+            checkDB = SQLiteDatabase.openDatabase("/data/data/sup.savemeaspot/databases/SpotDatabase.db",null,SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
+        }
+        catch(SQLiteException e){
+
+        }
+        return checkDB != null;
     }
 
     public static void destroyInstance() {

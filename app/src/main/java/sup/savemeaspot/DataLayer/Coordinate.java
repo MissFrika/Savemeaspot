@@ -36,11 +36,7 @@ public class Coordinate {
      * Constructor för Koordinater
      */
 
-    public Coordinate(double lat, double lon, String address, String country){
-        latitude = lat;
-        longitude = lon;
-        localAddress = address;
-        countryName = country;
+    public Coordinate(){
 
     }
 
@@ -48,6 +44,8 @@ public class Coordinate {
      * Getters and setters
      * @return
      */
+    public int getCoordinateId () {return this.CoordinateId;}
+    public void setCoordinateId(int coordId) { this.CoordinateId = coordId; }
     public double getLatitude(){
         return this.latitude;
     }

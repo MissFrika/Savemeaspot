@@ -33,9 +33,14 @@ public class Category {
 
     /**
      * Getters & Setters
-     *
      * @return
      */
+    public int getCategoryId(){
+        return this.CategoryId;
+    }
+    public void setCategoryId (int categoryId){
+        this.CategoryId = categoryId;
+    }
     public String getCategoryName() {
         return this.categoryName;
     }
@@ -44,29 +49,26 @@ public class Category {
         this.categoryName = name;
     }
 
-    public String getImg(String img) {
-        return this.categoryImg;
+    public void setCategoryImg(String categoryImg) {
+        this.categoryImg = categoryImg;
     }
 
-    public String setImg() {
+    public String getCategoryImg() {
         return this.categoryImg;
     }
 
     public boolean getIsDeletable() {
         return this.isDeletable;
     }
+    public void setDeletable(boolean isDeletable){
+        this.isDeletable = isDeletable;
+    }
 
     /**
      * Constructor för ny kategori
      *
-     * @param title
-     * @param image
      */
-    public Category(String title, String image) {
-        categoryName = title;
-        categoryImg = image;
-        isDeletable = true;
-    }
+    public Category(){}
 
     @Dao
     public interface CategoryDao{
