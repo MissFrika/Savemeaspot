@@ -33,11 +33,14 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.List;
 
+import sup.savemeaspot.DataLayer.DatabaseHandler;
+
 public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private GoogleMap mMap;
     private LocationManager locationManager;
+
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
     public static final String EXTRA_MESSAGE = "sup.savemeaspot.COORDINATES";
@@ -45,12 +48,15 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        DatabaseHandler db = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_start);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
         //Hämtar en användares position och uppdaterar positionen på kartan
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
