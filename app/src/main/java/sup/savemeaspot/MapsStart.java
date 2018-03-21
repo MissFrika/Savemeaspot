@@ -2,6 +2,7 @@ package sup.savemeaspot;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.arch.persistence.room.Database;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,6 +35,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.DatabaseHandler;
+import sup.savemeaspot.DataLayer.DatabaseInitializer;
 
 public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
@@ -50,6 +52,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     protected void onCreate(Bundle savedInstanceState) {
 
         DatabaseHandler db = new DatabaseHandler(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_start);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

@@ -21,7 +21,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /** Klass för att hantera koordinater GPS**/
 @Entity(tableName = "Coordinate")
 public class Coordinate {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int CoordinateId;
     @ColumnInfo(name = "latitude")
     private double latitude;
@@ -29,7 +29,7 @@ public class Coordinate {
     private double longitude;
     @ColumnInfo(name = "local_address")
     private String localAddress;
-    @ColumnInfo(name = "country_name")
+    @ColumnInfo(name = "country")
     private String countryName;
 
     /**

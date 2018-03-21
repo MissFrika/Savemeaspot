@@ -22,4 +22,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="yoyo"
         android:textColor="@color/menuButtonTextColor" />
+
+    <TextView
+        android:id="@+id/dataTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finns data?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="176dp"
+        android:textColor="@color/menuButtonTextColor" />
 </android.support.constraint.ConstraintLayout>

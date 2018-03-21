@@ -18,13 +18,17 @@ import java.util.List;
  */
 @Entity(tableName = "Spot")
 public class Spot {
-    @PrimaryKey
-    @ColumnInfo(name = "spot_id")
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "spotid")
     private int SpotId;
     @ColumnInfo(name = "spot_title")
     private String spotTitle;
-    @ColumnInfo(name = "spot_description")
+    @ColumnInfo(name = "description")
     private String spotDescription;
+    @ColumnInfo(name ="spot_category")
+    private int spotCategory;
+    @ColumnInfo(name = "spot_coordinate")
+    private int spotCoordinate;
 
     /**
      * Getters & Setters
@@ -43,6 +47,10 @@ public class Spot {
     public void setSpotDescription(String desc){
         this.spotDescription = desc;
     }
+    public int getSpotCategory(){return this.spotCategory;}
+    public void setSpotCategory(int spotCat){this.spotCategory = spotCat;}
+    public int getSpotCoordinate(){return this.spotCoordinate;}
+    public void setSpotCoordinate(int spotCoord){this.spotCoordinate = spotCoord;}
 
     /**
      * Constructor för Spots
@@ -59,8 +67,8 @@ public class Spot {
         @Query("SELECT * FROM SPOT")
         List<Spot> getAllSpots();
 
-        //Hämtar alls Spots med en viss angiven titel
-        @Query("SELECT Spot_ID FROM SPOT WHERE SPOT_TITLE LIKE :title ;")
+        //Hämtar alla Spots med en viss angiven titel
+        @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title ;")
         List<Spot> getSpotByTitle(String title);
     }
 }
