@@ -32,11 +32,11 @@ public abstract class SpotDatabase extends RoomDatabase {
     public abstract Category.CategoryDao categoryDao();
 
     //Om databas ej existerar
-    public static SpotDatabase getAppDatabase(Context context) {
+    public static SpotDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             //Skapa en ny instans av databas
             INSTANCE =
-                    Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "spot-database")
+                    Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                             // allow queries on the main thread.
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
                             .allowMainThreadQueries()
@@ -46,6 +46,7 @@ public abstract class SpotDatabase extends RoomDatabase {
         return INSTANCE;
     }
     public static boolean checkDatabase(){
+
         SQLiteDatabase checkDB = null;
         try{
             checkDB = SQLiteDatabase.openDatabase("/data/data/sup.savemeaspot/databases/SpotDatabase.db",null,SQLiteDatabase.OPEN_READONLY);
