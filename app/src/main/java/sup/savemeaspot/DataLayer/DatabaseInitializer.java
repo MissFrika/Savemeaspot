@@ -13,18 +13,19 @@ public class DatabaseInitializer {
     private Spot spot = new Spot();
     private Coordinate coordinate = new Coordinate();
 
-    private Context context;
+
 
     public DatabaseInitializer(){
 
     }
 
-    public void populateDatabaseWithCategories(){
+    public void populateDatabaseWithCategories(Context context){
         SpotDatabase database = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), SpotDatabase.class)
 
                 .allowMainThreadQueries()
                 .build();
         if(database.categoryDao().getAllCategories().isEmpty()){
+            category.setCategoryId(1);
             category.setCategoryName("Fish");
             category.setCategoryImg("/Path");
             category.setDeletable(false);

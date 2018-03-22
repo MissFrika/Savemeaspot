@@ -79,7 +79,7 @@ public class Category {
     public interface CategoryDao{
         //Ny kategori
         @Insert(onConflict = OnConflictStrategy.IGNORE)
-        public void insertCategories(Category... categories);
+        void insertCategories(Category... categories);
 
         //Get all categories
         @Query("SELECT * FROM CATEGORY")
