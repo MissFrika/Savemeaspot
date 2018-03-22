@@ -1,6 +1,7 @@
 package sup.savemeaspot;
 
 import android.arch.persistence.room.Room;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -32,9 +33,9 @@ public class MainMenuScreen extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
         try {
-            DatabaseInitializer dbInit = new DatabaseInitializer();
-            dbInit.populateDatabaseWithCategories(this);
-            List<Category> aCat = SpotDatabase.getDatabase(this).categoryDao().getAllCategories();
+            DatabaseInitializer init = new DatabaseInitializer();
+            init.populateDatabaseWithCategories(this);
+            List<Category> aCat = database.getDatabase(this).categoryDao().getAllCategories();
             d.setText(aCat.get(0).getCategoryName());
         }
         catch(Exception e){

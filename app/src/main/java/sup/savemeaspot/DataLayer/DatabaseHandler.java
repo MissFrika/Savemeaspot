@@ -3,6 +3,7 @@ package sup.savemeaspot.DataLayer;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Frika on 2018-03-20.
@@ -51,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
     //Category table
     db.execSQL("CREATE TABLE " +TABLE_NAME_CAT+
-            " (" +COLUMN_ID_CAT+ " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +COLUMN_NAME_CAT+ " TEXT NOT NULL, " +COLUMN_ICON_CAT+" TEXT NOT NULL," +COLUMN_DELETABLE+ " BOOLEAN NOT NULL)");
+            " (" +COLUMN_ID_CAT+ " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +COLUMN_NAME_CAT+ " TEXT NOT NULL, " +COLUMN_ICON_CAT+" TEXT NOT NULL," +COLUMN_DELETABLE+ " INT NOT NULL)");
 
     //Coordinate table
     db.execSQL("CREATE TABLE " +TABLE_NAME_COR+
@@ -66,5 +67,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        }
+        Log.w(DatabaseHandler.class.getName(),
+                "Upgrading database from version " + oldVersion + " to "
+                        + newVersion + ", which will destroy all old data");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CAT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_COR);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_SPOT);
+        onCreate(db);
+    }
 }

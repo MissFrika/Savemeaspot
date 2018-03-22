@@ -1,6 +1,7 @@
 package sup.savemeaspot.DataLayer;
 
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.ColumnInfo;
@@ -9,6 +10,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import java.util.List;
+import java.util.concurrent.Executors;
+
 import android.arch.persistence.room.util.TableInfo;
 import android.content.Context;
 import android.content.ContentValues;
@@ -16,6 +19,7 @@ import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 
 /**
@@ -35,8 +39,7 @@ public abstract class SpotDatabase extends RoomDatabase {
     public static SpotDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             //Skapa en ny instans av databas
-            INSTANCE =
-                    Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                             // allow queries on the main thread.
                             // Don't do this on a real app! See PersistenceBasicSample for an example.
                             .allowMainThreadQueries()
@@ -45,6 +48,27 @@ public abstract class SpotDatabase extends RoomDatabase {
         //Annars returnerar databas
         return INSTANCE;
     }
+
+    private static SpotDatabase buildDatabase(final Context context) {
+        return Room.databaseBuilder(context,
+                SpotDatabase.class,
+                "my-database")
+                .addCallback(new Callback() {
+                    @Override
+                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+                        Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                getDatabase(context).categoryDao().insertCategories(Category.populateData());
+                            }
+                        });
+                    }
+                })
+                .build();
+    }
+
+    //Kontrollerar om databasen existerar
     public static boolean checkDatabase(){
 
         SQLiteDatabase checkDB = null;
@@ -61,5 +85,6 @@ public abstract class SpotDatabase extends RoomDatabase {
     public static void destroyInstance() {
         INSTANCE = null;
     }
+
 }
 

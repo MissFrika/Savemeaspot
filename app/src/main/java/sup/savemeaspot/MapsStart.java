@@ -53,6 +53,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
         DatabaseHandler db = new DatabaseHandler(this);
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_start);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
