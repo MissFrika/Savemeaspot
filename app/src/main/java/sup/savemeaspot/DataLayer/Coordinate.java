@@ -80,11 +80,11 @@ public class Coordinate {
     public interface CoordinateDao{
         //Ny Coordinate
         @Insert(onConflict = OnConflictStrategy.IGNORE)
-        void insertCoordinate(Coordinate coordinate);
+        void insertCoordinate(Coordinate... coordinates);
 
         //Ny coordinate som lägger till kopior av existerande coordinates.
         @Insert (onConflict = OnConflictStrategy.REPLACE)
-        void insertDuplicateCoordinate(Coordinate coordinate);
+        void insertDuplicateCoordinate(Coordinate... coordinates);
 
         //Uppdatera Coordinate
         @Update(onConflict = OnConflictStrategy.REPLACE)
