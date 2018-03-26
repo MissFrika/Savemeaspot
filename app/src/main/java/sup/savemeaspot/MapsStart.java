@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.List;
 
+import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
 import sup.savemeaspot.DataLayer.DatabaseInitializer;
 
@@ -43,9 +44,13 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     private GoogleMap mMap;
     private LocationManager locationManager;
 
+    //Koordinatobjekt
+    private Coordinate currentCoordinate = new Coordinate();
+
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
-    public static final String EXTRA_MESSAGE = "sup.savemeaspot.COORDINATES";
+    public static final String EXTRA_MESSAGE_COORDINATES = "sup.savemeaspot.COORDINATES";
+
 
 
     @Override
@@ -144,6 +149,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         //För att hämta ut adresserna, i detta fall lokal adress och land
                         String adr = adresses.get(0).getLocality() + ", ";
                         adr += adresses.get(0).getCountryName();
+                        currentCoordinate.setLatitude(latitude);
+                        currentCoordinate.setLongitude(longitude);
+                        currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
+                        currentCoordinate.setCountryName(adresses.get(0).getCountryName());
 
                         //Markör på användarens position.
                         mMap.addMarker(new MarkerOptions().position(latLng).title(adr));
@@ -186,9 +195,21 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
      * skickar med koordinater till den nya aktiviteten
      */
     public void saveSpotDialogueView(View view){
-        Intent intent = new Intent(this, SaveSpotCategory.class);
-        //Array coordinates = getCurrentCoordinates();
-        //intent.putExtra("COORDINATES", coordinates);
+        Intent intent = new Intent(this, SaveSpotActivity.class);
+
+        //Nytt koordinatobjet från nuvarande koordinater
+        Coordinate coordinateToSave = currentCoordinate;
+        double lat = coordinateToSave.getLatitude();
+        double lon = coordinateToSave.getLongitude();
+        String locality = coordinateToSave.getLocalAddress();
+        String country = coordinateToSave.getCountryName();
+
+        //Skickar med ett koordinatobjekt, konverterat till String
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LOCAL", locality);
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY", country);
+
         startActivity(intent);
     }
 
