@@ -3,4 +3,7 @@
     <string name="title_activity_maps_start">Map Overview</string>
     <string name="button_menu_en">Menu</string>
     <string name="button_save_en">+</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
