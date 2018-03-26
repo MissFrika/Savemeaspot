@@ -2,6 +2,7 @@ package sup.savemeaspot.DataLayer;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import android.content.Context;
@@ -70,6 +71,13 @@ public class Spot {
         //Hämtar alla Spots med en viss angiven titel
         @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title ;")
         List<Spot> getSpotByTitle(String title);
+        //Hämtar alls spots med en viss kategori
+        @Query("SELECT * FROM SPOT WHERE SPOT_CATEGORY LIKE :categoryId ;")
+        List<Spot> getSpotsByCategory(int categoryId);
+        //Lägg till ny spot
+        @Insert
+        void insertNewSpot(Spot... spots);
+
     }
 }
 
