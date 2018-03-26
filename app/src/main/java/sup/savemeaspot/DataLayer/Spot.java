@@ -3,8 +3,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteCursor;
@@ -77,6 +79,15 @@ public class Spot {
         //Hämtar alls spots med en viss kategori
         @Query("SELECT * FROM SPOT WHERE SPOT_CATEGORY LIKE :categoryId ;")
         List<Spot> getSpotsByCategory(int categoryId);
+
+        //Uppdatera en specifik Spots titel
+        @Query("UPDATE SPOT SET SPOT_TITLE = :spotTitle WHERE SPOT_ID = :spotID;")
+        void updateSpotTitle (String spotTitle, int spotID);
+
+        //Uppdatera en specifik Spots kategori
+        @Query("UPDATE SPOT SET SPOT_CATEGORY = :categoryId WHERE SPOT_ID = :spotId;")
+        void updateSpotTitle (int categoryId, int spotId);
+
         //Lägg till ny spot
         @Insert
         void insertNewSpot(Spot... spots);

@@ -16,7 +16,10 @@ import sup.savemeaspot.DataLayer.SpotDatabase;
 public class MainMenuScreen extends AppCompatActivity {
 
 
-
+    /**
+     * Skapar aktiviteten MainMenuScreen
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
