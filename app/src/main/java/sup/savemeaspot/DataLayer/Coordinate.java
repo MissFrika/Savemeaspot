@@ -79,8 +79,12 @@ public class Coordinate {
     @Dao
     public interface CoordinateDao{
         //Ny Coordinate
-        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
         void insertCoordinate(Coordinate coordinate);
+
+        //Ny coordinate som lägger till kopior av existerande coordinates.
+        @Insert (onConflict = OnConflictStrategy.REPLACE)
+        void insertDuplicateCoordinate(Coordinate coordinate);
 
         //Uppdatera Coordinate
         @Update(onConflict = OnConflictStrategy.REPLACE)
