@@ -1,11 +1,14 @@
 package sup.savemeaspot.DataLayer;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import java.util.List;
+import java.util.Queue;
 
 import android.arch.persistence.room.Update;
 import android.arch.persistence.room.util.TableInfo;
@@ -75,14 +78,37 @@ public class Coordinate {
 
     @Dao
     public interface CoordinateDao{
+        //Ny Coordinate
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
+        void insertCoordinate(Coordinate coordinate);
+
+        //Uppdatera Coordinate
+        @Update(onConflict = OnConflictStrategy.REPLACE)
+        void updateCoordinate(Coordinate coordinate);
+
+        //Ta bort Coordinates
+        @Delete()
+        void deleteCoordinate(Coordinate coordinate);
+
+        //Visa alla Coordinate.
         @Query("SELECT * FROM COORDINATE")
         List<Coordinate> getAllCoordinates();
 
+        //Sök Coordinate baserat på CoordinateId.
         @Query("SELECT * FROM COORDINATE WHERE CoordinateId LIKE :spotCoordinate")
         List<Coordinate> getCoordinateByID(int spotCoordinate);
 
-        @Update(onConflict = OnConflictStrategy.IGNORE)
-        void updateCoordinate(Coordinate coordinate);
+        //Visa Coordinate med specifik longitude och latitude.
+        @Query("SELECT * FROM COORDINATE WHERE latitude LIKE :spotLatitude AND longitude LIKE :spotLongitude")
+        List<Coordinate> getCoordinateByLatAndLong (double spotLatitude, double spotLongitude);
+
+        //Visa Coordinate från ett visst land
+        @Query("SELECT * FROM COORDINATE WHERE country LIKE :spotCountry")
+        List<Coordinate> getCoordinateByCountry(String spotCountry);
+
+        //Visa Coordinates med viss address.
+        @Query("SELECT * FROM COORDINATE WHERE local_address LIKE :spotAddress")
+        List<Coordinate> getCoordinateByAddress(String spotAddress);
     }
 
 }

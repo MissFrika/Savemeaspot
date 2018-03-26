@@ -1,6 +1,7 @@
 package sup.savemeaspot.DataLayer;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Insert;
@@ -83,20 +84,29 @@ public class Category {
 
     @Dao
     public interface CategoryDao{
-        //Ny kategori
+        //Ny Category
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         void insertCategories(Category... categories);
 
-        //Get all categories
+        //Uppdatera Category
+        @Update(onConflict = OnConflictStrategy.REPLACE)
+        void updateCategory(Category category);
+
+        // Ta bort Category
+        @Delete()
+        void deleteCategories(Category category);
+
+        //Hämta alla Categories
         @Query("SELECT * FROM CATEGORY")
             List<Category> getAllCategories();
 
-        //Get category name from id
-        @Query("SELECT * FROM Category where categoryid like :spotCatId")
+        //Hämta Categories med visst Id
+        @Query("SELECT * FROM CATEGORY WHERE categoryId LIKE :spotCatId")
             Category getSpotCategory(int spotCatId);
-        //Update
-        @Update(onConflict = OnConflictStrategy.REPLACE)
-        void updateCategory(Category category);
+
+        //Hämta Categories med visst namn.
+        @Query("SELECT * FROM CATEGORY WHERE category_name LIKE :catName")
+        List<Category> getCategoryByName(String catName);
     }
 
     public static Category[] populateData() {
