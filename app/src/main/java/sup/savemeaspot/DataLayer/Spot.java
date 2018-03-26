@@ -29,7 +29,8 @@ public class Spot {
     private int spotCategory;
     @ColumnInfo(name = "spot_coordinate")
     private int spotCoordinate;
-
+    @ColumnInfo(name = "category_image")
+    private String spotIcon;
     /**
      * Getters & Setters
      */
@@ -51,6 +52,8 @@ public class Spot {
     public void setSpotCategory(int spotCat){this.spotCategory = spotCat;}
     public int getSpotCoordinate(){return this.spotCoordinate;}
     public void setSpotCoordinate(int spotCoord){this.spotCoordinate = spotCoord;}
+    public String getCategoryImage() {return this.spotIcon;}
+    public void setCategoryImage(String iconImg) {this.spotIcon = iconImg;}
 
     /**
      * Constructor för Spots
@@ -68,7 +71,7 @@ public class Spot {
         List<Spot> getAllSpots();
 
         //Hämtar alla Spots med en viss angiven titel
-        @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title ;")
+        @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title")
         List<Spot> getSpotByTitle(String title);
     }
 }
