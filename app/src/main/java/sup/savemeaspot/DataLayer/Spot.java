@@ -81,11 +81,11 @@ public class Spot {
         List<Spot> getSpotsByCategory(int categoryId);
 
         //Uppdatera en specifik Spots titel
-        @Query("UPDATE SPOT SET SPOT_TITLE = :spotTitle WHERE SPOT_ID = :spotID;")
+        @Query("UPDATE SPOT SET SPOT_TITLE = :spotTitle WHERE SPOTID = :spotID;")
         void updateSpotTitle (String spotTitle, int spotID);
 
         //Uppdatera en specifik Spots kategori
-        @Query("UPDATE SPOT SET SPOT_CATEGORY = :categoryId WHERE SPOT_ID = :spotId;")
+        @Query("UPDATE SPOT SET SPOT_CATEGORY = :categoryId WHERE SPOTID = :spotId;")
         void updateSpotTitle (int categoryId, int spotId);
 
         //Lägg till ny spot
