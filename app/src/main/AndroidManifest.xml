@@ -53,7 +53,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenuScreen" />
-        <activity android:name=".DataLayer.SaveSpotTitle" />
         <activity android:name=".SaveSpotActivity"></activity>
     </application>
 

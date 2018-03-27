@@ -14,4 +14,5 @@
         android:layout_marginTop="@dimen/text_margin"
         android:text="@string/category_add_title"
         android:textSize="24sp" />
+
 </FrameLayout>
