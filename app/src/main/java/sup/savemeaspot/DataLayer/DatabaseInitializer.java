@@ -8,6 +8,7 @@ import android.os.Handler;
 
 /**
  * Created by Frida on 2018-03-21.
+ * Denna klass förbereder data i databasen om data saknas i tabeller som behövs för att funktionalitet skall fungera i applikationen
  */
 
 public class DatabaseInitializer {
@@ -15,18 +16,18 @@ public class DatabaseInitializer {
     private Spot spot = new Spot();
     private Coordinate coordinate = new Coordinate();
 
-
+    //Konstruktor
     public DatabaseInitializer() {
 
     }
 
     /**
-     * Checks if the category table is empty, and if it is, populates it
-     *     * @param context
+     * Kontrollerar om Category-tabellen är tom, och om sådant är fallet, fyller den med kategorier
+     * @param context
      */
     public void populateDatabaseWithCategories(final Context context) {
         SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
-                .allowMainThreadQueries()
+                .allowMainThreadQueries() // VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
                 .build();
         if (database.categoryDao().getAllCategories().isEmpty()) {
             database.categoryDao().insertCategories(Category.populateData());

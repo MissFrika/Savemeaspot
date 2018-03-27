@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
 
 /**
  * Created by Frida on 2018-03-19. Databas. Deklarerar vilka klasser som skall finnas tillgängliga som tables i databasen. Attribut är
- * detaljerade i entiteternas enskiljda klasser.
+ * detaljerade i entiteternas enskiljda klasser. H
  */
 @android.arch.persistence.room.Database(entities = {Coordinate.class, Spot.class, Category.class}, version = 1)
 public abstract class SpotDatabase extends RoomDatabase {
@@ -35,7 +35,11 @@ public abstract class SpotDatabase extends RoomDatabase {
     public abstract Spot.SpotDao spotDao();
     public abstract Category.CategoryDao categoryDao();
 
-    //Om databas ej existerar
+    /**
+     * Hanterar instansiering av en databas
+     * @param context
+     * @return
+     */
     public static SpotDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             //Skapa en ny instans av databas
