@@ -17,15 +17,26 @@ import sup.savemeaspot.DataLayer.Coordinate;
 
 public class SaveSpotActivity extends AppCompatActivity {
 
-    private static final int CONTENT_VIEW_ID = 1010;
     private Coordinate coordinatesToSave = new Coordinate();
+    public static FragmentManager fragmentManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_spot);
-        TextView coordinates = (TextView) findViewById(R.id.coordinates);
+        fragmentManager = getSupportFragmentManager();
+
+        if(findViewById(R.id.frame_container) != null){
+            if(savedInstanceState != null){
+                return;
+            }
+            fragmentManager.beginTransaction().add(R.id.frame_container, new CategoryListFragment()).commit();
+        }
+
+
+
+        //*TextView coordinates = (TextView) findViewById(R.id.coordinates);
 
         Bundle extra = getIntent().getExtras();
        //Kontrollerar om intent är null
@@ -40,24 +51,18 @@ public class SaveSpotActivity extends AppCompatActivity {
                 //Konverterar Strings som skickats med intent till double
                 coordinatesToSave.setLatitude(latitude);
                 coordinatesToSave.setLongitude(longitude);
-
-
                 coordinatesToSave.setLocalAddress(locale);
                 coordinatesToSave.setCountryName(country);
 
 
-                coordinates.setText(coordinatesToSave.getCountryName());
+                //coordinates.setText(coordinatesToSave.getCountryName());
             }
             catch(NullPointerException e)
             {
-                coordinates.setText("Something went wrong");
+                //coordinates.setText("Something went wrong");
             }
         }
-        CategoryListFragment listFragment = new CategoryListFragment();
-        FragmentManager manager = getSupportFragmentManager();
 
-        manager.beginTransaction().add(R.id.frame_container, listFragment, "frag_category");
-        manager.beginTransaction().commit();
 
 
 
