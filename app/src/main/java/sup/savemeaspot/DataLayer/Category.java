@@ -3,19 +3,16 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
-import android.content.Context;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+
 import java.util.List;
-import java.util.Locale;
+
+import sup.savemeaspot.R;
 
 
 /**
@@ -80,6 +77,16 @@ public class Category {
         this.categoryName = name;
         this.categoryImg = image;
         this.isDeletable = deletable;
+
+    }
+
+    /**
+     * Hämtar sökvägen för en resursfil
+     * @param resourceId
+     * @return
+     */
+    public static String getURLForResource (int resourceId) {
+        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 
     @Dao
@@ -111,10 +118,10 @@ public class Category {
 
     public static Category[] populateData() {
         return new Category[] {
-                new Category("Fish", "Path", 0),
-                new Category("Fruit", "Path", 0),
-                new Category("Berry", "Path", 0),
-                new Category("Mushroom", "Path", 0)
+                new Category("Fish", getURLForResource(R.drawable.fish), 0),
+                new Category("Fruit", getURLForResource(R.drawable.apple), 0),
+                new Category("Berry", getURLForResource(R.drawable.cherry), 0),
+                new Category("Mushroom", getURLForResource(R.drawable.wheat), 0)
         };
     }
 }
