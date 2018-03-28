@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="16dp"
+    android:background="@color/menuBackgroundColor"
+    android:layout_height="match_parent"
+    tools:context="sup.savemeaspot.SaveSpotCategoryActivity">
+
+    <TextView
+        android:id="@+id/category_add_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/category_add_title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_container_save"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/category_add_title_text"
+        android:layout_marginTop="13dp"
+        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/category_cancel"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/nextCategory"
+        android:layout_alignBottom="@+id/nextCategory"
+        android:layout_alignLeft="@+id/addNewCategory"
+        android:layout_alignStart="@+id/addNewCategory"
+        android:background="@color/menuButtonColor"
+        android:text="@string/button_save_cancel" />
+
+    <Button
+        android:id="@+id/nextCategory"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="21dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/menuButtonColor"
+        android:text="@string/button_save_next" />
+
+    <EditText
+        android:id="@+id/addNewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/category_cancel"
+        android:layout_marginBottom="46dp"
+        android:layout_toLeftOf="@+id/nextCategory"
+        android:layout_toStartOf="@+id/nextCategory"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <!-- Lägg till kategori-knapp-->
+    <Button
+        android:id="@+id/buttonAddCategory"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/recycler_container_save"
+        android:layout_alignEnd="@+id/nextCategory"
+        android:layout_alignRight="@+id/nextCategory"
+        android:layout_alignTop="@+id/addNewCategory"
+        android:background="@drawable/roundbutton_save"
+        android:text="@string/button_save_en"
+        android:textColor="@color/menuButtonTextColor" />
+
+</RelativeLayout>

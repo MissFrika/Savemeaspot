@@ -1,28 +1,21 @@
 package sup.savemeaspot;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.Button;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.Category;
 import sup.savemeaspot.DataLayer.Coordinate;
-import sup.savemeaspot.DataLayer.DatabaseInitializer;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 
-public class SaveSpotActivity extends AppCompatActivity {
+public class SaveSpotCategoryActivity extends AppCompatActivity {
 
     private Coordinate coordinatesToSave = new Coordinate();
     private Category categoryToSave = new Category();
@@ -35,8 +28,8 @@ public class SaveSpotActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_save_spot);
-
+        setContentView(R.layout.activity_save_spot_category);
+        initBackButton();
         recyclerView = findViewById(R.id.recycler_container_save);
 
         SpotDatabase database = Room.inMemoryDatabaseBuilder(this.getApplicationContext(), SpotDatabase.class)
@@ -46,8 +39,7 @@ public class SaveSpotActivity extends AppCompatActivity {
             List<Category> aCat = database.getDatabase(this).categoryDao().getAllCategories();
             this.categories = aCat;
             database.close();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
 
         }
         // specify an adapter (see also next example)
@@ -61,10 +53,12 @@ public class SaveSpotActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+
+
         //*TextView coordinates = (TextView) findViewById(R.id.coordinates);
         Bundle extra = getIntent().getExtras();
-       //Kontrollerar om intent är null
-        if(extra != null) {
+        //Kontrollerar om intent är null
+        if (extra != null) {
             try {
                 //Hämtar ut alla strings i intent
                 double latitude = extra.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
@@ -80,18 +74,23 @@ public class SaveSpotActivity extends AppCompatActivity {
 
 
                 //coordinates.setText(coordinatesToSave.getCountryName());
-            }
-            catch(NullPointerException e)
-            {
+            } catch (NullPointerException e) {
                 //coordinates.setText("Something went wrong");
             }
         }
-
-    }
-    public void onArticleSelected(int position) {
-        // The user selected the headline of an article from the HeadlinesFragment
-        // Do something here to display that article
     }
 
+        private void initBackButton() {
+            Button back = this.findViewById(R.id.category_cancel);
+            back.setOnClickListener(new View.OnClickListener() {
 
-}
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+
+    }
+

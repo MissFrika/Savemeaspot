@@ -1,8 +1,6 @@
 package sup.savemeaspot;
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.arch.persistence.room.Database;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,16 +12,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,12 +25,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
-import sup.savemeaspot.DataLayer.DatabaseInitializer;
 
 public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
@@ -194,7 +186,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
      * skickar med koordinater till den nya aktiviteten
      */
     public void saveSpotDialogueView(View view){
-        Intent intent = new Intent(this, SaveSpotActivity.class);
+        Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
 
         //Nytt koordinatobjet från nuvarande koordinater
         Coordinate coordinateToSave = currentCoordinate;
