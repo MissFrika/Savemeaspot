@@ -56,7 +56,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
     //Category table
     db.execSQL("CREATE TABLE " +TABLE_NAME_CAT+
-            " (" +COLUMN_ID_CAT+ " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +COLUMN_NAME_CAT+ " TEXT NOT NULL, " +COLUMN_ICON_CAT+" TEXT NOT NULL," +COLUMN_DELETABLE+ " INT NOT NULL)");
+            " (" +COLUMN_ID_CAT+ " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +COLUMN_NAME_CAT+ " TEXT NOT NULL, " +COLUMN_ICON_CAT+" INTEGER NOT NULL," +COLUMN_DELETABLE+ " INT NOT NULL)");
 
     //Coordinate table
     db.execSQL("CREATE TABLE " +TABLE_NAME_COR+

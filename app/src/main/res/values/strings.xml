@@ -4,52 +4,61 @@
     <string name="button_menu_en">Menu</string>
     <string name="button_save_en">+</string>
     <string name="category_add_title">Please choose a category</string>
+
     <!-- Titlar Berry-->
-    <string name="title_example_berry_1">Bilberry</string>
-    <string name="title_example_berry_2">Blackberry</string>
-    <string name="title_example_berry_3">Blueberry</string>
-    <string name="title_example_berry_4">Cloudberry</string>
-    <string name="title_example_berry_5">Cranberry</string>
-    <string name="title_example_berry_6">Elderberry</string>
-    <string name="title_example_berry_7">Gooseberry</string>
-    <string name="title_example_berry_8">Lingonberry</string>
-    <string name="title_example_berry_9">Raspberry</string>
-    <string name="title_example_berry_10">Strawberry</string>
+    <string-array name="titles_example_berry">
+        <item>Bilberry</item>
+        <item>Blackberry</item>
+        <item>Blueberry</item>
+        <item>Cloudberry</item>
+        <item>Cranberry</item>
+        <item>Elderberry</item>
+        <item>Gooseberry</item>
+        <item>Lingonberry</item>
+        <item>Raspberry</item>
+        <item>Strawberry</item>
+    </string-array>
+
 
     <!-- Titlar Fruit-->
-
-    <string name="title_example_fruit_1">Apple</string>
-    <string name="title_example_fruit_2">Apricot</string>
-    <string name="title_example_fruit_3">Cherry</string>
-    <string name="title_example_fruit_4">Grape</string>
-    <string name="title_example_fruit_5">Nectarine</string>
-    <string name="title_example_fruit_6">Peach</string>
-    <string name="title_example_fruit_7">Plum</string>
-    <string name="title_example_fruit_8">Pumpkin</string>
-    <string name="title_example_fruit_9">Orange</string>
-    <string name="title_example_fruit_10">Tomato</string>
+    <string-array name="titles_example_fruit">
+        <item>Apple</item>
+        <item>Apricot</item>
+        <item>Cherry</item>
+        <item>Grape</item>
+        <item>Nectarine</item>
+        <item>Peach</item>
+        <item>Plum</item>
+        <item>Pumpkin</item>
+        <item>Orange</item>
+        <item>Tomato</item>
+    </string-array>
 
     <!-- Titlar Fish-->
-    <string name="title_example_fish_1">Bream</string>
-    <string name="title_example_fish_2">Carp</string>
-    <string name="title_example_fish_3">Freshwater Eel</string>
-    <string name="title_example_fish_4">Perch</string>
-    <string name="title_example_fish_5">Pike</string>
-    <string name="title_example_fish_6">Grayling</string>
-    <string name="title_example_fish_7">Roach</string>
-    <string name="title_example_fish_8">Salmon</string>
-    <string name="title_example_fish_9">Trout</string>
-    <string name="title_example_fish_10">Zander</string>
+    <string-array name="titles_example_fish">
+        <item>Bream</item>
+        <item>Carp</item>
+        <item>Freshwater Eel</item>
+        <item>Grayling</item>
+        <item>Perch</item>
+        <item>Peach</item>
+        <item>Pike</item>
+        <item>Roach</item>
+        <item>Salmon</item>
+        <item>Trout</item>
+        <item>Zander</item>
+    </string-array>
 
     <!-- Titlar Mushroom-->
-    <string name="title_example_mushroom_1">Chanterelle</string>
-    <string name="title_example_mushroom_2">Field Mushroom</string>
-    <string name="title_example_mushroom_3">Funnel Chanterelle</string>
-    <string name="title_example_mushroom_4">False Morel</string>
-    <string name="title_example_mushroom_5">Hedgehog Mushroom</string>
-    <string name="title_example_mushroom_6">Horse Mushroom</string>
-    <string name="title_example_mushroom_7">Penny Bun</string>
-    <string name="title_example_mushroom_8">Shaggy Ink Cap</string>
-
+    <string-array name="titles_example_mushroom">
+        <item>Chanterelle</item>
+        <item>Field Mushroom</item>
+        <item>False Morel</item>
+        <item>Funnel Chanterelle</item>
+        <item>Hedgehog Mushroom</item>
+        <item>Horse Mushroom</item>
+        <item>Penny Bun</item>
+        <item>Shaggy Ink Cap</item>
+    </string-array>
 
 </resources>

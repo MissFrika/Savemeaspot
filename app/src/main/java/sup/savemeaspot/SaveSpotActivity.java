@@ -22,7 +22,7 @@ import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseInitializer;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 
-public class SaveSpotActivity extends AppCompatActivity implements CategoryItemFragment.OnListFragmentInteractionListener {
+public class SaveSpotActivity extends AppCompatActivity {
 
     private Coordinate coordinatesToSave = new Coordinate();
     private Category categoryToSave = new Category();
@@ -38,7 +38,6 @@ public class SaveSpotActivity extends AppCompatActivity implements CategoryItemF
         setContentView(R.layout.activity_save_spot);
 
         recyclerView = findViewById(R.id.recycler_container_save);
-
 
         SpotDatabase database = Room.inMemoryDatabaseBuilder(this.getApplicationContext(), SpotDatabase.class)
                 .allowMainThreadQueries() //DO NOT !!!

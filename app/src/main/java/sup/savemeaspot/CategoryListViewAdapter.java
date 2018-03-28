@@ -1,12 +1,16 @@
 package sup.savemeaspot;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.Category;
@@ -17,16 +21,10 @@ import sup.savemeaspot.DataLayer.Category;
 
 public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListViewAdapter.ViewHolder> {
     private List<Category> categoryDataset;
-    public TextView mTextView;
 
     public CategoryListViewAdapter(List<Category> items) {
 
         this.categoryDataset = items;
-    }
-
-    public void setCategoryDataset(List<Category> items){
-        categoryDataset = items;
-        notifyDataSetChanged();
     }
 
 
@@ -36,7 +34,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                                                    int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_categoryitem, parent, false);
+                .inflate(R.layout.card_view_layout_category, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
@@ -45,10 +43,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if(holder instanceof ViewHolder){
              holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
-             holder.catImgTextView.setText(categoryDataset.get(position).getCategoryImg());
-        }
+             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
 
     }
 
@@ -71,16 +67,16 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView catNameTextView;
-        public TextView catImgTextView;
+        public ImageView catImageView;
 
         public ViewHolder(View v) {
             super(v);
-            catNameTextView = (TextView) v.findViewById(R.id.category_item_name);
-            catImgTextView = (TextView) v.findViewById(R.id.category_item_image);
+            catNameTextView = (TextView) v.findViewById(R.id.category_name_cardview);
+            catImageView = (ImageView) v.findViewById(R.id.category_image_cardview);
         }
 
         static ViewHolder inflate(ViewGroup parent){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_categoryitem, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_layout_category, parent, false);
             return new ViewHolder(view);
         }
 

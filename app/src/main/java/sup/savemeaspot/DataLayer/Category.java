@@ -10,6 +10,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.R;
@@ -29,7 +30,7 @@ public class Category {
     @ColumnInfo( name = "category_name")
     private String categoryName;
     @ColumnInfo( name = "category_img")
-    private String categoryImg;
+    private int categoryImg;
     @ColumnInfo( name = "is_deletable")
     private int isDeletable;
 
@@ -52,11 +53,11 @@ public class Category {
         this.categoryName = name;
     }
 
-    public void setCategoryImg(String categoryImg) {
+    public void setCategoryImg(int categoryImg) {
         this.categoryImg = categoryImg;
     }
 
-    public String getCategoryImg() {
+    public int getCategoryImg() {
         return this.categoryImg;
     }
 
@@ -69,11 +70,10 @@ public class Category {
 
     /**
      * Constructor för ny kategori
-     *
-     */
+     *     */
     public Category(){}
 
-    public Category(String name, String image, int deletable){
+    public Category(String name, int image, int deletable){
         this.categoryName = name;
         this.categoryImg = image;
         this.isDeletable = deletable;
@@ -86,7 +86,7 @@ public class Category {
      * @return
      */
     public static String getURLForResource (int resourceId) {
-        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
+        return Uri.parse("android.resource:/"+R.class.getPackage().getName()+"/" +resourceId).toString();
     }
 
     @Dao
@@ -118,10 +118,10 @@ public class Category {
 
     public static Category[] populateData() {
         return new Category[] {
-                new Category("Fish", getURLForResource(R.drawable.fish), 0),
-                new Category("Fruit", getURLForResource(R.drawable.apple), 0),
-                new Category("Berry", getURLForResource(R.drawable.cherry), 0),
-                new Category("Mushroom", getURLForResource(R.drawable.wheat), 0)
+                new Category("Fish", R.drawable.fish, 0),
+                new Category("Fruit", R.drawable.apple, 0),
+                new Category("Berry", R.drawable.cherry, 0),
+                new Category("Mushroom", R.drawable.wheat, 0)
         };
     }
 }
