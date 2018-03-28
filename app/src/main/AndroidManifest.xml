@@ -53,10 +53,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenuScreen" />
-        <activity android:name=".SaveSpotCategoryActivity"
-            android:windowSoftInputMode ="adjustPan"
-            >
-        </activity>
+        <activity
+            android:name=".SaveSpotCategoryActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".SaveTitleActivity"></activity>
     </application>
 
 </manifest>
