@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="menuButtonColor">#667b2d</color>
     <color name="menuButtonTextColor">#ffffff</color>
+    <color name="menuBackgroundColor">#fffef6</color>
 </resources>

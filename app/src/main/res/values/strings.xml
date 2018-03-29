@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Save me a spot</string>
     <string name="title_activity_maps_start">Map Overview</string>
+    <string name="category_add_title">Please choose a category</string>
+
+    <!--Buttons-->
     <string name="button_menu_en">Menu</string>
     <string name="button_save_en">+</string>
-    <string name="category_add_title">Please choose a category</string>
+    <string name="button_save_cancel">Cancel</string>
+    <string name="button_save_next">Next</string>
 
     <!-- Titlar Berry-->
     <string-array name="titles_example_berry">
