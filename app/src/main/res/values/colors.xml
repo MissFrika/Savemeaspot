@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#667b2d</color>
     <color name="colorPrimaryDark">#374318</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#799333</color>
     <color name="menuButtonColor">#667b2d</color>
     <color name="menuButtonTextColor">#ffffff</color>
     <color name="menuBackgroundColor">#fffef6</color>

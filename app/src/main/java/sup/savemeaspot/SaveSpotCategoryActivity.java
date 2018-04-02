@@ -42,9 +42,9 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        // specify an adapter (see also next example)
+        // Specifierar en adapter för RecyclerView
         adapter = new CategoryListViewAdapter(categories);
-        // use a linear layout manager
+        //LayoutManager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // use this setting to improve performance if you know that changes
@@ -95,8 +95,9 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
      * Öppnar aktiviteten SaveTitleActivity för att spara en titel till en spot
       * @return
      */
-    public void openViewSaveTitle(){
-        Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
+
+    public void openViewSaveTitle(View view){
+        Intent intent = new Intent(this, SaveTitleActivity.class);
         if(categoryToSave != null) {
             int catId = categoryToSave.getCategoryId();
             String catName = categoryToSave.getCategoryName();
@@ -108,8 +109,8 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
             intent.putExtra("EXTRA_MESSAGE_CATEGORY_IMG", catImg);
             intent.putExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE", catDel);
         }
-
         startActivity(intent);
+
     }
 
 }
