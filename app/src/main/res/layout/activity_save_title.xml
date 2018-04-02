@@ -15,7 +15,7 @@
         android:layout_marginBottom="16dp"
         android:layout_height="wrap_content"
         android:text="Name your Spot"
-        android:textSize="24sp"
+        android:textSize="24dp"
         />
 
     <EditText
@@ -38,7 +38,7 @@
         android:layout_below="@id/editTitle"
         android:text="Or select title" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/titleList"
         android:layout_width="match_parent"
         android:layout_height="250dp"

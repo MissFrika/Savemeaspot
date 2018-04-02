@@ -91,6 +91,26 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
             });
         }
 
+    /**
+     * Öppnar aktiviteten SaveTitleActivity för att spara en titel till en spot
+      * @return
+     */
+    public void openViewSaveTitle(){
+        Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
+        if(categoryToSave != null) {
+            int catId = categoryToSave.getCategoryId();
+            String catName = categoryToSave.getCategoryName();
+            int catImg = categoryToSave.getCategoryImg();
+            int catDel = categoryToSave.getIsDeletable();
 
+            intent.putExtra("EXTRA_MESSAGE_CATEGORY_ID", catId);
+            intent.putExtra("EXTRA_MESSAGE_CATEGORY_NAME", catName);
+            intent.putExtra("EXTRA_MESSAGE_CATEGORY_IMG", catImg);
+            intent.putExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE", catDel);
+        }
+
+        startActivity(intent);
     }
+
+}
 

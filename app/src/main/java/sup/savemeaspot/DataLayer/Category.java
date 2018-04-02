@@ -34,6 +34,13 @@ public class Category {
     @ColumnInfo( name = "is_deletable")
     private int isDeletable;
 
+    public Category(int extra_message_category_id, String extra_message_category_name, int extra_message_category_img, int b) {
+        setCategoryName(extra_message_category_name);
+        setCategoryId(extra_message_category_id);
+        setCategoryImg(extra_message_category_img);
+        setIsDeletable(b);
+    }
+
 
     /**
      * Getters & Setters
