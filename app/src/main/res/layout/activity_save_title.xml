@@ -2,48 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="16dp"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context="sup.savemeaspot.SaveTitleActivity">
 
     <TextView
         android:id="@+id/titleSaveTitle"
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_marginBottom="16dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:text="Name your Spot"
-        android:textSize="24sp"
-        />
+        android:textSize="24dp" />
 
     <EditText
         android:id="@+id/editTitle"
-        android:layout_marginBottom="16dp"
-        android:layout_below="@id/titleSaveTitle"
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="wrap_content"
         android:layout_height="54dp"
+        android:layout_below="@id/titleSaveTitle"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:singleLine="true"
-        android:text="Name"
-        />
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/selectTitle"
-        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTitle"
+        android:layout_marginBottom="16dp"
         android:text="Or select title" />
 
-    <ListView
-        android:id="@+id/titleList"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/title_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_below="@id/selectTitle" />
-
 
 
 </LinearLayout>

@@ -40,7 +40,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     }
 
 
-    // Replace the contents of a view (invoked by the layout manager)
+    // Byter ut delar av en view (layout manager behövs)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
              holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
@@ -48,13 +48,13 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Returnerar storleken på dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return categoryDataset.size();
     }
 
-    //Return item view type
+    //Returnerar viewtyp
     @Override
     public int getItemViewType(int position) {
         return 0;
