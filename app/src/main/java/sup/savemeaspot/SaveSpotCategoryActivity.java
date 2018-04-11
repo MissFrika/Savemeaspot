@@ -43,7 +43,7 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
 
         }
         // Specifierar en adapter för RecyclerView
-        adapter = new CategoryListViewAdapter(categories);
+        adapter = new CategoryListViewAdapter(categories, this);
         //LayoutManager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

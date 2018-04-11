@@ -1,18 +1,23 @@
 package sup.savemeaspot;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import sup.savemeaspot.DataLayer.Category;
 
 public class SaveTitleActivity extends AppCompatActivity {
 
 
-    private List<String> exampleTitles;
+    private List<String> exampleTitles = new ArrayList<String>();
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -26,18 +31,7 @@ public class SaveTitleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_title);
 
-        Bundle extra = getIntent().getExtras();
-        //Kontrollerar om intent är null
-        if (extra != null) {
-            try {
-                //Hämtar ut alla strings i intent och skapar ett Category-objekt
-                this.chosenCategory = new Category(extra.getInt("EXTRA_MESSAGE_CATEGORY_ID"), extra.getString("EXTRA_MESSAGE_CATEGORY_NAME"),
-                        extra.getInt("EXTRA_MESSAGE_CATEGORY_IMG"), extra.getInt("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE"));
-
-            } catch (NullPointerException e) {
-
-            }
-        }
+        checkIncomingIntents();
         //Kontrollerar vilken kategori som valts från SaveSpotCategoryActivity och instansierar "titlesToDisplay"
         if(this.chosenCategory.getCategoryName()!=null){
 
@@ -59,7 +53,7 @@ public class SaveTitleActivity extends AppCompatActivity {
                     break;
             }
             for (String item : exampleStrings){
-                exampleTitles.add(item);
+                    exampleTitles.add(item);
             }
         }
 
@@ -75,6 +69,21 @@ public class SaveTitleActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+    }
+
+    /**
+     * Kontrollerar om det finns intents medskickade från föregående aktivitet
+     */
+    private void checkIncomingIntents(){
+        if(getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_ID") && getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_NAME") &&
+                getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_IMG") && getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE")){
+            Bundle extra = getIntent().getExtras();
+            int id = extra.getInt("EXTRA_MESSAGE_CATEGORY_ID");
+            String name = extra.getString("EXTRA_MESSAGE_CATEGORY_NAME");
+            int image = extra.getInt("EXTRA_MESSAGE_CATEGORY_IMG");
+            int isDeletable = extra.getInt("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE");
+            this.chosenCategory = new Category(id,name,image,isDeletable);
+        }
     }
 }
 

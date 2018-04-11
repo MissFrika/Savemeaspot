@@ -44,12 +44,12 @@ public abstract class SpotDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             //Skapa en ny instans av databas
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
-                            // allow queries on the main thread.
-                            // Don't do this on a real app! See PersistenceBasicSample for an example.
+                            // Tillåter queries på huvudtråden. Får ej köras på huvudtråden på fysisk enhet.
+                            // TODO: Skapa en asynkron metod för att köra köra queries mot databasen
                             .allowMainThreadQueries()
                             .build();
         }
-        //Annars returnerar databas
+        //Returnerar instans av databas
         return INSTANCE;
     }
 

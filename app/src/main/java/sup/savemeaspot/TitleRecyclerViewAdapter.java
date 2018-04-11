@@ -31,7 +31,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
     @Override
     public TitleRecyclerViewAdapter.TitleViewHolder onCreateViewHolder(ViewGroup parent,
     int viewType) {
-        // create a new view
+        // Skapa ny vy
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_layout_title, parent, false);
         TitleRecyclerViewAdapter.TitleViewHolder viewHolder = new TitleRecyclerViewAdapter.TitleViewHolder(v);
