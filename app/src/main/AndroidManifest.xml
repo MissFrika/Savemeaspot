@@ -46,24 +46,24 @@
 
         <activity
             android:name=".MapsStart"
-            android:label="@string/title_activity_maps_start">
+            android:label="Save Me a Spot">
+
+        </activity>
+        <activity android:name=".MainMenuScreen" />
+        <activity
+            android:name=".SaveSpotCategoryActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".SaveTitleActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".MainActivity"
+            android:label="Save Me a Spot">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainMenuScreen" />
-
-        <activity
-            android:name=".SaveSpotCategoryActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-
-        <activity
-            android:name=".SaveTitleActivity"
-            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

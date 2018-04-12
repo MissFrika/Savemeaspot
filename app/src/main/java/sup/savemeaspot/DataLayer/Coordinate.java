@@ -61,7 +61,7 @@ public class Coordinate {
         return this.longitude;
     }
     public void setLongitude(double lon){
-        this.latitude = lon;
+        this.longitude = lon;
     }
     public String getLocalAddress(){
         return this.localAddress;

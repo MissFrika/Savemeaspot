@@ -25,7 +25,7 @@ public class DatabaseInitializer {
      * Kontrollerar om Category-tabellen är tom, och om sådant är fallet, fyller den med kategorier
      * @param context
      */
-    public void populateDatabaseWithCategories(final Context context) {
+    public static void populateDatabaseWithCategories(final Context context) {
         SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                 .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
                 .build();

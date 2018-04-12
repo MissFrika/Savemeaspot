@@ -8,6 +8,7 @@
     <string name="button_save_en">+</string>
     <string name="button_save_cancel">Cancel</string>
     <string name="button_save_next">Next</string>
+    <string name="button_launch">Launch</string>
 
     <!-- Titlar Berry-->
     <string-array name="titles_example_berry">

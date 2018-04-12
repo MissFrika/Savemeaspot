@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,9 +42,10 @@ import sup.savemeaspot.DataLayer.DatabaseHandler;
 /**
  * Main Activity. Visar en karta med markörer för användarens nuvarande position och sparade Spots. Kod för Google Maps är pre-made och hämtat från https://developers.google.com/maps/documentation/android-api/start
  */
-public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
+public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
+    private static final int PERMISSION_REQUEST_ACCESS_NETWORK_STATE = 0;
     private GoogleMap mMap;
     private LocationManager locationManager;
     private boolean permissionsGranted = false;
@@ -50,16 +54,16 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     //Koordinatobjekt
     private Coordinate currentCoordinate = new Coordinate();
 
-    private static final int ERROR_DIALOG_REQUEST = 9001;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
     public static final String EXTRA_MESSAGE_COORDINATES = "sup.savemeaspot.COORDINATES";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //TODO:Flytta till MainActivity
         DatabaseHandler db = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
 
@@ -67,11 +71,11 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         //Kontrollerar permissions
         checkPermissions();
-        mapFragment.getMapAsync(this);
 
-        //Hämtar en användares position och uppdaterar positionen på kartan
+
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
         String context = Context.LOCATION_SERVICE;
@@ -87,21 +91,25 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+        //Hämtar en användares position och uppdaterar positionen på kartan
         //Kollar om det finns tillgång till en nätverkstjänst
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, new LocationListener() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                PERMISSION_REQUEST_ACCESS_NETWORK_STATE);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     //Hämta latitud och longitud
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     //Ny instans av LatLng, håller doubles med latitud och longitud
-                    LatLng latLng = new LatLng(latitude,longitude);
+                    LatLng latLng = new LatLng(latitude, longitude);
 
                     Geocoder geocoder = new Geocoder(getApplicationContext());
                     //En lista av adresser som skall hämtas från en användares positionen
                     try {
-                        List<Address> adresses = geocoder.getFromLocation(latitude,longitude,1);
+                        List<Address> adresses = geocoder.getFromLocation(latitude, longitude, 1);
 
                         //För att hämta ut adresserna, i detta fall lokal adress och land
                         String adr = adresses.get(0).getLocality() + ", ";
@@ -112,11 +120,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
                         currentCoordinate.setCountryName(adresses.get(0).getCountryName());
 
-                        //Markör på användarens position.
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(adr));
-
-                        //Kameraposition på markör
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.2f));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -140,8 +143,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
             });
         }
         //Om inget nätverk är tillgängligt, kontrollera GPS-tillgänglighet
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-        {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
@@ -149,11 +151,11 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     //Ny instans av objekt LatLing,
-                    LatLng latLng = new LatLng(latitude,longitude);
+                    LatLng latLng = new LatLng(latitude, longitude);
                     Geocoder geocoder = new Geocoder(getApplicationContext());
                     //En lista av adresser som skall hämtas från en användares positionen
                     try {
-                        List<Address> adresses = geocoder.getFromLocation(latitude,longitude,1);
+                        List<Address> adresses = geocoder.getFromLocation(latitude, longitude, 1);
 
                         //För att hämta ut adresserna, i detta fall lokal adress och land
                         String adr = adresses.get(0).getLocality() + ", ";
@@ -163,11 +165,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
                         currentCoordinate.setCountryName(adresses.get(0).getCountryName());
 
-                        //Markör på användarens position.
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(adr));
-
-                        //Kameraposition på markör
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.2f));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -196,9 +193,9 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     /**
      * Kontrollerar att permissions finns
      */
-    private void checkPermissions(){
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+    private void checkPermissions() {
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -206,35 +203,14 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
             } else {
                 ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
-        }
-        else{ActivityCompat.requestPermissions(this, permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
-    /**
-     * Kontrollerar om Google Services fungerar korrekt
-     * @return
-     */
-    public boolean checkGoogleService(){
-        int isAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MapsStart.this);
-
-        //Google Services fungerar
-        if(isAvailable == ConnectionResult.SUCCESS){
-            return true;
-        }
-        //Google Services fungerar ej, men kan åtgärdas
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(isAvailable)){
-            Dialog googleServiceDialog = GoogleApiAvailability.getInstance().getErrorDialog(MapsStart.this, isAvailable, ERROR_DIALOG_REQUEST);
-            googleServiceDialog.show();
-        }
-        else{
-            Toast.makeText(this, "Unable to request map", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-    }
 
     /** Detta körs vid Menu-knapptryck, öppnar huvudmenyn*/
-    public void openMainMenu(View view){
+    public void openMainMenu(View view) {
         //Ny intent
         Intent intent = new Intent(this, MainMenuScreen.class);
         //Nytt koordinatobjet från nuvarande koordinater
@@ -245,18 +221,52 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
 
-
         startActivity(intent);
+    }
+
+    /**
+     * Kontrollerar senast kända position...OBS! GPS måste vara aktiv
+     */
+    public void checkLastLocation(){
+        //Geocoder
+        final Geocoder geocoder = new Geocoder(getApplicationContext());
+        //Senaste kända platsen
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                currentCoordinate.setLatitude(location.getLatitude());
+                currentCoordinate.setLongitude(location.getLongitude());
+
+                try {
+                    List<Address> adresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    currentCoordinate.setCountryName(adresses.get(0).getCountryName());
+                    currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.2f));
+            }
+        });
     }
 
     /** Öppnar en ny dialogruta för att spara en Spot,
      * skickar med koordinater till den nya aktiviteten
      */
-    public void saveSpotDialogueView(View view){
-        checkGoogleService();
-
+    public void saveSpotDialogueView(View view) {
         Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
-
         //Nytt koordinatobjet från nuvarande koordinater
         double lat = currentCoordinate.getLatitude();
         double lon = currentCoordinate.getLongitude();
@@ -284,6 +294,13 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        //Markör på användarens position.
+        if (ActivityCompat.checkSelfPermission(MapsStart.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsStart.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
