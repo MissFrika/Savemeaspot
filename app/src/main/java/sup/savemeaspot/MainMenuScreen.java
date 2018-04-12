@@ -26,22 +26,17 @@ public class MainMenuScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu_screen);
         TextView t = (TextView)findViewById(R.id.dbtest);
         TextView d = (TextView)findViewById(R.id.dataTest);
-        if(SpotDatabase.checkDatabase()){
-            t.setText("Database exists");
+
+        if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")&& getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")) {
+
+            Bundle extras = getIntent().getExtras();
+            double lat = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
+            double lon = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
+
+            d.setText("Latitude: " + String.valueOf(lat) + "\nLongitude: " +String.valueOf(lon));
+
         }
         else{
-            t.setText("No database found");
-        }
-        SpotDatabase database = Room.inMemoryDatabaseBuilder(this.getApplicationContext(), SpotDatabase.class)
-                .allowMainThreadQueries()
-                .build();
-        try {
-            DatabaseInitializer init = new DatabaseInitializer();
-            init.populateDatabaseWithCategories(this);
-            List<Category> aCat = database.getDatabase(this).categoryDao().getAllCategories();
-            d.setText(aCat.get(0).getCategoryName());
-        }
-        catch(Exception e){
             d.setText("Something went wrong");
         }
 

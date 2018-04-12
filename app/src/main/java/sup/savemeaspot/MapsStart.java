@@ -179,6 +179,16 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
     public void openMainMenu(View view){
         //Ny intent
         Intent intent = new Intent(this, MainMenuScreen.class);
+        Coordinate coordinateToSave = currentCoordinate;
+        double lat = coordinateToSave.getLatitude();
+        double lon = coordinateToSave.getLongitude();
+
+
+        //Skickar med ett koordinatobjekt, konverterat till String
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
+
+
         startActivity(intent);
     }
 

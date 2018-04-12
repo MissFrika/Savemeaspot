@@ -60,7 +60,9 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
 
-        <activity android:name=".SaveTitleActivity" />
+        <activity
+            android:name=".SaveTitleActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
