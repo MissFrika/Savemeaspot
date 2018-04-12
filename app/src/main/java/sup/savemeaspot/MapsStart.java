@@ -1,6 +1,7 @@
 package sup.savemeaspot;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,12 +11,17 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,15 +36,21 @@ import java.util.List;
 import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
 
+/**
+ * Main Activity. Visar en karta med markörer för användarens nuvarande position och sparade Spots. Kod för Google Maps är pre-made och hämtat från https://developers.google.com/maps/documentation/android-api/start
+ */
 public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private GoogleMap mMap;
     private LocationManager locationManager;
+    private boolean permissionsGranted = false;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
 
     //Koordinatobjekt
     private Coordinate currentCoordinate = new Coordinate();
 
+    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
     public static final String EXTRA_MESSAGE_COORDINATES = "sup.savemeaspot.COORDINATES";
@@ -55,8 +67,9 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        //Kontrollerar permissions
+        checkPermissions();
         mapFragment.getMapAsync(this);
-
 
         //Hämtar en användares position och uppdaterar positionen på kartan
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -94,6 +107,11 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         String adr = adresses.get(0).getLocality() + ", ";
                         adr += adresses.get(0).getCountryName();
 
+                        currentCoordinate.setLatitude(latLng.latitude);
+                        currentCoordinate.setLongitude(latLng.longitude);
+                        currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
+                        currentCoordinate.setCountryName(adresses.get(0).getCountryName());
+
                         //Markör på användarens position.
                         mMap.addMarker(new MarkerOptions().position(latLng).title(adr));
 
@@ -122,7 +140,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
             });
         }
         //Om inget nätverk är tillgängligt, kontrollera GPS-tillgänglighet
-        else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
         {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
@@ -140,8 +158,8 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
                         //För att hämta ut adresserna, i detta fall lokal adress och land
                         String adr = adresses.get(0).getLocality() + ", ";
                         adr += adresses.get(0).getCountryName();
-                        currentCoordinate.setLatitude(latitude);
-                        currentCoordinate.setLongitude(longitude);
+                        currentCoordinate.setLatitude(latLng.latitude);
+                        currentCoordinate.setLongitude(latLng.longitude);
                         currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
                         currentCoordinate.setCountryName(adresses.get(0).getCountryName());
 
@@ -175,14 +193,53 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
         }
     }
 
+    /**
+     * Kontrollerar att permissions finns
+     */
+    private void checkPermissions(){
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                permissionsGranted = true;
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }
+        else{ActivityCompat.requestPermissions(this, permissions,LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    /**
+     * Kontrollerar om Google Services fungerar korrekt
+     * @return
+     */
+    public boolean checkGoogleService(){
+        int isAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MapsStart.this);
+
+        //Google Services fungerar
+        if(isAvailable == ConnectionResult.SUCCESS){
+            return true;
+        }
+        //Google Services fungerar ej, men kan åtgärdas
+        else if(GoogleApiAvailability.getInstance().isUserResolvableError(isAvailable)){
+            Dialog googleServiceDialog = GoogleApiAvailability.getInstance().getErrorDialog(MapsStart.this, isAvailable, ERROR_DIALOG_REQUEST);
+            googleServiceDialog.show();
+        }
+        else{
+            Toast.makeText(this, "Unable to request map", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
     /** Detta körs vid Menu-knapptryck, öppnar huvudmenyn*/
     public void openMainMenu(View view){
         //Ny intent
         Intent intent = new Intent(this, MainMenuScreen.class);
-        Coordinate coordinateToSave = currentCoordinate;
-        double lat = coordinateToSave.getLatitude();
-        double lon = coordinateToSave.getLongitude();
-
+        //Nytt koordinatobjet från nuvarande koordinater
+        double lat = currentCoordinate.getLatitude();
+        double lon = currentCoordinate.getLongitude();
 
         //Skickar med ett koordinatobjekt, konverterat till String
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
@@ -196,14 +253,15 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
      * skickar med koordinater till den nya aktiviteten
      */
     public void saveSpotDialogueView(View view){
+        checkGoogleService();
+
         Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
 
         //Nytt koordinatobjet från nuvarande koordinater
-        Coordinate coordinateToSave = currentCoordinate;
-        double lat = coordinateToSave.getLatitude();
-        double lon = coordinateToSave.getLongitude();
-        String locality = coordinateToSave.getLocalAddress();
-        String country = coordinateToSave.getCountryName();
+        double lat = currentCoordinate.getLatitude();
+        double lon = currentCoordinate.getLongitude();
+        String locality = currentCoordinate.getLocalAddress();
+        String country = currentCoordinate.getCountryName();
 
         //Skickar med ett koordinatobjekt, konverterat till String
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
@@ -242,13 +300,20 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback{
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        permissionsGranted = false;
         switch (requestCode) {
-            case PERMISSION_REQUEST_ACCESS_FINE_LOCATION: {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
+                if (grantResults.length > 0){
+                    for(int i =0; i < grantResults.length; i++){
+                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                            permissionsGranted = false;
+                            return;
+                        }
+                    }
+                    permissionsGranted = true;
+                }
+                else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
 
