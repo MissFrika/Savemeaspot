@@ -27,7 +27,7 @@ public class DatabaseInitializer {
      */
     public void populateDatabaseWithCategories(final Context context) {
         SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
-                .allowMainThreadQueries() // VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
+                .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
                 .build();
         if (database.categoryDao().getAllCategories().isEmpty()) {
             database.categoryDao().insertCategories(Category.populateData());
