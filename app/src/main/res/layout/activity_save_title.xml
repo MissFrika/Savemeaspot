@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:focusableInTouchMode="true"
     android:padding="16dp"
-    tools:context="sup.savemeaspot.SaveTitleActivity"
-    android:focusableInTouchMode="true">
+    tools:context="sup.savemeaspot.SaveTitleActivity">
 
     <TextView
         android:id="@+id/titleSaveTitle"
@@ -17,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:defaultFocusHighlightEnabled="false"
         android:focusedByDefault="false"
-        android:text="Name your Spot"
+        android:text="@string/name_spot"
         android:textSize="24dp" />
 
     <EditText
@@ -45,5 +44,14 @@
         android:layout_height="250dp"
         android:layout_below="@id/selectTitle" />
 
+    <android.support.v7.widget.AppCompatImageButton
+        android:src="@android:drawable/ic_menu_save"
+        android:id="@+id/save_title_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/roundbutton_save"
+        />
 
-</LinearLayout>
+</RelativeLayout>

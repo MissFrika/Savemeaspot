@@ -53,8 +53,8 @@
     <!-- Lägg till kategori-knapp-->
     <Button
         android:id="@+id/buttonAddCategory"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignBottom="@+id/addNewCategory"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -76,7 +76,7 @@
         android:id="@+id/spinner"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/buttonAddCategory"
+        android:layout_alignBottom="@+id/addNewCategory"
         android:layout_toLeftOf="@+id/buttonAddCategory"
         android:layout_toStartOf="@+id/buttonAddCategory" />
 

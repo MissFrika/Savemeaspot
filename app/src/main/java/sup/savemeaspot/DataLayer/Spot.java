@@ -32,8 +32,7 @@ public class Spot {
     private int spotCategory;
     @ColumnInfo(name = "spot_coordinate")
     private int spotCoordinate;
-    @ColumnInfo(name = "spot_icon")
-    private String spotIcon;
+
     /**
      * Getters & Setters
      */
@@ -55,8 +54,6 @@ public class Spot {
     public void setSpotCategory(int spotCat){this.spotCategory = spotCat;}
     public int getSpotCoordinate(){return this.spotCoordinate;}
     public void setSpotCoordinate(int spotCoord){this.spotCoordinate = spotCoord;}
-    public String getSpotIcon() {return this.spotIcon;}
-    public void setSpotIcon(String iconImg) {this.spotIcon = iconImg;}
 
     /**
      * Constructor för Spots
