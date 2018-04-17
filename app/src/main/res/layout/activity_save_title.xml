@@ -44,14 +44,13 @@
         android:layout_height="250dp"
         android:layout_below="@id/selectTitle" />
 
-    <android.support.v7.widget.AppCompatImageButton
+    <ImageButton
         android:id="@+id/save_title_button"
-        android:src="@android:drawable/ic_menu_save"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/roundbutton_save"
-        />
+        android:src="@android:drawable/ic_menu_save" />
 
 </RelativeLayout>

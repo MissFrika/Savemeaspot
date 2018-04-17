@@ -33,5 +33,6 @@ public class DatabaseInitializer {
             database.categoryDao().insertCategories(Category.populateData());
             database.close();
         }
+        database.close();
     }
 }

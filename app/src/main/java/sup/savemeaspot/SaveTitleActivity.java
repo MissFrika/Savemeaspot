@@ -39,7 +39,7 @@ public class SaveTitleActivity extends AppCompatActivity {
     private String[] exampleStrings;
     private Category chosenCategory;
     private Context context = SaveTitleActivity.this;
-    private String selectedTitle;
+    private String selectedTitle ="";
     private Spot spotToSave = new Spot();
 
     public SaveTitleActivity() {
@@ -50,6 +50,8 @@ public class SaveTitleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_title);
 
+        //Instansiera sparaknappen
+        saveSpotButton();
         checkIncomingIntents();
         //Kontrollerar vilken kategori som valts från SaveSpotCategoryActivity och instansierar "titlesToDisplay"
         if (this.chosenCategory.getCategoryName() != null) {
@@ -102,15 +104,16 @@ public class SaveTitleActivity extends AppCompatActivity {
             int image = extra.getInt("EXTRA_MESSAGE_CATEGORY_IMG");
             int isDeletable = extra.getInt("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE");
             this.chosenCategory = new Category(id, name, image, isDeletable);
+            this.spotToSave.setSpotCategory(id);
         }
     }
 
     /**
      * Metod för att spara en Spot till databasen vid ett OnClick-event
      */
-    private void saveSpot() {
+    private void saveSpotButton() {
         //Ny button
-        ImageButton btn = findViewById(R.id.save_title_button);
+        ImageButton btn = this.findViewById(R.id.save_title_button);
         //Ny OnClickListener för btn
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,13 +123,12 @@ public class SaveTitleActivity extends AppCompatActivity {
                         .allowMainThreadQueries() //DO NOT !!!
                         .build();
                 TextView textView = (TextView) findViewById(R.id.editTitle);
-                String text = (String) textView.getText();
 
                 Boolean hasTitle = false;
 
-                if(!text.isEmpty() && !(text == " ")){
+                if(!(textView.getText().toString()).isEmpty() && !(textView.getText().toString() == " ")){
                     //Textfältet är ifyllt
-                    spotToSave.setSpotTitle(text);
+                    spotToSave.setSpotTitle(textView.getText().toString());
                     hasTitle = true;
                 }
                 else if(!selectedTitle.isEmpty()){
@@ -136,7 +138,7 @@ public class SaveTitleActivity extends AppCompatActivity {
                 }
                 else {
                     //Ingen titel är angiven
-                    Toast.makeText(context, "You must select a title for your Spot", Toast.LENGTH_LONG);
+                    Toast.makeText(context, "You must choose a title for your Spot", Toast.LENGTH_LONG).show();
                 }
 
                 //Om Spot har en titel
@@ -144,15 +146,16 @@ public class SaveTitleActivity extends AppCompatActivity {
                     try {
                         //SpotDao
                         database.spotDao().insertNewSpot(spotToSave);
-                        Toast.makeText(context, spotToSave.getSpotTitle() + " has successfully been saved!", Toast.LENGTH_LONG);
+                        Toast.makeText(context, spotToSave.getSpotTitle() + " has successfully been saved!", Toast.LENGTH_LONG).show();
                         //Stäng db
                         database.close();
                         //Avsluta aktivitet och öppna MapsStart
-                        finish();
                         Intent intent = new Intent(context, MapsStart.class);
+                        finish();
+
                     } catch (Exception e) {
-                        Toast.makeText(context, "Could not save Spot", Toast.LENGTH_SHORT);
                         database.close();
+                        Toast.makeText(context, "Could not save Spot", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
