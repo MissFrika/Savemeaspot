@@ -2,13 +2,19 @@ package sup.savemeaspot;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.Category;
@@ -23,6 +29,8 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    Integer[] drawables = new Integer[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
+            R.drawable.heart, R.drawable.fire, R.drawable.building};
 
 
     @Override
@@ -53,6 +61,12 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+        //Spinner
+        ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, drawables);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinnerItems = (Spinner) findViewById(R.id.category_spinner);
+        spinnerItems.setAdapter(spinnerAdapter);
 
 
         //*TextView coordinates = (TextView) findViewById(R.id.coordinates);
