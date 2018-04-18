@@ -64,7 +64,7 @@
         android:textColor="@color/menuButtonTextColor" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/newCategoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonAddCategory"
