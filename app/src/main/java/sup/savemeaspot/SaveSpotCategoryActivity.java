@@ -137,7 +137,7 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
             addCatBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView categoryField = findViewById(R.id.newCategoryTextView);
+                    TextView categoryField = findViewById(R.id.addNewCategory);
                     if(!categoryField.getText().toString().isEmpty()){
                         newCategory.setCategoryName(categoryField.getText().toString());
                         newCategory.setIsDeletable(1);
