@@ -15,7 +15,7 @@ import android.widget.ImageView;
  * Created by Frida on 2018-04-18.
  */
 
-public class CustomSpinnerAdapter extends ArrayAdapter {
+public class CustomSpinnerAdapter extends ArrayAdapter<Integer> {
 
     private int[] spinnerImages;
     private Context context;
@@ -52,7 +52,19 @@ public class CustomSpinnerAdapter extends ArrayAdapter {
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return super.getDropDownView(position, convertView, parent);
+        ViewHolder mViewHolder = new ViewHolder();
+        if (convertView == null) {
+            LayoutInflater mInflater = (LayoutInflater) context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = mInflater.inflate(R.layout.custom_spinner_layout, parent, false);
+            mViewHolder.mIcon = (ImageView) convertView.findViewById(R.id.category_icon);
+            convertView.setTag(mViewHolder);
+
+        } else {
+            mViewHolder = (ViewHolder) convertView.getTag();
+        }
+        mViewHolder.mIcon.setImageResource(spinnerImages[position]);
+        return convertView;
     }
 
     //Inre klass ViewHolder
