@@ -5,7 +5,7 @@
     <string name= "name_spot">Name your Spot</string>
 
     <!--Buttons-->
-    <string name="button_menu_en">Menu</string>
+    <string name="button_menu_en">Menu</string>app:layout_constraintLeft_toLeftOf="parent"
     <string name="button_save_en">+</string>
     <string name="button_save_cancel">Cancel</string>
     <string name="button_save_next">Next</string>

@@ -68,6 +68,8 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
         Spinner spinnerItems = (Spinner) findViewById(R.id.category_spinner);
         spinnerItems.setAdapter(spinnerAdapter);
 
+        //Spinner
+
 
         //*TextView coordinates = (TextView) findViewById(R.id.coordinates);
         Bundle extra = getIntent().getExtras();

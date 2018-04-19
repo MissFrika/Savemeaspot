@@ -24,8 +24,7 @@ public class MainMenuScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu_screen);
-        TextView t = (TextView)findViewById(R.id.dbtest);
-        TextView d = (TextView)findViewById(R.id.dataTest);
+
 
         if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")&& getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")) {
 
@@ -33,11 +32,11 @@ public class MainMenuScreen extends AppCompatActivity {
             double lat = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
             double lon = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
 
-            d.setText("Latitude: " + String.valueOf(lat) + "\nLongitude: " +String.valueOf(lon));
+
 
         }
         else{
-            d.setText("Something went wrong");
+
         }
 
     }
