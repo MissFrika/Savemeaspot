@@ -44,7 +44,10 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_spot_category);
+        //Instansiera tillbakaknapp
         initBackButton();
+        //Instansiera spara kategori-knapp
+        initAddCat();
         this.context = this;
         recyclerView = findViewById(R.id.recycler_container_save);
 

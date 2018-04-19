@@ -10,6 +10,7 @@
     <string name="button_save_cancel">Cancel</string>
     <string name="button_save_next">Next</string>
     <string name="button_launch">Launch</string>
+    <string name="category_add_new">Add new category</string>
 
     <!-- Titlar Berry-->
     <string-array name="titles_example_berry">
