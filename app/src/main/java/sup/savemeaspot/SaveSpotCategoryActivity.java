@@ -160,7 +160,6 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
                             database.categoryDao().insertCategories(newCategory);
                             database.close();
                             Toast.makeText(context, "Category: " + newCategory.getCategoryName() + " has been created", Toast.LENGTH_SHORT).show();
-
                         }
                         catch(Exception e){
                             Toast.makeText(context, "Could not save to database", Toast.LENGTH_SHORT).show();

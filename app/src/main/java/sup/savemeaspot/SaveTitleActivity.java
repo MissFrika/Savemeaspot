@@ -33,9 +33,6 @@ import sup.savemeaspot.DataLayer.SpotDatabase;
 public class SaveTitleActivity extends AppCompatActivity {
 
     private List<String> exampleTitles = new ArrayList<String>();
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
     private String[] exampleStrings;
     private Category chosenCategory;
     private Context context = SaveTitleActivity.this;
@@ -79,9 +76,9 @@ public class SaveTitleActivity extends AppCompatActivity {
         }
 
         // Specifierar en adapter för RecyclerView
-        adapter = new TitleRecyclerViewAdapter(exampleTitles);
-        recyclerView = findViewById(R.id.title_recycler_view);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.Adapter adapter = new TitleRecyclerViewAdapter(exampleTitles);
+        RecyclerView recyclerView = findViewById(R.id.title_recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //LayoutManager
         recyclerView.setLayoutManager(layoutManager);
         // use this setting to improve performance if you know that changes

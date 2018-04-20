@@ -3,6 +3,7 @@
     <string name="title_activity_maps_start">Map Overview</string>
     <string name="category_add_title">Please choose a category</string>
     <string name="name_spot">Name your Spot</string>
+    <string name="add_description_tv">Spot description (optional)</string>
 
     <!--Buttons-->
     <string name="button_menu_en">Menu</string>app:layout_constraintLeft_toLeftOf="parent"
