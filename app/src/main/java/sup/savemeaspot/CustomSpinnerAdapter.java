@@ -24,6 +24,8 @@ public class CustomSpinnerAdapter extends ArrayAdapter {
         super(context, R.layout.custom_spinner_layout);
         this.spinnerImages = spinnerImages;
         this.context = context;
+
+
     }
 
     @Override

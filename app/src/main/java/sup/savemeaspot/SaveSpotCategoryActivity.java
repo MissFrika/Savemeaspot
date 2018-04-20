@@ -73,10 +73,9 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         //Spinner med anpassad adapter
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(SaveSpotCategoryActivity.this, drawables);
-        customAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         Spinner spinner = (Spinner) findViewById(R.id.category_spinner);
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), drawables);
+        customAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(customAdapter);
 
         //On Select listener
