@@ -72,28 +72,8 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        //Spinner med anpassad adapter
-        Spinner spinner = (Spinner) findViewById(R.id.category_spinner);
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), drawables);
-        customAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(customAdapter);
-
-        //On Select listener
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                int resourceId = drawables[i];
-                newCategory.setCategoryImg(resourceId);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         //Spinner
-
+        setSpinner();
 
         //*TextView coordinates = (TextView) findViewById(R.id.coordinates);
         Bundle extra = getIntent().getExtras();
@@ -112,14 +92,15 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
                 coordinatesToSave.setLocalAddress(locale);
                 coordinatesToSave.setCountryName(country);
 
-                //coordinates.setText(coordinatesToSave.getCountryName());
             } catch (NullPointerException e) {
-                //coordinates.setText("Something went wrong");
+                //Something went wrong;
             }
         }
     }
 
-        //Cancel activity
+    /**
+     * Cancel activity
+     */
         private void initBackButton() {
             Button back = this.findViewById(R.id.category_cancel);
             back.setOnClickListener(new View.OnClickListener() {
@@ -131,8 +112,37 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
             });
         }
 
-        //Add new category-button
-        private void initAddCat() {
+    /**
+     * Instantierar en spinner som visar kategoriikoner
+     */
+    private void setSpinner(){
+            //Spinner med anpassad adapter
+            CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(SaveSpotCategoryActivity.this, drawables);
+            customAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            Spinner spinner = (Spinner) findViewById(R.id.category_spinner);
+            spinner.setAdapter(customAdapter);
+
+            //On Select listener
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    int resourceId = drawables[i];
+                    newCategory.setCategoryImg(resourceId);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+        }
+
+    /**
+     * Add new category-button
+     */
+    private void initAddCat() {
             Button addCatBtn = this.findViewById(R.id.buttonAddCategory);
             //OnClick-listener
             addCatBtn.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +175,6 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
      * Öppnar aktiviteten SaveTitleActivity för att spara en titel till en spot
       * @return
      */
-
     public void openViewSaveTitle(View view){
         Intent intent = new Intent(this, SaveTitleActivity.class);
         if(categoryToSave != null) {
@@ -180,7 +189,6 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
             intent.putExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE", catDel);
         }
         startActivity(intent);
-
     }
 
 }
