@@ -12,13 +12,14 @@
         android:id="@+id/menuButtonConstraint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
         >
 
         <ImageButton
             android:id="@+id/edit_spots_button"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_alignParentTop="true"
             android:background="@color/menuButtonColor"
             android:drawableLeft="@drawable/map_marker_icon"
@@ -29,8 +30,8 @@
 
         <ImageButton
             android:id="@+id/my_spots_button"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@color/menuButtonColor"
             android:layout_margin="20dp"
             android:layout_alignParentTop="true"
@@ -38,8 +39,8 @@
 
         <ImageButton
             android:id="@+id/categories_button"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@color/menuButtonColor"
             android:layout_margin="20dp"
             app:layout_constraintTop_toBottomOf="@+id/my_spots_button"
@@ -47,8 +48,8 @@
 
         <ImageButton
             android:id="@+id/settings_button"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@color/menuButtonColor"
             android:text="Settings"
             android:textColor="@color/menuButtonTextColor"
@@ -60,12 +61,12 @@
     </android.support.constraint.ConstraintLayout>
     <ImageButton
         android:id="@+id/close_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/roundbutton_save"
-        android:layout_below="@+id/menuButtonConstraint"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/round_button_big"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="50dp"
         />
 
 </RelativeLayout>
