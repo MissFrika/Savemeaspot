@@ -42,14 +42,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**
-     * Hämtar nuvarande en databas utifrån context (Applikation, aktivitet etc.)
+     * Konstruktor...Hämtar nuvarande databas utifrån context (Applikation, aktivitet etc.)
      * @param context
      */
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         database = getWritableDatabase();
-        DatabaseInitializer.populateDatabaseWithCategories(context);
+        DatabaseHelper.populateDatabaseWithCategories(context);
     }
 
     //Skapa databas

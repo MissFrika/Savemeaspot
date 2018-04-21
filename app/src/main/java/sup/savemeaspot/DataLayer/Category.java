@@ -98,9 +98,13 @@ public class Category {
 
     @Dao
     public interface CategoryDao{
-        //Ny Category
+        //Nya Categories
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         void insertCategories(Category... categories);
+
+        //Ny Category
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        void insertCategory(Category category);
 
         //Uppdatera Category
         @Update(onConflict = OnConflictStrategy.REPLACE)

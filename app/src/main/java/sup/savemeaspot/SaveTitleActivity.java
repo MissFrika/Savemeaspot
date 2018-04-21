@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import sup.savemeaspot.DataLayer.Category;
+import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 
@@ -38,6 +40,7 @@ public class SaveTitleActivity extends AppCompatActivity {
     private Context context = SaveTitleActivity.this;
     private String selectedTitle ="";
     private Spot spotToSave = new Spot();
+    private Coordinate coordinates;
 
     public SaveTitleActivity() {
     }
@@ -51,7 +54,8 @@ public class SaveTitleActivity extends AppCompatActivity {
         saveSpotButton();
         checkIncomingIntents();
         //Kontrollerar vilken kategori som valts från SaveSpotCategoryActivity och instansierar "titlesToDisplay"
-        if (this.chosenCategory.getCategoryName() != null) {
+        if (!this.chosenCategory.getCategoryName().isEmpty() && (this.chosenCategory.getCategoryName().equals("Fruit") || this.chosenCategory.getCategoryName().equals("Mushroom")
+        || this.chosenCategory.getCategoryName().equals("Fish") || this.chosenCategory.getCategoryName().equals("Berry"))) {
 
             switch (chosenCategory.getCategoryName()) {
                 case "Mushroom":
@@ -74,6 +78,9 @@ public class SaveTitleActivity extends AppCompatActivity {
                 exampleTitles.add(item);
             }
         }
+        else{
+            exampleTitles.add("My Spot");
+        }
 
         // Specifierar en adapter för RecyclerView
         RecyclerView.Adapter adapter = new TitleRecyclerViewAdapter(exampleTitles);
@@ -94,14 +101,23 @@ public class SaveTitleActivity extends AppCompatActivity {
      */
     private void checkIncomingIntents() {
         if (getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_ID") && getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_NAME") &&
-                getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_IMG") && getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE")) {
+                getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_IMG") && getIntent().hasExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE") && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")
+                && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG") && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LOCAL") && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY")) {
             Bundle extra = getIntent().getExtras();
+
+            //Category-intent message
             int id = extra.getInt("EXTRA_MESSAGE_CATEGORY_ID");
             String name = extra.getString("EXTRA_MESSAGE_CATEGORY_NAME");
             int image = extra.getInt("EXTRA_MESSAGE_CATEGORY_IMG");
             int isDeletable = extra.getInt("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE");
             this.chosenCategory = new Category(id, name, image, isDeletable);
-            this.spotToSave.setSpotCategory(id);
+            //Coordinate-intent message
+            double latitude = extra.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
+            double longitude = extra.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
+            String locale = extra.getString("EXTRA_MESSAGE_COORDINATES_LOCAL");
+            String country = extra.getString("EXTRA_MESSAGE_COORDINATES_COUNTRY");
+            this.coordinates = new Coordinate(latitude ,longitude, locale, country);
+
         }
     }
 
@@ -119,8 +135,9 @@ public class SaveTitleActivity extends AppCompatActivity {
                 SpotDatabase database = Room.inMemoryDatabaseBuilder(context, SpotDatabase.class)
                         .allowMainThreadQueries() //DO NOT !!!
                         .build();
-                TextView textView = (TextView) findViewById(R.id.editTitle);
 
+                //TextView för att ange titel
+                TextView textView = (TextView) findViewById(R.id.editTitle);
                 Boolean hasTitle = false;
 
                 if(!(textView.getText().toString()).isEmpty() && !(textView.getText().toString() == " ")){
@@ -141,6 +158,21 @@ public class SaveTitleActivity extends AppCompatActivity {
                 //Om Spot har en titel
                 if(hasTitle) {
                     try {
+
+                        //Spara koordinater
+                        database.coordinateDao().insertCoordinate(coordinates);
+
+                        //EditText för att ange beskrivning
+                        EditText editView = findViewById(R.id.addDescription);
+                        String description = editView.getText().toString();
+                        //Sätt beskrivning
+                        spotToSave.setSpotDescription(description);
+                        //Sätt kategori
+                        spotToSave.setSpotCategory(chosenCategory.getCategoryId());
+                        //Sätt koordinater
+                        Coordinate coordinateToSave = database.coordinateDao().getLastRecordCoordinates();
+                        spotToSave.setSpotCoordinate(coordinateToSave.getCoordinateId());
+
                         //SpotDao
                         database.spotDao().insertNewSpot(spotToSave);
                         Toast.makeText(context, spotToSave.getSpotTitle() + " has successfully been saved!", Toast.LENGTH_LONG).show();

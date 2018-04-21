@@ -14,6 +14,7 @@ import android.arch.persistence.room.Update;
 import android.arch.persistence.room.util.TableInfo;
 import android.content.Context;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -27,7 +28,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 @Entity(tableName = "Coordinate")
 public class Coordinate {
     @PrimaryKey(autoGenerate = true)
-    private int CoordinateId;
+    private int coordinateId;
     @ColumnInfo(name = "latitude")
     private double latitude;
     @ColumnInfo(name = "longitude")
@@ -38,19 +39,42 @@ public class Coordinate {
     private String countryName;
 
     /**
-     * Constructor för Koordinater
+     * Konstruktor för Coordinate
      */
 
     public Coordinate(){
+    }
 
+    /**
+     * Konstruktor för Coordinate, object-instansiering
+     * @return
+     */
+    public Coordinate(double latitude, double longitude, String locale, String country){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.localAddress = locale;
+        this.countryName = country;
+    }
+
+    /**
+     * Skapar extra intent-meddelanden för Coordinate
+     * @param intent
+     * @return
+     */
+    public Intent putExtraMessageCoordinate(Intent intent, Coordinate coordinate){
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", coordinate.getLatitude());
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", coordinate.getLongitude());
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LOCAL", coordinate.getLocalAddress());
+        intent.putExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY", coordinate.getCountryName());
+        return intent;
     }
 
     /**
      * Getters and setters
      * @return
      */
-    public int getCoordinateId () {return this.CoordinateId;}
-    public void setCoordinateId(int coordId) { this.CoordinateId = coordId; }
+    public int getCoordinateId () {return this.coordinateId;}
+    public void setCoordinateId(int coordId) { this.coordinateId = coordId; }
     public double getLatitude(){
         return this.latitude;
     }
@@ -93,6 +117,10 @@ public class Coordinate {
         //Ta bort Coordinates
         @Delete()
         void deleteCoordinate(Coordinate coordinate);
+
+        //Hämta sist insatta raden i tabellen
+        @Query("SELECT * FROM COORDINATE ORDER BY CoordinateId DESC LIMIT 1")
+        Coordinate getLastRecordCoordinates();
 
         //Visa alla Coordinate.
         @Query("SELECT * FROM COORDINATE")

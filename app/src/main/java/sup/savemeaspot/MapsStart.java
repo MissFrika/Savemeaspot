@@ -267,19 +267,26 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
      */
     public void saveSpotDialogueView(View view) {
         Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
+        //Put extra
+        putExtraCoordinateIntent(intent);
+        startActivity(intent);
+    }
+
+    /**
+     * Extra intent-messages för Coordinate
+     */
+    private Intent putExtraCoordinateIntent(Intent intent){
         //Nytt koordinatobjet från nuvarande koordinater
         double lat = currentCoordinate.getLatitude();
         double lon = currentCoordinate.getLongitude();
         String locality = currentCoordinate.getLocalAddress();
         String country = currentCoordinate.getCountryName();
-
         //Skickar med ett koordinatobjekt, konverterat till String
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LOCAL", locality);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY", country);
-
-        startActivity(intent);
+        return intent;
     }
 
     /**

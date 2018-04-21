@@ -1,17 +1,7 @@
 package sup.savemeaspot;
 
-import android.arch.persistence.room.Room;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
-
-import java.util.List;
-
-import sup.savemeaspot.DataLayer.Category;
-import sup.savemeaspot.DataLayer.DatabaseHandler;
-import sup.savemeaspot.DataLayer.DatabaseInitializer;
-import sup.savemeaspot.DataLayer.SpotDatabase;
 
 public class MainMenuScreen extends AppCompatActivity {
 

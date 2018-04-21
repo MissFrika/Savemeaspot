@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import sup.savemeaspot.DataLayer.Category;
+import sup.savemeaspot.DataLayer.Coordinate;
 
 /**
  * Created by Frika on 2018-03-27.
@@ -31,11 +32,13 @@ import sup.savemeaspot.DataLayer.Category;
 public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListViewAdapter.ViewHolder> {
     private List<Category> categoryDataset;
     private Context context;
+    private Coordinate extraCoordinates;
 
-    public CategoryListViewAdapter(List<Category> items, Context context) {
+    public CategoryListViewAdapter( Context context, List<Category> items, Coordinate extraCoordinates) {
 
         this.categoryDataset = items;
         this.context = context;
+        this.extraCoordinates = extraCoordinates;
     }
 
 
@@ -76,6 +79,9 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                     intent.putExtra( "EXTRA_MESSAGE_CATEGORY_NAME", name);
                     intent.putExtra("EXTRA_MESSAGE_CATEGORY_IMG", img);
                     intent.putExtra( "EXTRA_MESSAGE_CATEGORY_IS_DELETABLE", delete);
+
+                    Coordinate coordinate = new Coordinate();
+                    coordinate.putExtraMessageCoordinate(intent, extraCoordinates);
 
                     context.startActivity(intent);
                 }

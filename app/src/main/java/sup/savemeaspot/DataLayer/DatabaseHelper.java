@@ -8,16 +8,13 @@ import android.os.Handler;
 
 /**
  * Created by Frida on 2018-03-21.
- * Denna klass förbereder data i databasen om data saknas i tabeller som behövs för att funktionalitet skall fungera i applikationen
+ * Denna klass hanterar data som skall sparas till databasen från Activities, samt fyller databaseb med startdata som behövs för att funktionalitet skall fungera i applikationen
  */
 
-public class DatabaseInitializer {
-    private Category category = new Category();
-    private Spot spot = new Spot();
-    private Coordinate coordinate = new Coordinate();
+public class DatabaseHelper {
 
     //Konstruktor
-    public DatabaseInitializer() {
+    public DatabaseHelper() {
 
     }
 
@@ -33,6 +30,19 @@ public class DatabaseInitializer {
             database.categoryDao().insertCategories(Category.populateData());
             database.close();
         }
+        database.close();
+    }
+
+    /**
+     * Ny Category
+     * @param context
+     * @param category
+     */
+    public static void insertCategory(final Context context, Category category) {
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
+                .build();
+        database.categoryDao().insertCategory(category);
         database.close();
     }
 }
