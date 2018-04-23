@@ -45,4 +45,30 @@ public class DatabaseHelper {
         database.categoryDao().insertCategory(category);
         database.close();
     }
+
+    /**
+     * Metod för att spara Spot till databas.
+     * @param context
+     * @param spot
+     */
+    public static void insertSpot(Context context, Spot spot){
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
+                .build();
+        database.spotDao().insertNewSpot(spot);
+        database.close();
+    }
+
+    /**
+     * Metod för att spara coordinate till databas.
+     * @param context
+     * @param coordinate
+     */
+    public static void insertCoordinate(Context context, Coordinate coordinate){
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
+                .build();
+        database.coordinateDao().insertSingleCoordinate(coordinate);
+        database.close();
+    }
 }

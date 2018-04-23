@@ -29,6 +29,7 @@ import java.util.ListIterator;
 
 import sup.savemeaspot.DataLayer.Category;
 import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 
@@ -37,7 +38,7 @@ public class SaveTitleActivity extends AppCompatActivity {
     private List<String> exampleTitles = new ArrayList<String>();
     private String[] exampleStrings;
     private Category chosenCategory;
-    private Context context = SaveTitleActivity.this;
+    private Context context;
     private String selectedTitle ="";
     private Spot spotToSave = new Spot();
     private Coordinate coordinates;
@@ -49,6 +50,7 @@ public class SaveTitleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_title);
+        this.context = getApplicationContext();
 
         //Instansiera sparaknappen
         saveSpotButton();
@@ -131,10 +133,6 @@ public class SaveTitleActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Bygg in-memory databas
-                SpotDatabase database = Room.inMemoryDatabaseBuilder(context, SpotDatabase.class)
-                        .allowMainThreadQueries() //DO NOT !!!
-                        .build();
 
                 //TextView för att ange titel
                 TextView textView = (TextView) findViewById(R.id.editTitle);
@@ -160,7 +158,7 @@ public class SaveTitleActivity extends AppCompatActivity {
                     try {
 
                         //Spara koordinater
-                        database.coordinateDao().insertCoordinate(coordinates);
+                        DatabaseHelper.insertCoordinate(context, coordinates);
 
                         //EditText för att ange beskrivning
                         EditText editView = findViewById(R.id.addDescription);
@@ -170,20 +168,25 @@ public class SaveTitleActivity extends AppCompatActivity {
                         //Sätt kategori
                         spotToSave.setSpotCategory(chosenCategory.getCategoryId());
                         //Sätt koordinater
-                        Coordinate coordinateToSave = database.coordinateDao().getLastRecordCoordinates();
-                        spotToSave.setSpotCoordinate(coordinateToSave.getCoordinateId());
-
-                        //SpotDao
-                        database.spotDao().insertNewSpot(spotToSave);
-                        Toast.makeText(context, spotToSave.getSpotTitle() + " has successfully been saved!", Toast.LENGTH_LONG).show();
+                        SpotDatabase database = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), SpotDatabase.class)
+                                .allowMainThreadQueries() //DO NOT !!!
+                                .build();
+                        int coordinateToSave = database.coordinateDao().getLastRecordCoordinates();
                         //Stäng db
                         database.close();
+                        spotToSave.setSpotCoordinate(coordinateToSave);
+
+                        //SpotDao
+                        DatabaseHelper.insertSpot(context, spotToSave);
+                        Toast.makeText(context, spotToSave.getSpotTitle() + " has successfully been saved!", Toast.LENGTH_LONG).show();
+
+
                         //Avsluta aktivitet och öppna MapsStart
-                        Intent intent = new Intent(context, MapsStart.class);
                         finish();
+                        Intent intent = new Intent(context, MapsStart.class);
 
                     } catch (Exception e) {
-                        database.close();
+
                         Toast.makeText(context, "Could not save Spot", Toast.LENGTH_SHORT).show();
                     }
                 }

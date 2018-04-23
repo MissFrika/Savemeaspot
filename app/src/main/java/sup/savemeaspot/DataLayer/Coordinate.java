@@ -102,9 +102,13 @@ public class Coordinate {
 
     @Dao
     public interface CoordinateDao{
-        //Ny Coordinate
+        //Nya Coordinates
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         void insertCoordinate(Coordinate... coordinates);
+
+        //Ny Coordinate
+        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        void insertSingleCoordinate(Coordinate coordinate);
 
         //Ny coordinate som lägger till kopior av existerande coordinates.
         @Insert (onConflict = OnConflictStrategy.REPLACE)
@@ -119,8 +123,8 @@ public class Coordinate {
         void deleteCoordinate(Coordinate coordinate);
 
         //Hämta sist insatta raden i tabellen
-        @Query("SELECT * FROM COORDINATE ORDER BY CoordinateId DESC LIMIT 1")
-        Coordinate getLastRecordCoordinates();
+        @Query("SELECT CoordinateID FROM COORDINATE WHERE CoordinateID =(SELECT MAX(CoordinateID) FROM COORDINATE)")
+        int getLastRecordCoordinates();
 
         //Visa alla Coordinate.
         @Query("SELECT * FROM COORDINATE")
