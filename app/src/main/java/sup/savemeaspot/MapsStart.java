@@ -24,6 +24,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -47,6 +48,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private static final int PERMISSION_REQUEST_ACCESS_NETWORK_STATE = 0;
     private GoogleMap mMap;
+    private static final int zoomLevel = 15;
     private LocationManager locationManager;
     private boolean permissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
@@ -97,7 +99,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
                 PERMISSION_REQUEST_ACCESS_NETWORK_STATE);
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     //Hämta latitud och longitud
@@ -124,6 +126,8 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                         e.printStackTrace();
                     }
 
+                    CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+                    mMap.animateCamera(userLocation);
                 }
 
                 @Override
@@ -144,7 +148,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         }
         //Om inget nätverk är tillgängligt, kontrollera GPS-tillgänglighet
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     //Hämta latitud och longitud
@@ -168,6 +172,8 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+                    mMap.animateCamera(userLocation);
 
                 }
 
@@ -257,7 +263,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     e.printStackTrace();
                 }
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15.2f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
             }
         });
     }

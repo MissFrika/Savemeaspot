@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -138,7 +139,7 @@ public class SaveTitleActivity extends AppCompatActivity {
                 TextView textView = (TextView) findViewById(R.id.editTitle);
                 Boolean hasTitle = false;
 
-                if(!(textView.getText().toString()).isEmpty() && !(textView.getText().toString() == " ")){
+                if(!(textView.getText().toString()).isEmpty() && !(textView.getText().toString().equals(" "))){
                     //Textfältet är ifyllt
                     spotToSave.setSpotTitle(textView.getText().toString());
                     hasTitle = true;
@@ -180,10 +181,11 @@ public class SaveTitleActivity extends AppCompatActivity {
                         DatabaseHelper.insertSpot(context, spotToSave);
                         Toast.makeText(context, spotToSave.getSpotTitle() + " has successfully been saved!", Toast.LENGTH_LONG).show();
 
-
                         //Avsluta aktivitet och öppna MapsStart
-                        finish();
                         Intent intent = new Intent(context, MapsStart.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        ActivityCompat.finishAffinity(SaveTitleActivity.this);
+                        startActivity(intent);
 
                     } catch (Exception e) {
 
