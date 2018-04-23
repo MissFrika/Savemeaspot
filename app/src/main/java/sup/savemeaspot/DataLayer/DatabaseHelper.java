@@ -51,11 +51,11 @@ public class DatabaseHelper {
      * @param context
      * @param spot
      */
-    public static void insertSpot(Context context, Spot spot){
+    public static void insertSpot(final Context context, Spot spot){
         SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                 .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
                 .build();
-        database.spotDao().insertNewSpot(spot);
+        database.spotDao().insertSingleSpot(spot);
         database.close();
     }
 
@@ -64,7 +64,7 @@ public class DatabaseHelper {
      * @param context
      * @param coordinate
      */
-    public static void insertCoordinate(Context context, Coordinate coordinate){
+    public static void insertCoordinate(final Context context, Coordinate coordinate){
         SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                 .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
                 .build();

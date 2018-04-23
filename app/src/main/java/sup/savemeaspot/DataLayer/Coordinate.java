@@ -104,10 +104,10 @@ public class Coordinate {
     public interface CoordinateDao{
         //Nya Coordinates
         @Insert(onConflict = OnConflictStrategy.IGNORE)
-        void insertCoordinate(Coordinate... coordinates);
+        void insertCoordinates(Coordinate... coordinates);
 
         //Ny Coordinate
-        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        @Insert (onConflict = OnConflictStrategy.IGNORE)
         void insertSingleCoordinate(Coordinate coordinate);
 
         //Ny coordinate som lägger till kopior av existerande coordinates.

@@ -169,7 +169,7 @@ public class SaveTitleActivity extends AppCompatActivity {
                         //Sätt kategori
                         spotToSave.setSpotCategory(chosenCategory.getCategoryId());
                         //Sätt koordinater
-                        SpotDatabase database = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), SpotDatabase.class)
+                        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class,"SpotDatabase")
                                 .allowMainThreadQueries() //DO NOT !!!
                                 .build();
                         int coordinateToSave = database.coordinateDao().getLastRecordCoordinates();

@@ -71,6 +71,10 @@ public class Spot {
         @Query("SELECT * FROM SPOT")
         List<Spot> getAllSpots();
 
+        //Hämta senast inlagda spot
+        @Query("SELECT * FROM SPOT WHERE SPOTID =(SELECT MAX(SPOTID) FROM SPOT)")
+        Spot getSpotLast();
+
         //Hämtar alla Spots med en viss angiven titel
         @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title")
         List<Spot> getSpotByTitle(String title);
@@ -84,11 +88,14 @@ public class Spot {
 
         //Uppdatera en specifik Spots kategori
         @Query("UPDATE SPOT SET SPOT_CATEGORY = :categoryId WHERE SPOTID = :spotId;")
-        void updateSpotTitle (int categoryId, int spotId);
+        void updateSpotCategory (int categoryId, int spotId);
 
-        //Lägg till ny spot
-        @Insert
-        void insertNewSpot(Spot... spots);
+        //Lägg till nya spots
+        @Insert (onConflict = OnConflictStrategy.IGNORE)
+        void insertNewSpots(Spot... spots);
+
+        @Insert (onConflict = OnConflictStrategy.IGNORE)
+        void insertSingleSpot(Spot spot);
 
     }
 }
