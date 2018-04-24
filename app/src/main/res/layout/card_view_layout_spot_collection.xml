@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_spot_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="false"
+        android:focusable="true"
+        android:clickable="true"
+        >
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/collection_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        <RelativeLayout
+            android:id="@+id/collection_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/collection_drop_down_layout"
+            android:padding="10dp">
+
+
+            <!--
+            <ImageView
+                android:id="@+id/category_image_cardview2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/heart" />
+            -->
+
+            <TextView
+                android:id="@+id/collection_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Collection Item"
+                android:textColor="@color/menuButtonTextColor"
+                android:textSize="24sp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <Button
+                android:id="@+id/collection_drop_down_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorPrimary"
+                android:text="\/"
+                android:textColor="@color/menuButtonTextColor" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/collection_drop_down_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            >
+
+            <TextView
+                android:id="@+id/spot_description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <Button
+                android:id="@+id/show_map_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_on_map" />
+        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

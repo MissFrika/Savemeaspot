@@ -4,6 +4,7 @@
     <string name="category_add_title">Please choose a category</string>
     <string name="name_spot">Name your Spot</string>
     <string name="add_description_tv">Spot description (optional)</string>
+    <string name="show_on_map">Show on Map</string>
 
     <!--Buttons-->
     <string name="button_menu_en">Menu</string>app:layout_constraintLeft_toLeftOf="parent"
