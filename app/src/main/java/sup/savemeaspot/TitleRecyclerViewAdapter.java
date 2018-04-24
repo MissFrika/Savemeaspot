@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,9 +42,18 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
 
     // Byter ut delar av en view (layout manager behövs)
     @Override
-    public void onBindViewHolder(TitleRecyclerViewAdapter.TitleViewHolder holder, int position) {
+    public void onBindViewHolder(TitleRecyclerViewAdapter.TitleViewHolder holder, final int position) {
         holder.titleView.setText(titleDataset.get(position));
 
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String selectedTitle = titleDataset.get(position);
+                View parentView = view.getRootView();
+                EditText editTitle = parentView.findViewById(R.id.editTitle);
+                editTitle.setText(selectedTitle);
+            }
+        });
     }
 
     // Returnerar storleken på dataset (invoked by the layout manager)
@@ -61,10 +72,12 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
     public static class TitleViewHolder extends RecyclerView.ViewHolder {
 
         public TextView titleView;
+        public RelativeLayout relativeLayout;
 
         public TitleViewHolder(View v) {
             super(v);
             titleView = (TextView) v.findViewById(R.id.title_name_cardview);
+            relativeLayout = v.findViewById(R.id.relativeLayoutTitle);
         }
 
         static TitleRecyclerViewAdapter.TitleViewHolder inflate(ViewGroup parent){
