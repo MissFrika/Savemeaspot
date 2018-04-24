@@ -75,6 +75,10 @@ public class Spot {
         @Query("SELECT * FROM SPOT WHERE SPOTID =(SELECT MAX(SPOTID) FROM SPOT)")
         Spot getSpotLast();
 
+        //Räkna hur många Spots som finns i databasen
+        @Query("SELECT COUNT(SPOTID) FROM SPOT")
+        int countSpots();
+
         //Hämtar alla Spots med en viss angiven titel
         @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title")
         List<Spot> getSpotByTitle(String title);

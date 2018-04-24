@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         if(checkGoogleService()) {
             openMapsStart();
         }
-
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
