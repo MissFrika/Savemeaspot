@@ -30,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +40,8 @@ import java.util.List;
 
 import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
+import sup.savemeaspot.DataLayer.DatabaseHelper;
+import sup.savemeaspot.DataLayer.Spot;
 
 /**
  * Main Activity. Visar en karta med markörer för användarens nuvarande position och sparade Spots. Kod för Google Maps är pre-made och hämtat från https://developers.google.com/maps/documentation/android-api/start
@@ -76,7 +79,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
         //Kontrollerar permissions
         checkPermissions();
-
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
@@ -326,6 +328,22 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         } catch (Resources.NotFoundException e) {
             Log.e(simpl_MS, "Can't find style. Error: ", e);
         }
+        //Skapa markörer på kartan om Spots finns
+        try{
+            List<Spot> spots;
+            if (DatabaseHelper.checkIfSpotsExist(getApplicationContext())) {
+
+                spots = DatabaseHelper.getAllSpots(getApplicationContext());
+
+                for (final Spot spot : spots) {
+                    addSpotMarker(mMap, spot);
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -352,6 +370,29 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             }
             // other 'case' lines to check for other
             // permissions this app might request
+        }
+    }
+
+    /**
+     * Lägg till en markör för en Spot på kartan
+     * @param googleMap
+     * @param spot
+     */
+    private void addSpotMarker(GoogleMap googleMap, Spot spot){
+        if(DatabaseHelper.checkIfSpotsExist(getApplicationContext())){
+            String spotTitle = spot.getSpotTitle();
+            String spotDescription = spot.getSpotDescription();
+            int spotCategory = spot.getSpotCategory();
+            int spotCoordinates = spot.getSpotCoordinate();
+
+            //Koordinater
+            Coordinate coordinate = DatabaseHelper.getSpotCoordinates(getApplicationContext(), spot);
+            LatLng latlng = new LatLng(coordinate.getLatitude(),coordinate.getLongitude());
+            String locale = coordinate.getLocalAddress();
+            String country = coordinate.getCountryName();
+
+            //Markör
+            googleMap.addMarker(new MarkerOptions().position(latlng).title(spotTitle).snippet(spotDescription));
         }
     }
 }

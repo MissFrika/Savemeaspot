@@ -132,7 +132,7 @@ public class Coordinate {
 
         //Sök Coordinate baserat på CoordinateId.
         @Query("SELECT * FROM COORDINATE WHERE CoordinateId LIKE :spotCoordinate")
-        List<Coordinate> getCoordinateByID(int spotCoordinate);
+        Coordinate getCoordinateByID(int spotCoordinate);
 
         //Visa Coordinate med specifik longitude och latitude.
         @Query("SELECT * FROM COORDINATE WHERE latitude LIKE :spotLatitude AND longitude LIKE :spotLongitude")
