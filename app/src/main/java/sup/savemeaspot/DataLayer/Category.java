@@ -122,6 +122,10 @@ public class Category {
         @Query("SELECT * FROM CATEGORY WHERE categoryId LIKE :spotCatId")
             Category getSpotCategory(int spotCatId);
 
+        //Hämta sist insatta raden i tabellen
+        @Query("SELECT CategoryID FROM CATEGORY WHERE CategoryID =(SELECT MAX(CategoryID) FROM CATEGORY)")
+        int getLastRecordCategory();
+
         //Hämta Categories med visst namn.
         @Query("SELECT * FROM CATEGORY WHERE category_name LIKE :catName")
         List<Category> getCategoryByName(String catName);

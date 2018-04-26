@@ -27,10 +27,10 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
     private Category categoryToSave = new Category();
     private Category newCategory = new Category();
     private List<Category> categories;
-    private RecyclerView recyclerView;
+    private static RecyclerView recyclerView;
     private Context context;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView.LayoutManager layoutManager;
     //Ikoner
     private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
             R.drawable.heart, R.drawable.fire, R.drawable.building};
@@ -157,6 +157,15 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
                         try{
                             DatabaseHelper.insertCategory(context, newCategory);
                             categoryField.setText("");
+                            //Dataset ändrad
+                            SpotDatabase database = Room.inMemoryDatabaseBuilder(SaveSpotCategoryActivity.this.getApplicationContext(), SpotDatabase.class)
+                                    .allowMainThreadQueries() //DO NOT !!!
+                                    .build();
+                            int lastIdInsert = database.categoryDao().getLastRecordCategory();
+                            database.close();
+                            newCategory.setCategoryId(lastIdInsert);
+                            categories.add(newCategory);
+                            adapter.notifyItemInserted(categories.size());
                             Toast.makeText(context, "Category: " + newCategory.getCategoryName() + " has been created", Toast.LENGTH_SHORT).show();
                         }
                         catch(Exception e){
