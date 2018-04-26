@@ -68,7 +68,7 @@ public class Spot {
     @Dao
     public interface SpotDao{
         //Hämtar alla Spots
-        @Query("SELECT * FROM SPOT")
+        @Query("SELECT * FROM SPOT;")
         List<Spot> getAllSpots();
 
         //Hämta senast inlagda spot
@@ -83,15 +83,19 @@ public class Spot {
         @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title")
         List<Spot> getSpotByTitle(String title);
         //Hämtar alls spots med en viss kategori
-        @Query("SELECT * FROM SPOT WHERE SPOT_CATEGORY LIKE :categoryId ;")
+        @Query("SELECT * FROM SPOT WHERE SPOT_CATEGORY LIKE :categoryId")
         List<Spot> getSpotsByCategory(int categoryId);
 
         //Uppdatera en specifik Spots titel
-        @Query("UPDATE SPOT SET SPOT_TITLE = :spotTitle WHERE SPOTID = :spotID;")
-        void updateSpotTitle (String spotTitle, int spotID);
+        @Query("UPDATE SPOT SET SPOT_TITLE = :spotTitle WHERE SPOTID = :spotId")
+        void updateSpotTitle (String spotTitle, int spotId);
+
+        //Uppdatera en specifik Spots beskrivning
+        @Query("UPDATE SPOT SET SPOT_DESCRIPTION = :spotDescription WHERE SPOTID = :spotId")
+        void updateSpotDescription (String spotDescription, int spotId);
 
         //Uppdatera en specifik Spots kategori
-        @Query("UPDATE SPOT SET SPOT_CATEGORY = :categoryId WHERE SPOTID = :spotId;")
+        @Query("UPDATE SPOT SET SPOT_CATEGORY = :categoryId WHERE SPOTID = :spotId")
         void updateSpotCategory (int categoryId, int spotId);
 
         //Lägg till nya spots
@@ -100,6 +104,7 @@ public class Spot {
 
         @Insert (onConflict = OnConflictStrategy.IGNORE)
         void insertSingleSpot(Spot spot);
+
 
     }
 }

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -127,6 +128,39 @@ public class DatabaseHelper {
         else{
             return null;
         }
+
+    }
+
+    /**
+     * Uppdatera information om en spot
+     * @param context
+     * @param spot
+     * @param title
+     * @param description
+     * @param category
+     */
+    public void editSpot(Context context, Spot spot, String title, String description, Category category){
+
+        Spot updatedSpot = spot;
+        //Konrtollerar förändringar för alla fält
+        if(title != spot.getSpotTitle()){
+            updatedSpot.setSpotTitle(title);
+        }
+        if(description != spot.getSpotDescription()){
+            updatedSpot.setSpotDescription(description);
+        }
+        if(category.getCategoryId() != spot.getSpotCategory()) {
+            updatedSpot.setSpotCategory(category.getCategoryId());
+        }
+
+        //Uppdatera fält
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(),SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries()
+                .build();
+        database.spotDao().updateSpotTitle(updatedSpot.getSpotTitle(),spot.getSpotId());
+        database.spotDao().updateSpotCategory(updatedSpot.getSpotCategory(),spot.getSpotId());
+        database.spotDao().updateSpotDescription(updatedSpot.getSpotDescription(),spot.getSpotId());
+        database.close();
 
     }
 }
