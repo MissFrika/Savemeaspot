@@ -1,50 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="sup.savemeaspot.SpotCollectionActivity">
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_container_spot_collection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/spotTitleTextView"
-        android:layout_width="298dp"
-        android:layout_height="47dp"
-        android:layout_margin="10dp"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/menuButtonTextColor"
-        />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/category_add_title_text"
+        android:layout_marginTop="13dp"
+        android:scrollbars="vertical">
+    </android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/spotDescTextView"
-        android:layout_width="298dp"
-        android:layout_height="47dp"
-        android:layout_margin="10dp"
-        android:background="@color/colorPrimary"
-        android:layout_below="@id/spotTitleTextView"
-        />
-
-    <TextView
-        android:id="@+id/spotCatNameTextView"
-        android:layout_width="297dp"
-        android:layout_height="46dp"
-        android:layout_margin="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/menuButtonTextColor"
-        android:layout_below="@id/spotDescTextView"/>
-
-    <TextView
-        android:id="@+id/spotCoordsTextView"
-        android:layout_width="298dp"
-        android:layout_height="45dp"
-        android:background="@color/colorPrimary"
-        android:layout_margin="10dp"
-        android:textColor="@color/menuButtonTextColor"
-        android:layout_below="@id/spotCatNameTextView"/>
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

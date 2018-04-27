@@ -8,12 +8,16 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.RelativeLayout;
+
 
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.Category;
 import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 
@@ -27,27 +31,18 @@ public class SpotCollectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spot_collection);
         // Context hämtas och databas instansieras
         this.context = getApplicationContext();
-        SpotDatabase db = Room.databaseBuilder(context, SpotDatabase.class,"SpotDatabase")
-        .allowMainThreadQueries()
-        .build();
-        //Spot från databas
-        Spot titleToAdd = db.spotDao().getSpotLast();
-        db.close();
+        // Hämtar ut lista av spots från database
+        List<Spot> spots = DatabaseHelper.getAllSpots(context);
 
-        TextView titleTextView = (TextView) findViewById(R.id.spotTitleTextView);
-        TextView descTextView = (TextView) findViewById(R.id.spotDescTextView);
-        TextView catTextView = (TextView) findViewById(R.id.spotCatNameTextView);
-        TextView coordTextView = (TextView) findViewById(R.id.spotCoordsTextView);
-
-        String title = titleToAdd.getSpotTitle();
-        String desc = titleToAdd.getSpotDescription();
-        String cat = (String.valueOf(titleToAdd.getSpotCategory()));
-        String coords = (String.valueOf(titleToAdd.getSpotCoordinate()));
-
-        titleTextView.setText(title);
-        descTextView.setText(desc);
-        catTextView.setText(cat);
-        coordTextView.setText(coords);
+        // Nytt relativeLayout
+        RecyclerView recyclerView = findViewById(R.id.recycler_container_spot_collection);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        // Set LayoutManager
+        recyclerView.setLayoutManager(layoutManager);
+        // Set adapter
+        SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots);
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
 
     }
 
