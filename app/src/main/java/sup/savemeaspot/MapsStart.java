@@ -2,10 +2,13 @@ package sup.savemeaspot;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -29,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -42,6 +46,7 @@ import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.Spot;
+import sup.savemeaspot.DataLayer.SpotDatabase;
 
 /**
  * Main Activity. Visar en karta med markörer för användarens nuvarande position och sparade Spots. Kod för Google Maps är pre-made och hämtat från https://developers.google.com/maps/documentation/android-api/start
@@ -391,8 +396,41 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             String locale = coordinate.getLocalAddress();
             String country = coordinate.getCountryName();
 
+            //Kontrollera typ av kategori för att ändra markörens ikon
+            int drawableMarker = R.drawable.map_marker_icon;
+            SpotDatabase database = Room.inMemoryDatabaseBuilder(getApplicationContext(), SpotDatabase.class)
+                    .allowMainThreadQueries()
+                    .build();
+            int categoryDrawableId = database.categoryDao().getSpotCategory(spot.getSpotCategory()).getCategoryId();
+
+            switch(categoryDrawableId){
+                case R.drawable.apple :
+                    drawableMarker = R.drawable.apple_marker;
+                    break;
+                case R.drawable.building :
+                    drawableMarker = R.drawable.buildings_marker;
+                    break;
+                case R.drawable.cherry :
+                    drawableMarker = R.drawable.cherry_marker;
+                    break;
+                case R.drawable.fish :
+                    drawableMarker = R.drawable.fish_marker;
+                    break;
+                case R.drawable.fire :
+                    drawableMarker = R.drawable.fire_marker;
+                    break;
+                case R.drawable.water :
+                    drawableMarker = R.drawable.water_marker;
+                    break;
+                case R.drawable.wheat :
+                    drawableMarker = R.drawable.wheat_marker;
+                    break;
+                case R.drawable.heart :
+                    drawableMarker = R.drawable.heart_marker;
+                    break;
+                }
             //Markör
-            googleMap.addMarker(new MarkerOptions().position(latlng).title(spotTitle).snippet(spotDescription));
+            googleMap.addMarker(new MarkerOptions().position(latlng).title(spotTitle).snippet(spotDescription).icon(BitmapDescriptorFactory.fromResource(drawableMarker)));
         }
     }
 }
