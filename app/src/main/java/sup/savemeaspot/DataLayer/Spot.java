@@ -27,7 +27,7 @@ public class Spot {
     private int SpotId;
     @ColumnInfo(name = "spot_title")
     private String spotTitle;
-    @ColumnInfo(name = "description")
+    @ColumnInfo(name = "spot_description")
     private String spotDescription;
     @ColumnInfo(name ="spot_category")
     private int spotCategory;

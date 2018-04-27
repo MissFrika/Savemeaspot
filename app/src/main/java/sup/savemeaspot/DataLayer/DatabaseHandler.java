@@ -36,7 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_NAME_SPOT = "Spot";
     private static final String COLUMN_ID_SPOT = "SpotID";
     private static final String COLUMN_TITLE = "spot_title";
-    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String COLUMN_DESCRIPTION = "spot_description";
     private static final String COLUMN_CATEGORY = "spot_category";
     private static final String COLUMN_COORDINATE = "spot_coordinate";
 
