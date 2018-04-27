@@ -397,12 +397,12 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             String country = coordinate.getCountryName();
 
             //Kontrollera typ av kategori för att ändra markörens ikon
-            int drawableMarker = R.drawable.map_marker_icon;
-            SpotDatabase database = Room.inMemoryDatabaseBuilder(getApplicationContext(), SpotDatabase.class)
+            int drawableMarker = R.drawable.map_marker_default;
+            SpotDatabase database = Room.databaseBuilder(getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                     .allowMainThreadQueries()
                     .build();
-            int categoryDrawableId = database.categoryDao().getSpotCategory(spot.getSpotCategory()).getCategoryId();
-
+            int categoryDrawableId = database.categoryDao().getSpotCategory(spot.getSpotCategory()).getCategoryImg();
+            database.close();
             switch(categoryDrawableId){
                 case R.drawable.apple :
                     drawableMarker = R.drawable.apple_marker;
@@ -428,7 +428,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                 case R.drawable.heart :
                     drawableMarker = R.drawable.heart_marker;
                     break;
-                }
+            }
             //Markör
             googleMap.addMarker(new MarkerOptions().position(latlng).title(spotTitle).snippet(spotDescription).icon(BitmapDescriptorFactory.fromResource(drawableMarker)));
         }
