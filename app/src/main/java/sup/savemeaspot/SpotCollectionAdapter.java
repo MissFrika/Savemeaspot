@@ -80,7 +80,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
 
             collectionTextView = v.findViewById(R.id.collection_text_view);
             dropDownButton = v.findViewById(R.id.collection_drop_down_button);
-            spotDescriptionTextView = v.findViewById(R.id.spotDescTextView);
+            spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
             showMapButton = v.findViewById(R.id.show_map_button);
 
         }
