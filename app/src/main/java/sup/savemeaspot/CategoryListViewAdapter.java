@@ -101,6 +101,12 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         return 0;
     }
 
+    // Insert a new item to the RecyclerView on a predefined position
+    public void insertCategory(Category category) {
+        categoryDataset.add(category);
+
+        notifyItemInserted(categoryDataset.size());
+    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and

@@ -133,10 +133,15 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                         e.printStackTrace();
                     }
 
-                    CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
-                    mMap.animateCamera(userLocation);
+                    boolean activityStarted = true;
+                    do {
+                        CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+                        mMap.animateCamera(userLocation);
+                        activityStarted = false;
+                    } while (activityStarted);
                 }
 
+                //Auto-genererade metoder
                 @Override
                 public void onStatusChanged(String s, int i, Bundle bundle) {
 
@@ -179,11 +184,16 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
-                    mMap.animateCamera(userLocation);
+                    boolean activityStarted = true;
+                    do {
+                        CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+                        mMap.animateCamera(userLocation);
+                        activityStarted = false;
+                    } while (activityStarted);
 
                 }
 
+                //Auto-genererade metoder
                 @Override
                 public void onStatusChanged(String s, int i, Bundle bundle) {
 

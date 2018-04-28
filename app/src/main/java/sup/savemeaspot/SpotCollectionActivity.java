@@ -39,11 +39,12 @@ public class SpotCollectionActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         // Set LayoutManager
         recyclerView.setLayoutManager(layoutManager);
-        // Set adapter
-        SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
-
+        // Set adapter om spots finns
+        if(spots != null) {
+            SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots);
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+        }
     }
 
 }

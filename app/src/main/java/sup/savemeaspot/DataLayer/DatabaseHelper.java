@@ -139,7 +139,7 @@ public class DatabaseHelper {
      * @param description
      * @param category
      */
-    public void editSpot(Context context, Spot spot, String title, String description, Category category){
+    public static void editSpot(Context context, Spot spot, String title, String description, Category category){
 
         Spot updatedSpot = spot;
         //Konrtollerar förändringar för alla fält
@@ -163,4 +163,5 @@ public class DatabaseHelper {
         database.close();
 
     }
+
 }
