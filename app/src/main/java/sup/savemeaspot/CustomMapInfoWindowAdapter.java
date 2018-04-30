@@ -1,3 +1,5 @@
+package sup.savemeaspot;
+
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.ActivityCompat;
@@ -19,9 +21,15 @@ import sup.savemeaspot.R;
 public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private Activity context;
+    private String locality;
+    private String category;
+    private String description;
 
-    public CustomMapInfoWindowAdapter(Activity context){
+    public CustomMapInfoWindowAdapter(Activity context, String locality, String category, String description){
         this.context = context;
+        this.locality = locality;
+        this.category = category;
+        this.description = description;
     }
 
 
@@ -32,10 +40,6 @@ public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoContents(Marker marker) {
-        return null;
-    }
-
-    public View getInfoWindowContents(Marker marker, String locality, String category, String description) {
         View view = context.getLayoutInflater().inflate(R.layout.custom_info_window_marker, null);
 
         //Hämtar alla textview från layout

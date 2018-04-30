@@ -397,8 +397,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         if(DatabaseHelper.checkIfSpotsExist(getApplicationContext())){
             String spotTitle = spot.getSpotTitle();
             String spotDescription = spot.getSpotDescription();
-            int spotCategory = spot.getSpotCategory();
-            int spotCoordinates = spot.getSpotCoordinate();
 
             //Koordinater
             Coordinate coordinate = DatabaseHelper.getSpotCoordinates(getApplicationContext(), spot);
@@ -412,6 +410,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     .allowMainThreadQueries()
                     .build();
             int categoryDrawableId = database.categoryDao().getSpotCategory(spot.getSpotCategory()).getCategoryImg();
+            String categoryName = database.categoryDao().getSpotCategory(spot.getSpotCategory()).getCategoryName();
             database.close();
             switch(categoryDrawableId){
                 case R.drawable.apple :
@@ -440,7 +439,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     break;
             }
             //Markör
-            googleMap.addMarker(new MarkerOptions().position(latlng).title(spotTitle).snippet(spotDescription).icon(BitmapDescriptorFactory.fromResource(drawableMarker)));
+            CustomMapInfoWindowAdapter infoWindowAdapter = new CustomMapInfoWindowAdapter(this, locale + ", " + country, categoryName, spotDescription);
+            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title(spotTitle).icon(BitmapDescriptorFactory.fromResource(drawableMarker));
+            Marker marker = googleMap.addMarker(markerOptions);
+            googleMap.setInfoWindowAdapter(infoWindowAdapter);
         }
     }
 }
