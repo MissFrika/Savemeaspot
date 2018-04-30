@@ -61,9 +61,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/menuBackgroundColor"
                 android:text="\/"
-                android:textColor="@color/menuButtonTextColor" />
+                android:textColor="@color/menuButtonTextColor"
+                android:clickable="true"
+                />
         </RelativeLayout>
 
         <RelativeLayout

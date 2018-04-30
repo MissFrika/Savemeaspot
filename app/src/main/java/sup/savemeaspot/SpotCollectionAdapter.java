@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -22,11 +24,12 @@ import sup.savemeaspot.DataLayer.Spot;
 public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAdapter.ViewHolder> {
     private List<Spot> spotDataset;
     private Context context;
+    private View dropDown;
 
-    public SpotCollectionAdapter(Context context, List<Spot> items){
+    public SpotCollectionAdapter(Context context, List<Spot> items, View dropDown){
         this.context = context;
         this.spotDataset = items;
-
+        this.dropDown = dropDown;
     }
 
     /**
@@ -50,6 +53,13 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     @Override
     public void onBindViewHolder(SpotCollectionAdapter.ViewHolder holder, final int position) {
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
+        holder.dropDownButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"Works", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     /**
@@ -60,6 +70,15 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         return spotDataset.size();
     }
 
+    public void changeDropdownLayoutVisibility() {
+        View relativeLayout = dropDown;
+        if (relativeLayout.getVisibility()==View.GONE) {
+            relativeLayout.setVisibility(View.VISIBLE);
+        }
+        else if(relativeLayout.getVisibility()==View.VISIBLE){
+            relativeLayout.setVisibility(View.GONE);
+        }
+    }
 
     /**
      * Klass för RecylerViewHolder for Spots
