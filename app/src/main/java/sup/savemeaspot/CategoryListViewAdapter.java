@@ -1,9 +1,13 @@
 package sup.savemeaspot;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +29,7 @@ import java.util.ListIterator;
 
 import sup.savemeaspot.DataLayer.Category;
 import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.DataLayer.DatabaseHelper;
 
 /**
  * Created by Frika on 2018-03-27.
@@ -34,35 +40,81 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     private Context context;
     private Coordinate extraCoordinates;
 
-    public CategoryListViewAdapter( Context context, List<Category> items, Coordinate extraCoordinates) {
+    /**
+     * Konstruktor + koordinater
+     * @param context
+     * @param items
+     * @param extraCoordinates
+     */
+    public CategoryListViewAdapter(Context context, List<Category> items, Coordinate extraCoordinates) {
 
         this.categoryDataset = items;
         this.context = context;
         this.extraCoordinates = extraCoordinates;
     }
 
+    /**
+     * Konstruktor
+     * @param context
+     * @param items
+     */
+    public CategoryListViewAdapter(Context context, List<Category> items) {
 
-    // Create new views (invoked by the layout manager)
-    @Override
-    public CategoryListViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_view_layout_category, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v, context, categoryDataset);
-        return viewHolder;
+        this.categoryDataset = items;
+        this.context = context;
     }
 
 
-    // Byter ut delar av en view (layout manager behövs)
+    // Create new views (invoked by the layout manager)
+    @Override
+    public CategoryListViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //Är context från aktiviteten SaveSpotCategoryActivity
+        if (context instanceof SaveSpotCategoryActivity) {
+            // create a new view
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_view_layout_category, parent, false);
+            ViewHolder viewHolder = new ViewHolder(v, context, categoryDataset);
+            return viewHolder;
+        }
+        //Är context från aktiviteten CategoryCollectionActivity
+        else {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.edit_category_card_view_layout, parent, false);
+            ViewHolder viewHolder = new ViewHolder(v, context, categoryDataset);
+            return viewHolder;
+        }
+    }
+
+
+    /**
+     * Hanterar innehållet i recylerviewn
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-             holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
-             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
+        if(holder.isCategoryCollection) {
+            holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
+            holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
+            final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
+            //TODO: CHECK IF DELETABLE INNAN DELETEKNAPPEN VISAS! 0 = FALSE
+            holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   AlertDialog alertDialog = confirmationWindowBuilder.create();
+                   alertDialog.show();
+                }
+            });
+        }
+        else if (!holder.isCategoryCollection) {
+
+            holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
+            holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
             //OnClickListener för view
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 /**
                  * Metod körs om ett objekt i ViewHolder klickas på
+                 *
                  * @param v
                  */
                 @Override
@@ -74,11 +126,11 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                     int img = aCategory.getCategoryImg();
                     int delete = aCategory.getIsDeletable();
                     //Nytt intent
-                    Intent intent = new Intent(context,SaveTitleActivity.class);
-                    intent.putExtra( "EXTRA_MESSAGE_CATEGORY_ID", id);
-                    intent.putExtra( "EXTRA_MESSAGE_CATEGORY_NAME", name);
+                    Intent intent = new Intent(context, SaveTitleActivity.class);
+                    intent.putExtra("EXTRA_MESSAGE_CATEGORY_ID", id);
+                    intent.putExtra("EXTRA_MESSAGE_CATEGORY_NAME", name);
                     intent.putExtra("EXTRA_MESSAGE_CATEGORY_IMG", img);
-                    intent.putExtra( "EXTRA_MESSAGE_CATEGORY_IS_DELETABLE", delete);
+                    intent.putExtra("EXTRA_MESSAGE_CATEGORY_IS_DELETABLE", delete);
 
                     Coordinate coordinate = new Coordinate();
                     coordinate.putExtraMessageCoordinate(intent, extraCoordinates);
@@ -86,8 +138,48 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                     context.startActivity(intent);
                 }
             });
+        }
 
     }
+
+    /**
+     * Skapa en dialogruta för att acceptera eller neka radering av en kategori
+     * @param position
+     * @return
+     */
+    private AlertDialog.Builder createDeleteCategoryDialog(final int position) {
+        AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
+        confirmationDialog.setTitle(R.string.delete_category);
+        confirmationDialog.setMessage(R.string.delete_confirmation_category + " " + categoryDataset.get(position).getCategoryName() + "?");
+
+        //Acceptera
+        confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Acceptera och radera kategori från databasen
+                DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
+                deleteCategory(position);
+                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + R.string.has_deleted, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        //Neka
+        confirmationDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //Avbryt och stäng dialogruta
+                dialog.dismiss();
+            }
+        });
+
+        return confirmationDialog;
+    }
+
+
+
 
     // Returnerar storleken på dataset (invoked by the layout manager)
     @Override
@@ -108,6 +200,12 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         notifyItemInserted(categoryDataset.size());
     }
 
+    //TODO: Denna metod get nullpointer exeption error, måste åtgärdas
+    public void deleteCategory(int position){
+        categoryDataset.remove(position);
+        notifyItemRemoved(position - 1);
+    }
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -115,18 +213,33 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
         TextView catNameTextView;
         ImageView catImageView;
+        ImageView catDeleteImageView;
+        ImageView catEditImageView;
         RelativeLayout relativeLayout;
         List<Category> categories;
         Context context;
+        //False om adaptern ej används i CategoryCollectionActivity
+        boolean isCategoryCollection;
 
         public ViewHolder(View v, Context context, List<Category> category) {
             super(v);
             this.categories = category;
             this.context = context;
+            if (v.findViewById(R.id.relativeLayout_category_collection) != null){
+                catNameTextView = (TextView) v.findViewById(R.id.category_name_cardview);
+                catImageView = (ImageView) v.findViewById(R.id.category_image_cardview);
+                catDeleteImageView = v.findViewById(R.id.delete_category_icon);
+                catEditImageView = v.findViewById(R.id.edit_category_icon);
+                relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout_category_collection);
+                isCategoryCollection = true;
+            }
+            else if(v.findViewById(R.id.relativeLayout) != null){
+                catNameTextView = (TextView) v.findViewById(R.id.category_name_cardview);
+                catImageView = (ImageView) v.findViewById(R.id.category_image_cardview);
+                relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout);
+                isCategoryCollection = false;
+            }
 
-            catNameTextView = (TextView) v.findViewById(R.id.category_name_cardview);
-            catImageView = (ImageView) v.findViewById(R.id.category_image_cardview);
-            relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout);
         }
 
     }

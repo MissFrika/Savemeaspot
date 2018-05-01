@@ -164,4 +164,35 @@ public class DatabaseHelper {
 
     }
 
+    /**
+     * Ta bort en vald kategory från databasen
+     * @param context
+     * @param category
+     *
+     */
+    public static void deleteCategory(Context context, Category category){
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
+                .build();
+        database.categoryDao().deleteCategories(category);
+        database.close();
+
+    }
+
+    /**
+     * Ändra
+     * @param context
+     * @param category
+     * @param categoryName
+     * @param categoryImage
+     */
+    public static void editCategory(Context context, Category category, String categoryName, int categoryImage){
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
+                .build();
+        database.categoryDao().editCategory(category.getCategoryId(), categoryName, categoryImage);
+
+        database.close();
+    }
+
 }

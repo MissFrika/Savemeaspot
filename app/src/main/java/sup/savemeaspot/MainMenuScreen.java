@@ -20,21 +20,15 @@ public class MainMenuScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu_screen);
         this.context = getApplicationContext();
+        //Instansiera knappar
         openMySpots();
-
-        if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")&& getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")) {
-
-            Bundle extras = getIntent().getExtras();
-            double lat = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
-            double lon = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
-
-        }
-        else{
-
-        }
-
+        openCategoryCollection();
     }
-    public void openMySpots() {
+
+    /**
+     * Öppna SpotCollectionActivity
+     */
+    private void openMySpots() {
         //Ny intent
         ImageButton btn = findViewById(R.id.my_spots_button);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +38,27 @@ public class MainMenuScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Öppna CategoryCollectionActivity
+     */
+    private void openCategoryCollection(){
+        ImageButton btn = findViewById(R.id.categories_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CategoryCollectionActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * Öppna EditSpotsActivity
+     */
+    private void openEditSpots(){
 
     }
+
 }

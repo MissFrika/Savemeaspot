@@ -46,7 +46,7 @@
 
         <activity
             android:name=".MapsStart"
-            android:label="Save Me a Spot"></activity>
+            android:label="Save Me a Spot" />
         <activity android:name=".MainMenuScreen" />
         <activity
             android:name=".SaveSpotCategoryActivity"
@@ -63,7 +63,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SpotCollectionActivity"></activity>
+        <activity android:name=".SpotCollectionActivity" />
+        <activity android:name=".CategoryCollectionActivity"></activity>
     </application>
 
 </manifest>
