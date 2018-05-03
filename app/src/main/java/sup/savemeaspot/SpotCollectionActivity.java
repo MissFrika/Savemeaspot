@@ -36,7 +36,7 @@ public class SpotCollectionActivity extends AppCompatActivity {
         // Initierar dropDown
         // Hämtar ut lista av spots från database
         List<Spot> spots = DatabaseHelper.getAllSpots(context);
-        RelativeLayout dropDown = findViewById(R.id.collection_drop_down_layout);
+
         // Nytt relativeLayout
         RecyclerView recyclerView = findViewById(R.id.recycler_container_spot_collection);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -45,17 +45,11 @@ public class SpotCollectionActivity extends AppCompatActivity {
 
         // Set adapter om spots finns
         if(spots != null) {
-            SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots, dropDown);
+            SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots, recyclerView);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
         }
-
-
     }
-
-
-
-
 }
 
 

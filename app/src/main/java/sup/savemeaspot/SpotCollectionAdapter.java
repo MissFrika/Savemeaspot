@@ -24,12 +24,12 @@ import sup.savemeaspot.DataLayer.Spot;
 public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAdapter.ViewHolder> {
     private List<Spot> spotDataset;
     private Context context;
-    private View dropDown;
+    private RecyclerView dropDown;
 
-    public SpotCollectionAdapter(Context context, List<Spot> items, View dropDown){
+    public SpotCollectionAdapter(Context context, List<Spot> items, RecyclerView recyclerView){
         this.context = context;
         this.spotDataset = items;
-        this.dropDown = dropDown;
+        this.dropDown = recyclerView;
     }
 
     /**
@@ -57,7 +57,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,"Works", Toast.LENGTH_SHORT).show();
-
+                changeDropdownLayoutVisibility();
             }
         });
     }
@@ -71,7 +71,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     }
 
     public void changeDropdownLayoutVisibility() {
-        View relativeLayout = dropDown;
+        RelativeLayout relativeLayout = dropDown.findViewById(R.id.collection_drop_down_layout);
         if (relativeLayout.getVisibility()==View.GONE) {
             relativeLayout.setVisibility(View.VISIBLE);
         }
