@@ -24,12 +24,12 @@ import sup.savemeaspot.DataLayer.Spot;
 public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAdapter.ViewHolder> {
     private List<Spot> spotDataset;
     private Context context;
-    private View dropDown;
+    private RecyclerView dropDown;
 
-    public SpotCollectionAdapter(Context context, List<Spot> items, View dropDown){
+    public SpotCollectionAdapter(Context context, List<Spot> items, RecyclerView recyclerView){
         this.context = context;
         this.spotDataset = items;
-        this.dropDown = dropDown;
+        this.dropDown = recyclerView;
     }
 
     /**
@@ -51,13 +51,13 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
 
 
     @Override
-    public void onBindViewHolder(SpotCollectionAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final SpotCollectionAdapter.ViewHolder holder, final int position) {
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
         holder.dropDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,"Works", Toast.LENGTH_SHORT).show();
-
+                changeDropdownLayoutVisibility(holder);
             }
         });
     }
@@ -70,13 +70,17 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         return spotDataset.size();
     }
 
-    public void changeDropdownLayoutVisibility() {
-        View relativeLayout = dropDown;
-        if (relativeLayout.getVisibility()==View.GONE) {
-            relativeLayout.setVisibility(View.VISIBLE);
+    /**
+     * Visar eller döljer relativelayout
+     * @param holder
+     */
+    public void changeDropdownLayoutVisibility(SpotCollectionAdapter.ViewHolder holder) {
+
+        if (holder.spotDetails.getVisibility()==View.GONE) {
+            holder.spotDetails.setVisibility(View.VISIBLE);
         }
-        else if(relativeLayout.getVisibility()==View.VISIBLE){
-            relativeLayout.setVisibility(View.GONE);
+        else if(holder.spotDetails.getVisibility()==View.VISIBLE){
+            holder.spotDetails.setVisibility(View.GONE);
         }
     }
 
@@ -91,12 +95,13 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         Button showMapButton;
         Context context;
         List<Spot> spots;
+        RelativeLayout spotDetails;
 
         public ViewHolder(View v, Context context, List<Spot> spots){
             super(v);
             this.spots = spots;
             this.context = context;
-
+            spotDetails = v.findViewById(R.id.collection_drop_down_layout);
             collectionTextView = v.findViewById(R.id.collection_text_view);
             dropDownButton = v.findViewById(R.id.collection_drop_down_button);
             spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
