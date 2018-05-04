@@ -64,7 +64,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SpotCollectionActivity" />
-        <activity android:name=".CategoryCollectionActivity"></activity>
+        <activity android:name=".CategoryCollectionActivity" />
+        <activity android:name=".EditSpotsActivity"></activity>
     </application>
 
 </manifest>

@@ -19,7 +19,6 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
 
     private List<String> titleDataset;
 
-
     public TitleRecyclerViewAdapter(List<String> titles){
         this.titleDataset = titles;
     }
@@ -44,7 +43,6 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
     @Override
     public void onBindViewHolder(TitleRecyclerViewAdapter.TitleViewHolder holder, final int position) {
         holder.titleView.setText(titleDataset.get(position));
-
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +74,7 @@ public class TitleRecyclerViewAdapter extends RecyclerView.Adapter<TitleRecycler
 
         public TitleViewHolder(View v) {
             super(v);
+            //Instansiera layouts
             titleView = (TextView) v.findViewById(R.id.title_name_cardview);
             relativeLayout = v.findViewById(R.id.relativeLayoutTitle);
         }

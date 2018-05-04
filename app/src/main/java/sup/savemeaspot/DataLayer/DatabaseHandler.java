@@ -66,7 +66,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Spot table
     db.execSQL("CREATE TABLE " +TABLE_NAME_SPOT+
             " (" +COLUMN_ID_SPOT+ " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +COLUMN_TITLE+ " TEXT NOT NULL, " +COLUMN_DESCRIPTION+" TEXT, " +COLUMN_CATEGORY+ " INTEGER NOT NULL, " +COLUMN_COORDINATE+
-            " INTEGER NOT NULL, FOREIGN KEY(" +COLUMN_CATEGORY+ ") REFERENCES Category(categoryid), FOREIGN KEY ("+ COLUMN_COORDINATE + ") REFERENCES Coordinate(coordinateid))");
+            " INTEGER NOT NULL, FOREIGN KEY(" +COLUMN_CATEGORY+ ") REFERENCES Category(categoryid), FOREIGN KEY ("+ COLUMN_COORDINATE + ") REFERENCES Coordinate(coordinateid) ON DELETE CASCADE)");
 
     }
 

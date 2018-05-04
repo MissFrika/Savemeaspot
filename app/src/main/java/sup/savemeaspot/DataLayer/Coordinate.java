@@ -145,6 +145,10 @@ public class Coordinate {
         //Visa Coordinates med viss address.
         @Query("SELECT * FROM COORDINATE WHERE local_address LIKE :spotAddress")
         List<Coordinate> getCoordinateByAddress(String spotAddress);
+
+        //Ta bort koordinater med ett visst koordinatid från databasen
+        @Query("DELETE FROM COORDINATE WHERE COORDINATE_ID LIKE :coordinateId")
+        void deleteCoordinates(int coordinateId);
     }
 
 }
