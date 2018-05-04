@@ -76,21 +76,45 @@
                     android:id="@+id/spot_description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Stuff"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/showOnMapConstraintLayout"
+                    android:layout_toStartOf="@+id/showOnMapConstraintLayout"
                     android:background="@color/spotDetailsBackground"
+                    android:text="Description"
                     />
 
-
-                <ImageButton
-                    android:id="@+id/show_map_button"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/menuBackgroundColor"
-                    android:textColor="@color/colorPrimary"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/show_on_map_icon"
-                    />
+                    android:id="@+id/showOnMapConstraintLayout"
+                    >
+
+                    <ImageButton
+                        android:id="@+id/show_map_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@color/menuBackgroundColor"
+                        android:src="@drawable/show_on_map_icon"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_on_map"
+                        android:textSize="6pt"
+                        android:layout_centerHorizontal="true"
+                        app:layout_constraintTop_toBottomOf="@id/show_map_button"
+                        />
+
+                </android.support.constraint.ConstraintLayout>
             </RelativeLayout>
 
 

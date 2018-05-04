@@ -57,7 +57,6 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         holder.dropDownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Works", Toast.LENGTH_SHORT).show();
                 changeDropdownLayoutVisibility(holder);
             }
         });
