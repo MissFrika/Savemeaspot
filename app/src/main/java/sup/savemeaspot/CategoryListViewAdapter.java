@@ -85,7 +85,6 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         }
     }
 
-
     /**
      * Hanterar innehållet i recylerviewn
      * @param holder
@@ -158,8 +157,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             public void onClick(DialogInterface dialog, int which) {
                 //Acceptera och radera kategori från databasen
                 DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
-                deleteCategory(position);
                 Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + R.string.has_deleted, Toast.LENGTH_SHORT).show();
+                deleteCategory(position);
                 dialog.dismiss();
             }
         });
@@ -200,10 +199,13 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         notifyItemInserted(categoryDataset.size());
     }
 
-    //TODO: Denna metod get nullpointer exeption error, måste åtgärdas
+    /**
+     * Tar bort en kategori från en position i dataset
+     * @param position
+     */
     public void deleteCategory(int position){
         categoryDataset.remove(position);
-        notifyItemRemoved(position - 1);
+        notifyItemRemoved(position);
     }
 
     // Provide a reference to the views for each data item
