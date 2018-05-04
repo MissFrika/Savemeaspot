@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,7 +93,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         TextView collectionTextView;
         Button dropDownButton;
         TextView spotDescriptionTextView;
-        Button showMapButton;
+        ImageButton showMapButton;
         Context context;
         List<Spot> spots;
         RelativeLayout spotDetails;
@@ -106,7 +107,6 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
             dropDownButton = v.findViewById(R.id.collection_drop_down_button);
             spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
             showMapButton = v.findViewById(R.id.show_map_button);
-
         }
     }
 }

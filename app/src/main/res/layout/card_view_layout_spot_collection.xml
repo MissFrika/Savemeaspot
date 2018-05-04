@@ -81,15 +81,15 @@
                     />
 
 
-                <Button
+                <ImageButton
                     android:id="@+id/show_map_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/menuBackgroundColor"
-                    android:text="@string/show_on_map"
                     android:textColor="@color/colorPrimary"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:src="@drawable/show_on_map_icon"
                     />
             </RelativeLayout>
 
