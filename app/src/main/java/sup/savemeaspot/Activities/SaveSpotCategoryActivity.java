@@ -1,4 +1,4 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
@@ -16,10 +16,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import sup.savemeaspot.DataLayer.Category;
-import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.Adapters.CategoryListViewAdapter;
+import sup.savemeaspot.Adapters.CustomSpinnerAdapter;
+import sup.savemeaspot.DataLayer.Models.Category;
+import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.SpotDatabase;
+import sup.savemeaspot.R;
 
 public class SaveSpotCategoryActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
+import sup.savemeaspot.R;
 
 /**
  * Created by Frika on 2018-04-02.

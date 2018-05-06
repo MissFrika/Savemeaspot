@@ -1,4 +1,4 @@
-package sup.savemeaspot.DataLayer;
+package sup.savemeaspot.DataLayer.Models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -10,7 +10,6 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 import android.net.Uri;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.R;

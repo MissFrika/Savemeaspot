@@ -1,4 +1,4 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+
+import sup.savemeaspot.R;
 
 /**
  * En anpassad adapter för Spinner. Används för att fylla

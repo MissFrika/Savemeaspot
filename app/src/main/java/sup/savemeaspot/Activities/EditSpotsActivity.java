@@ -1,7 +1,9 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import sup.savemeaspot.R;
 
 /**
  * Aktivitet för att ändra information on, samt radera Spots

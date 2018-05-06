@@ -1,4 +1,4 @@
-package sup.savemeaspot.DataLayer;
+package sup.savemeaspot.DataLayer.Models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -8,16 +8,9 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import java.util.List;
-import java.util.Queue;
 
 import android.arch.persistence.room.Update;
-import android.arch.persistence.room.util.TableInfo;
-import android.content.Context;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteCursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 
 /**
@@ -147,7 +140,7 @@ public class Coordinate {
         List<Coordinate> getCoordinateByAddress(String spotAddress);
 
         //Ta bort koordinater med ett visst koordinatid från databasen
-        @Query("DELETE FROM COORDINATE WHERE COORDINATE_ID LIKE :coordinateId")
+        @Query("DELETE FROM COORDINATE WHERE COORDINATEID LIKE :coordinateId")
         void deleteCoordinates(int coordinateId);
     }
 

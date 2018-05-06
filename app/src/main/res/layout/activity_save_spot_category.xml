@@ -5,7 +5,7 @@
     android:padding="16dp"
     android:background="@color/menuBackgroundColor"
     android:layout_height="match_parent"
-    tools:context="sup.savemeaspot.SaveSpotCategoryActivity">
+    tools:context="sup.savemeaspot.Activities.SaveSpotCategoryActivity">
 
     <TextView
         android:id="@+id/category_add_title_text"

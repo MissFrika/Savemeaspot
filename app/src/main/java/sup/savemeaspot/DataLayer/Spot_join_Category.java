@@ -3,6 +3,9 @@ package sup.savemeaspot.DataLayer;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 
+import sup.savemeaspot.DataLayer.Models.Category;
+import sup.savemeaspot.DataLayer.Models.Spot;
+
 /**
  * Created by Frida on 2018-03-19.
  */

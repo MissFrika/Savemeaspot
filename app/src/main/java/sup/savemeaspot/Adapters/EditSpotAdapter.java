@@ -1,4 +1,4 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import sup.savemeaspot.DataLayer.Spot;
+import sup.savemeaspot.DataLayer.Models.Spot;
+import sup.savemeaspot.R;
 
 /**
  * Adapter för att hantera ändringen av information om Spots i RecyclerViews

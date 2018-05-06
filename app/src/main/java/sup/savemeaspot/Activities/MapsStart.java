@@ -1,30 +1,23 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Activities;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -42,11 +35,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.io.IOException;
 import java.util.List;
 
-import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.Adapters.CustomMapInfoWindowAdapter;
+import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
-import sup.savemeaspot.DataLayer.Spot;
+import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
+import sup.savemeaspot.R;
 
 /**
  * Main Activity. Visar en karta med markörer för användarens nuvarande position och sparade Spots. Kod för Google Maps är pre-made och hämtat från https://developers.google.com/maps/documentation/android-api/start

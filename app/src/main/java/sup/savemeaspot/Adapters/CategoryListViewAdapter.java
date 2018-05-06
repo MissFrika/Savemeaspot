@@ -1,18 +1,10 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Adapters;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +13,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import sup.savemeaspot.DataLayer.Category;
-import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.Activities.SaveSpotCategoryActivity;
+import sup.savemeaspot.Activities.SaveTitleActivity;
+import sup.savemeaspot.DataLayer.Models.Category;
+import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
+import sup.savemeaspot.R;
 
 /**
  * Created by Frika on 2018-03-27.
@@ -175,8 +166,6 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
         return confirmationDialog;
     }
-
-
 
 
     // Returnerar storleken på dataset (invoked by the layout manager)

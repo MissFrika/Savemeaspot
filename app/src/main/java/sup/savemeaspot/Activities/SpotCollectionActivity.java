@@ -1,27 +1,18 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Activities;
 
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.DatabaseConfiguration;
-import android.arch.persistence.room.InvalidationTracker;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 
 import java.util.List;
 
-import sup.savemeaspot.DataLayer.Category;
-import sup.savemeaspot.DataLayer.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
-import sup.savemeaspot.DataLayer.Spot;
-import sup.savemeaspot.DataLayer.SpotDatabase;
+import sup.savemeaspot.DataLayer.Models.Spot;
+import sup.savemeaspot.R;
+import sup.savemeaspot.Adapters.SpotCollectionAdapter;
 
 public class SpotCollectionActivity extends AppCompatActivity {
 

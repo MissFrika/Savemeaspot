@@ -1,13 +1,13 @@
 package sup.savemeaspot.DataLayer;
 
-import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.widget.EditText;
 
 import java.util.List;
+
+import sup.savemeaspot.DataLayer.Models.Category;
+import sup.savemeaspot.DataLayer.Models.Coordinate;
+import sup.savemeaspot.DataLayer.Models.Spot;
 
 /**
  * Created by Frida on 2018-03-21.

@@ -1,38 +1,29 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Activities;
 
 import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import sup.savemeaspot.DataLayer.Category;
-import sup.savemeaspot.DataLayer.Coordinate;
+import sup.savemeaspot.DataLayer.Models.Category;
+import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
-import sup.savemeaspot.DataLayer.Spot;
+import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
+import sup.savemeaspot.R;
+import sup.savemeaspot.Adapters.TitleRecyclerViewAdapter;
 
 public class SaveTitleActivity extends AppCompatActivity {
 

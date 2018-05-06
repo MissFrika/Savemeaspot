@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/menuBackgroundColor"
-    tools:context="sup.savemeaspot.SpotCollectionActivity">
+    tools:context="sup.savemeaspot.Activities.SpotCollectionActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_container_spot_collection"

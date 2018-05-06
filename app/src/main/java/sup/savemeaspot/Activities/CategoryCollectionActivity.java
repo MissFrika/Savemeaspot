@@ -1,8 +1,7 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-import sup.savemeaspot.DataLayer.Category;
+import sup.savemeaspot.Adapters.CategoryListViewAdapter;
+import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.SpotDatabase;
+import sup.savemeaspot.R;
 
 public class CategoryCollectionActivity extends AppCompatActivity {
 

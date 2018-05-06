@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/menuBackgroundColor"
     android:theme="@style/AppTheme"
-    tools:context="sup.savemeaspot.MainMenuScreen">
+    tools:context="sup.savemeaspot.Activities.MainMenuScreen">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/menuButtonConstraint"

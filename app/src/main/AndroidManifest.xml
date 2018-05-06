@@ -45,17 +45,17 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MapsStart"
+            android:name=".Activities.MapsStart"
             android:label="Save Me a Spot" />
-        <activity android:name=".MainMenuScreen" />
+        <activity android:name=".Activities.MainMenuScreen" />
         <activity
-            android:name=".SaveSpotCategoryActivity"
+            android:name=".Activities.SaveSpotCategoryActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".SaveTitleActivity"
+            android:name=".Activities.SaveTitleActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="Save Me a Spot">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,9 +63,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SpotCollectionActivity" />
-        <activity android:name=".CategoryCollectionActivity" />
-        <activity android:name=".EditSpotsActivity"></activity>
+        <activity android:name=".Activities.SpotCollectionActivity" />
+        <activity android:name=".Activities.CategoryCollectionActivity" />
+        <activity android:name=".Activities.EditSpotsActivity"></activity>
     </application>
 
 </manifest>

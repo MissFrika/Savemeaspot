@@ -7,7 +7,7 @@
     android:focusableInTouchMode="true"
     android:background="@color/menuBackgroundColor"
     android:padding="16dp"
-    tools:context="sup.savemeaspot.SaveTitleActivity">
+    tools:context="sup.savemeaspot.Activities.SaveTitleActivity">
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">

@@ -1,4 +1,4 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Adapters;
 
 import android.app.Activity;
 import android.content.Context;

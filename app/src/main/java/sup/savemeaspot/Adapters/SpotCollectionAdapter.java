@@ -1,4 +1,4 @@
-package sup.savemeaspot;
+package sup.savemeaspot.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,13 +9,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 
-import sup.savemeaspot.DataLayer.Category;
-import sup.savemeaspot.DataLayer.Spot;
+import sup.savemeaspot.DataLayer.Models.Spot;
+import sup.savemeaspot.R;
 
 /**
  * Adapter för att hantera Spot-objekt i RecyclerView
