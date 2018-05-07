@@ -53,7 +53,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     @Override
     public void onBindViewHolder(final SpotCollectionAdapter.ViewHolder holder, final int position) {
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
-        holder.dropDownButton.setOnClickListener(new View.OnClickListener() {
+        holder.spotTitleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeDropdownLayoutVisibility(holder);
@@ -89,12 +89,12 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView collectionTextView;
-        Button dropDownButton;
         TextView spotDescriptionTextView;
         ImageButton showMapButton;
         Context context;
         List<Spot> spots;
         RelativeLayout spotDetails;
+        RelativeLayout spotTitleLayout;
 
         public ViewHolder(View v, Context context, List<Spot> spots){
             super(v);
@@ -102,9 +102,9 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
             this.context = context;
             spotDetails = v.findViewById(R.id.collection_drop_down_layout);
             collectionTextView = v.findViewById(R.id.collection_text_view);
-            dropDownButton = v.findViewById(R.id.collection_drop_down_button);
             spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
             showMapButton = v.findViewById(R.id.show_map_button);
+            spotTitleLayout = v.findViewById(R.id.collection_relative_layout);
         }
     }
 }
