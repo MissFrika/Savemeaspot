@@ -1,6 +1,7 @@
 package sup.savemeaspot.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import sup.savemeaspot.Adapters.SpotCollectionAdapter;
 public class SpotCollectionActivity extends AppCompatActivity {
 
     private Context context;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class SpotCollectionActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         }
     }
+
 }
 
 

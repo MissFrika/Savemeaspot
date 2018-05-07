@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-
+    <!--cardview för spots -->
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_spot_collection"
         android:layout_width="match_parent"
@@ -20,19 +20,22 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
 
+
         <android.support.constraint.ConstraintLayout
             android:id="@+id/collection_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/menuButtonTextColor">
 
+            <!-- Layout för Spot-->
             <RelativeLayout
                 android:id="@+id/collection_relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:background="@color/menuButtonColor"
                 android:padding="10dp">
 
+                <!--Här visas titel -->
                 <TextView
                     android:id="@+id/collection_text_view"
                     android:layout_width="wrap_content"
@@ -45,22 +48,9 @@
                     android:textColor="@color/menuButtonTextColor"
                     android:textSize="24sp" />
 
-
-                <!-- <Button
-                    android:id="@+id/collection_drop_down_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@color/menuBackgroundColor"
-                    android:text=" \/ "
-                    android:textColor="@color/menuButtonTextColor"
-                    android:clickable="true"
-                    />
--->
             </RelativeLayout>
 
+            <!-- Gömd layout som visas när Spot klickas på -->
             <RelativeLayout
                 android:id="@+id/collection_drop_down_layout"
                 android:layout_width="match_parent"
@@ -71,6 +61,13 @@
                 android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@id/collection_relative_layout">
 
+                <!--Här visas Category -->
+                <TextView
+                    android:id="@+id/spot_collection_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <!--Här visas Description -->
                 <TextView
                     android:id="@+id/spot_description_text_view"
                     android:layout_width="match_parent"
@@ -79,15 +76,18 @@
                     android:layout_toLeftOf="@+id/showOnMapConstraintLayout"
                     android:layout_toStartOf="@+id/showOnMapConstraintLayout"
                     android:background="@color/spotDetailsBackground"
-                    android:text="Description" />
+                    />
 
+                <!--Show on Map knapp -->
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/showOnMapConstraintLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/spot_collection_category">
 
+                    <!--Knapp för att visa Spot på kartan -->
                     <ImageButton
                         android:id="@+id/show_map_button"
                         android:layout_width="wrap_content"
@@ -101,6 +101,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <!--Text i Show on Map knapp -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

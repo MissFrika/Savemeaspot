@@ -1,6 +1,7 @@
 package sup.savemeaspot.Adapters;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     @Override
     public void onBindViewHolder(final SpotCollectionAdapter.ViewHolder holder, final int position) {
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
+        holder.spotDescriptionTextView.setText(spotDataset.get(position).getSpotDescription());
         holder.spotTitleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,11 +92,11 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
 
         TextView collectionTextView;
         TextView spotDescriptionTextView;
-        ImageButton showMapButton;
         Context context;
         List<Spot> spots;
         RelativeLayout spotDetails;
         RelativeLayout spotTitleLayout;
+        ConstraintLayout showOnMapButton;
 
         public ViewHolder(View v, Context context, List<Spot> spots){
             super(v);
@@ -103,8 +105,8 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
             spotDetails = v.findViewById(R.id.collection_drop_down_layout);
             collectionTextView = v.findViewById(R.id.collection_text_view);
             spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
-            showMapButton = v.findViewById(R.id.show_map_button);
             spotTitleLayout = v.findViewById(R.id.collection_relative_layout);
+            showOnMapButton = v.findViewById(R.id.showOnMapConstraintLayout);
         }
     }
 }

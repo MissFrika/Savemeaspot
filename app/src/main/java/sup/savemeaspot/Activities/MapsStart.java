@@ -51,6 +51,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private static final int PERMISSION_REQUEST_ACCESS_NETWORK_STATE = 0;
     private GoogleMap mMap;
+    private boolean activityStarted = true;
     private static final int zoomLevel = 15;
     private LocationManager locationManager;
     private boolean permissionsGranted = false;
@@ -128,7 +129,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                         e.printStackTrace();
                     }
 
-                    boolean activityStarted = true;
+
                     do {
                         CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
                         mMap.animateCamera(userLocation);
@@ -179,7 +180,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    boolean activityStarted = true;
                     do {
                         CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
                         mMap.animateCamera(userLocation);
@@ -305,6 +305,18 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LOCAL", locality);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY", country);
         return intent;
+    }
+
+    private void checkIncomingIntents() {
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (!extras.isEmpty()) {
+            //if(extras.get() )
+
+        }
+        else {
+
+        }
     }
 
     /**
@@ -439,5 +451,20 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             Marker marker = googleMap.addMarker(markerOptions);
             googleMap.setInfoWindowAdapter(infoWindowAdapter);
         }
+    }
+
+    /**
+     * Zoomar in till en specifik spots plats
+     * @param coordinate
+     */
+    public void zoomToSpot(Coordinate coordinate){
+        Coordinate coords = coordinate;
+        double latitude = coords.getLatitude();
+        double longitude = coords.getLongitude();
+
+        LatLng latLng= new LatLng(latitude,longitude);
+        //Flytta kameran
+        CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+        mMap.animateCamera(userLocation);
     }
 }
