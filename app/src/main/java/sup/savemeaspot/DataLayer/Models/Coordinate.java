@@ -112,7 +112,7 @@ public class Coordinate {
         void updateCoordinate(Coordinate coordinate);
 
         //Ta bort Coordinates
-        @Delete()
+        @Delete
         void deleteCoordinate(Coordinate coordinate);
 
         //Hämta sist insatta raden i tabellen

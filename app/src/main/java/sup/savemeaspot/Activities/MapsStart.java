@@ -51,6 +51,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private static final int PERMISSION_REQUEST_ACCESS_NETWORK_STATE = 0;
     private GoogleMap mMap;
+    private boolean activityStarted = true;
     private static final int zoomLevel = 15;
     private LocationManager locationManager;
     private boolean permissionsGranted = false;
@@ -62,7 +63,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationClient;
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
-    public static final String EXTRA_MESSAGE_COORDINATES = "sup.savemeaspot.COORDINATES";
 
 
     @Override
@@ -128,7 +128,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                         e.printStackTrace();
                     }
 
-                    boolean activityStarted = true;
+
                     do {
                         CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
                         mMap.animateCamera(userLocation);
@@ -179,7 +179,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    boolean activityStarted = true;
+
                     do {
                         CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
                         mMap.animateCamera(userLocation);
@@ -205,6 +205,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                 }
             });
 
+        }
+        //Zooma till en spot om intent skickas från SpotCollectionActivity
+        if(!getIntent().getExtras().isEmpty()){
+            zoomToSpot();
         }
     }
 
@@ -438,6 +442,19 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             MarkerOptions markerOptions = new MarkerOptions().position(latlng).title(spotTitle).icon(BitmapDescriptorFactory.fromResource(drawableMarker));
             Marker marker = googleMap.addMarker(markerOptions);
             googleMap.setInfoWindowAdapter(infoWindowAdapter);
+        }
+    }
+
+
+    private void zoomToSpot(){
+        if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")
+                && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")){
+            Bundle extras = getIntent().getExtras();
+            double latitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
+            double longitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
+
+            LatLng latLng = new LatLng(latitude,longitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
         }
     }
 }
