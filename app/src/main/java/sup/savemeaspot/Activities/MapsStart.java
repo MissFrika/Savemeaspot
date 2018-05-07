@@ -63,7 +63,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationClient;
 
     private static final String simpl_MS = MapsStart.class.getSimpleName();
-    public static final String EXTRA_MESSAGE_COORDINATES = "sup.savemeaspot.COORDINATES";
 
 
     @Override
@@ -180,6 +179,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                     do {
                         CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
                         mMap.animateCamera(userLocation);
@@ -205,6 +205,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                 }
             });
 
+        }
+        //Zooma till en spot om intent skickas från SpotCollectionActivity
+        if(!getIntent().getExtras().isEmpty()){
+            zoomToSpot();
         }
     }
 
@@ -305,18 +309,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LOCAL", locality);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY", country);
         return intent;
-    }
-
-    private void checkIncomingIntents() {
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (!extras.isEmpty()) {
-            //if(extras.get() )
-
-        }
-        else {
-
-        }
     }
 
     /**
@@ -453,18 +445,16 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-    /**
-     * Zoomar in till en specifik spots plats
-     * @param coordinate
-     */
-    public void zoomToSpot(Coordinate coordinate){
-        Coordinate coords = coordinate;
-        double latitude = coords.getLatitude();
-        double longitude = coords.getLongitude();
 
-        LatLng latLng= new LatLng(latitude,longitude);
-        //Flytta kameran
-        CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
-        mMap.animateCamera(userLocation);
+    private void zoomToSpot(){
+        if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")
+                && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")){
+            Bundle extras = getIntent().getExtras();
+            double latitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
+            double longitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
+
+            LatLng latLng = new LatLng(latitude,longitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+        }
     }
 }
