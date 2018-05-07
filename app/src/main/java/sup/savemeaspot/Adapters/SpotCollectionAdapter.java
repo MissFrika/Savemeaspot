@@ -1,6 +1,9 @@
 package sup.savemeaspot.Adapters;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +17,11 @@ import android.widget.TextView;
 import java.util.List;
 
 
+import sup.savemeaspot.Activities.MapsStart;
+import sup.savemeaspot.DataLayer.DatabaseHelper;
+import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.Models.Spot;
+import sup.savemeaspot.DataLayer.SpotDatabase;
 import sup.savemeaspot.R;
 
 /**
@@ -41,8 +48,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
      * @return
      */
     @Override
-    public SpotCollectionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                               int viewType) {
+    public SpotCollectionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // skapa ny vy
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_layout_spot_collection, parent, false);
@@ -55,10 +61,33 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     public void onBindViewHolder(final SpotCollectionAdapter.ViewHolder holder, final int position) {
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
         holder.spotDescriptionTextView.setText(spotDataset.get(position).getSpotDescription());
+        final Spot spot = spotDataset.get(position);
+
         holder.spotTitleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeDropdownLayoutVisibility(holder);
+            }
+        });
+        holder.showOnMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MapsStart.class);
+
+                //Hämta koordinater från databasen
+                Coordinate coordinate = DatabaseHelper.getSpotCoordinates(context, spot);
+                double latitude = coordinate.getLatitude();
+                double longitude = coordinate.getLongitude();
+
+                intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", latitude);
+                intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", longitude);
+                //Starta aktivitet
+                context.startActivity(intent);
+
+                //Uri gmmIntentUri = Uri.parse("geo:"+ latitude + "," + longitude);
+                //Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                //mapIntent.setPackage("com.google.android.apps.maps");
+                //context.startActivity(mapIntent);
             }
         });
     }
@@ -96,7 +125,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         List<Spot> spots;
         RelativeLayout spotDetails;
         RelativeLayout spotTitleLayout;
-        ConstraintLayout showOnMapButton;
+        ImageButton showOnMapButton;
 
         public ViewHolder(View v, Context context, List<Spot> spots){
             super(v);
@@ -106,7 +135,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
             collectionTextView = v.findViewById(R.id.collection_text_view);
             spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
             spotTitleLayout = v.findViewById(R.id.collection_relative_layout);
-            showOnMapButton = v.findViewById(R.id.showOnMapConstraintLayout);
+            showOnMapButton = v.findViewById(R.id.show_map_button);
         }
     }
 }

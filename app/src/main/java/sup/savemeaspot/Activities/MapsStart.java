@@ -96,6 +96,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             return;
         }
 
+
         //Hämtar en användares position och uppdaterar positionen på kartan
         //Kollar om det finns tillgång till en nätverkstjänst
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
@@ -113,27 +114,27 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     Geocoder geocoder = new Geocoder(getApplicationContext());
                     //En lista av adresser som skall hämtas från en användares positionen
                     try {
-                        List<Address> adresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
                         //För att hämta ut adresserna, i detta fall lokal adress och land
-                        String adr = adresses.get(0).getLocality() + ", ";
-                        adr += adresses.get(0).getCountryName();
-
                         currentCoordinate.setLatitude(latLng.latitude);
                         currentCoordinate.setLongitude(latLng.longitude);
-                        currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
-                        currentCoordinate.setCountryName(adresses.get(0).getCountryName());
+                        if (addresses != null && addresses.size() > 0) {
+                            currentCoordinate.setLocalAddress(addresses.get(0).getLocality());
+                            currentCoordinate.setCountryName(addresses.get(0).getCountryName());
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-
-                    do {
-                        CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
-                        mMap.animateCamera(userLocation);
-                        activityStarted = false;
-                    } while (activityStarted);
+                    if (activityStarted) {
+                        do {
+                            CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+                            mMap.animateCamera(userLocation);
+                            activityStarted = false;
+                        } while (activityStarted);
+                    }
                 }
 
                 //Auto-genererade metoder
@@ -166,26 +167,26 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     Geocoder geocoder = new Geocoder(getApplicationContext());
                     //En lista av adresser som skall hämtas från en användares positionen
                     try {
-                        List<Address> adresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
                         //För att hämta ut adresserna, i detta fall lokal adress och land
-                        String adr = adresses.get(0).getLocality() + ", ";
-                        adr += adresses.get(0).getCountryName();
                         currentCoordinate.setLatitude(latLng.latitude);
                         currentCoordinate.setLongitude(latLng.longitude);
-                        currentCoordinate.setLocalAddress(adresses.get(0).getLocality());
-                        currentCoordinate.setCountryName(adresses.get(0).getCountryName());
+                        if (addresses != null && addresses.size() > 0) {
+                            currentCoordinate.setLocalAddress(addresses.get(0).getLocality());
+                            currentCoordinate.setCountryName(addresses.get(0).getCountryName());
+                        }
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    do {
-                        CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
-                        mMap.animateCamera(userLocation);
-                        activityStarted = false;
-                    } while (activityStarted);
-
+                    if(activityStarted) {
+                        do {
+                            CameraUpdate userLocation = CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel);
+                            mMap.animateCamera(userLocation);
+                            activityStarted = false;
+                        } while (activityStarted);
+                    }
                 }
 
                 //Auto-genererade metoder
@@ -205,10 +206,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                 }
             });
 
-        }
-        //Zooma till en spot om intent skickas från SpotCollectionActivity
-        if(!getIntent().getExtras().isEmpty()){
-            zoomToSpot();
         }
     }
 
@@ -301,8 +298,20 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         //Nytt koordinatobjet från nuvarande koordinater
         double lat = currentCoordinate.getLatitude();
         double lon = currentCoordinate.getLongitude();
-        String locality = currentCoordinate.getLocalAddress();
-        String country = currentCoordinate.getCountryName();
+        String locality;
+        String country;
+        if (currentCoordinate.getLocalAddress() != null) {
+             locality = currentCoordinate.getLocalAddress();
+        }
+        else{
+            locality = "";
+        }
+        if(currentCoordinate.getCountryName() != null){
+            country = currentCoordinate.getCountryName();
+        }
+        else{
+            country = "";
+        }
         //Skickar med ett koordinatobjekt, konverterat till String
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
@@ -330,6 +339,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         }
         mMap.setMyLocationEnabled(true);
 
+
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
@@ -356,6 +366,11 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         }
         catch (Exception e){
             e.printStackTrace();
+        }
+
+        //Zooma till en spot om intent skickas från SpotCollectionActivity
+        if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT") && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")){
+            zoomToSpot(mMap);
         }
 
     }
@@ -446,15 +461,17 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     }
 
 
-    private void zoomToSpot(){
+    private void zoomToSpot(GoogleMap googleMap){
         if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")
                 && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")){
+            GoogleMap mMap = googleMap;
             Bundle extras = getIntent().getExtras();
             double latitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
             double longitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
 
             LatLng latLng = new LatLng(latitude,longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+            activityStarted = false;
         }
     }
 }
