@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     private List<Category> categoryDataset;
     private Context context;
     private Coordinate extraCoordinates;
+    private PopupWindow editPopupWindow;
 
     /**
      * Konstruktor + koordinater
@@ -86,16 +89,25 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         if(holder.isCategoryCollection) {
             holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
+
             if(categoryDataset.get(position).getIsDeletable()==0){
                 holder.catDeleteImageView.setVisibility(View.GONE);
                 holder.catEditImageView.setVisibility(View.GONE);
             }
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
+            holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                    //editPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+                }
+            });
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                    AlertDialog alertDialog = confirmationWindowBuilder.create();
                    alertDialog.show();
+
+
                 }
             });
         }
