@@ -147,12 +147,29 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         //Acceptera
         confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Acceptera och radera kategori från databasen
-                DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
-                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
-                deleteCategory(position);
+            public void onClick(final DialogInterface dialog, int which) {
+                AlertDialog.Builder confirmDeleteSpots = new AlertDialog.Builder(context);
+                confirmDeleteSpots.setTitle("Delete Spots");
+                confirmDeleteSpots.setMessage(context.getText(R.string.delete_category_spots_included) + " " + categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.category_spots_will_delete));
                 dialog.dismiss();
+
+                //Acceptera att spots tas bort
+                confirmDeleteSpots.setPositiveButton(context.getText(R.string.am_sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Acceptera och radera kategori från databasen
+                        DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
+                        Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
+                        deleteCategory(position);
+                        dialogInterface.dismiss();
+                    }
+                });
+                confirmDeleteSpots.setNegativeButton(context.getText(R.string.not_sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
             }
         });
 
