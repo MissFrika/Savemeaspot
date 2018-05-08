@@ -2,6 +2,7 @@ package sup.savemeaspot.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,17 +29,36 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public EditSpotAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.edit_spots_card_view_layout, parent, false);
+        EditSpotAdapter.ViewHolder viewHolder = new EditSpotAdapter.ViewHolder(v, context, spotDataset);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.spotTitle.setText(spotDataset.get(position).getSpotTitle());
+        //OnClick listener för att ta bort Spot
+        holder.deleteSpotBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        //OnClick listener för att redigera Spot
+       holder.editSpotBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+           }
+       });
 
     }
 
     @Override
     public int getItemCount() {
+
         return spotDataset.size();
     }
 

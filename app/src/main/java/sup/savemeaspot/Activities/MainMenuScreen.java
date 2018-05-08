@@ -25,6 +25,7 @@ public class MainMenuScreen extends AppCompatActivity {
         //Instansiera knappar
         openMySpots();
         openCategoryCollection();
+        openEditSpots();
     }
 
     /**
@@ -60,7 +61,14 @@ public class MainMenuScreen extends AppCompatActivity {
      * Öppna EditSpotsActivity
      */
     private void openEditSpots(){
-
+        ImageButton btn = findViewById(R.id.edit_spots_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EditSpotsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
