@@ -86,8 +86,11 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         if(holder.isCategoryCollection) {
             holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
+            if(categoryDataset.get(position).getIsDeletable()==0){
+                holder.catDeleteImageView.setVisibility(View.GONE);
+                holder.catEditImageView.setVisibility(View.GONE);
+            }
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
-            //TODO: CHECK IF DELETABLE INNAN DELETEKNAPPEN VISAS! 0 = FALSE
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
