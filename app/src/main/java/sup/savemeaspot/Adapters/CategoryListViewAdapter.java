@@ -88,7 +88,6 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
             //TODO: CHECK IF DELETABLE INNAN DELETEKNAPPEN VISAS! 0 = FALSE
-            //TODO: BE ANVÄNDAREN KONFIRMERA ATT SPOTS OCKSÅ TAS BORT OM EN KATEGORI TAS BORT/LÄGGS I NY KATEGORI
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -139,8 +138,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      */
     private AlertDialog.Builder createDeleteCategoryDialog(final int position) {
         AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
-        confirmationDialog.setTitle(context.getString(R.string.delete_category));
-        confirmationDialog.setMessage(context.getString(R.string.delete_confirmation_category) + " " + categoryDataset.get(position).getCategoryName() + "?");
+        confirmationDialog.setTitle(R.string.delete_category);
+        confirmationDialog.setMessage(R.string.delete_confirmation_category + " " + categoryDataset.get(position).getCategoryName() + "?");
 
         //Acceptera
         confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -148,7 +147,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             public void onClick(DialogInterface dialog, int which) {
                 //Acceptera och radera kategori från databasen
                 DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
-                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getString(R.string.has_deleted), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + R.string.has_deleted, Toast.LENGTH_SHORT).show();
                 deleteCategory(position);
                 dialog.dismiss();
             }
