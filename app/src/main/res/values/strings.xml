@@ -9,6 +9,7 @@
     <string name="delete_confirmation_category">Are you sure you want to delete</string>
     <string name="has_deleted">has been deleted.</string>
 
+
     <!--Buttons-->
     <string name="button_menu_en">Menu</string>app:layout_constraintLeft_toLeftOf="parent"
     <string name="button_save_en">+</string>

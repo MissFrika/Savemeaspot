@@ -304,13 +304,13 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
              locality = currentCoordinate.getLocalAddress();
         }
         else{
-            locality = "";
+            locality = "Unknown";
         }
         if(currentCoordinate.getCountryName() != null){
             country = currentCoordinate.getCountryName();
         }
         else{
-            country = "";
+            country = "Unknown";
         }
         //Skickar med ett koordinatobjekt, konverterat till String
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
