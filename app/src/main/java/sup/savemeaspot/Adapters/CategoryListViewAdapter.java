@@ -141,8 +141,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      */
     private AlertDialog.Builder createDeleteCategoryDialog(final int position) {
         AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
-        confirmationDialog.setTitle(R.string.delete_category);
-        confirmationDialog.setMessage(R.string.delete_confirmation_category + " " + categoryDataset.get(position).getCategoryName() + "?");
+        confirmationDialog.setTitle(context.getText(R.string.delete_category));
+        confirmationDialog.setMessage(context.getText(R.string.delete_confirmation_category) + " " + categoryDataset.get(position).getCategoryName() + "?");
 
         //Acceptera
         confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -150,7 +150,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             public void onClick(DialogInterface dialog, int which) {
                 //Acceptera och radera kategori från databasen
                 DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
-                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + R.string.has_deleted, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
                 deleteCategory(position);
                 dialog.dismiss();
             }
