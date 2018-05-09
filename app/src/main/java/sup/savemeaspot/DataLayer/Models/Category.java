@@ -24,7 +24,7 @@ import sup.savemeaspot.R;
 public class Category {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo( name = "categoryid")
+    @ColumnInfo( name = "categoryId")
     private int CategoryId;
     @ColumnInfo( name = "category_name")
     private String categoryName;

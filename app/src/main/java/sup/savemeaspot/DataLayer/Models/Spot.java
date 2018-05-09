@@ -2,6 +2,7 @@ package sup.savemeaspot.DataLayer.Models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
@@ -9,14 +10,18 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+import static android.arch.persistence.room.ForeignKey.RESTRICT;
+
 
 /**
  * Created by Frida on 2018-03-19. Klass för att hantera Spot objekt mot databasen och applikationen
  */
-@Entity(tableName = "Spot")
+@Entity(tableName = "Spot", foreignKeys = {@ForeignKey(entity = Category.class, parentColumns = "categoryId", childColumns = "spot_category", onDelete = CASCADE, onUpdate = RESTRICT),
+        @ForeignKey(entity = Coordinate.class, parentColumns = "coordinateId", childColumns = "spot_coordinate", onDelete = CASCADE, onUpdate = RESTRICT)})
 public class Spot {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "spotid")
+    @ColumnInfo(name = "spotId")
     private int SpotId;
     @ColumnInfo(name = "spot_title")
     private String spotTitle;
