@@ -165,6 +165,19 @@ public class DatabaseHelper {
     }
 
     /**
+     * Ta bort en Spot
+     * @param context
+     * @param spot
+     */
+    public static void deleteSpot(Context context, Spot spot){
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries()
+                .build();
+        database.spotDao().deleteSpot(spot.getSpotId());
+        database.close();
+    }
+
+    /**
      * Ta bort en vald kategory från databasen
      * @param context
      * @param category

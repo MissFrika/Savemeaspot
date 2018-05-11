@@ -151,7 +151,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     private AlertDialog.Builder createDeleteCategoryDialog(final int position) {
         final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
         confirmationDialog.setTitle(context.getText(R.string.delete_category));
-        confirmationDialog.setMessage(context.getText(R.string.delete_confirmation_category) + " " + categoryDataset.get(position).getCategoryName() + "?");
+        confirmationDialog.setMessage(context.getText(R.string.delete_confirmation) + " " + categoryDataset.get(position).getCategoryName() + "?");
 
         //Acceptera
         confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {

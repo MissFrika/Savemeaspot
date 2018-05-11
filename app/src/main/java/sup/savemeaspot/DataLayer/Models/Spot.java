@@ -77,6 +77,10 @@ public class Spot {
         @Query("SELECT COUNT(SPOTID) FROM SPOT")
         int countSpots();
 
+        //Radera en Spot
+        @Query("DELETE FROM SPOT WHERE SPOTID LIKE :spotId")
+        void deleteSpot(int spotId);
+
         //Hämtar alla Spots med en viss angiven titel
         @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title")
         List<Spot> getSpotByTitle(String title);

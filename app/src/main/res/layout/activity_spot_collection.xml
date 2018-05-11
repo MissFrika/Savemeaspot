@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:background="@color/menuBackgroundColor"
     tools:context="sup.savemeaspot.Activities.SpotCollectionActivity">
+
+    <TextView
+        android:id="@+id/sort_by_category_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Sort by category" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_container_spot_collection"
@@ -13,9 +23,18 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/category_add_title_text"
+        android:layout_below="@+id/category_spinner_spotlist"
         android:layout_marginTop="13dp"
         android:scrollbars="vertical">
     </android.support.v7.widget.RecyclerView>
+
+    <Spinner
+        android:id="@+id/category_spinner_spotlist"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sort_by_category_tv" />
+
 
 </RelativeLayout>

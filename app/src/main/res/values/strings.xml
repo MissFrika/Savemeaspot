@@ -6,7 +6,7 @@
     <string name="add_description_tv">Spot description (optional)</string>
     <string name="show_on_map">Show on Map</string>
     <string name="delete_category">Delete category</string>
-    <string name="delete_confirmation_category">Are you sure you want to delete</string>
+    <string name="delete_confirmation">Are you sure you want to delete</string>
     <string name="has_deleted">has been deleted.</string>
     <string name="delete_category_spots_included">Spots that are included in</string>
     <string name="category_spots_will_delete">will be deleted. Are you sure you want to proceed?</string>

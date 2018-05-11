@@ -27,8 +27,11 @@ public class EditSpotsActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         List<Spot> spotList = DatabaseHelper.getAllSpots(this.getApplicationContext());
 
-        EditSpotAdapter editSpotAdapter = new EditSpotAdapter(this.getApplicationContext(), spotList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(editSpotAdapter);
+        //Sätt Adapter om spotList !null
+        if(spotList != null) {
+            EditSpotAdapter editSpotAdapter = new EditSpotAdapter(this.getApplicationContext(), spotList);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(editSpotAdapter);
+        }
     }
 }
