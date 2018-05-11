@@ -49,6 +49,7 @@
         android:layout_toLeftOf="@+id/category_spinner"
         android:layout_toStartOf="@+id/category_spinner"
         android:ems="10"
+        android:maxLength="20"
         android:inputType="textPersonName" />
 
     <!-- Lägg till kategori-knapp-->

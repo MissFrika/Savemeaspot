@@ -61,6 +61,7 @@
         android:id="@+id/addDescription"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:maxLength="300"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/addDescriptionTextView"
