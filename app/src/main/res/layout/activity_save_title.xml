@@ -20,6 +20,7 @@
         android:defaultFocusHighlightEnabled="false"
         android:focusedByDefault="false"
         android:text="@string/name_spot"
+        android:maxLength="15"
         android:textSize="24dp" />
 
     <EditText
