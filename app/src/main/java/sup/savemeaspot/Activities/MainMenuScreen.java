@@ -26,6 +26,7 @@ public class MainMenuScreen extends AppCompatActivity {
         openMySpots();
         openCategoryCollection();
         openEditSpots();
+        closeMenu();
     }
 
     /**
@@ -67,6 +68,19 @@ public class MainMenuScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, EditSpotsActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * Stäng menyaktiviteten
+     */
+    private void closeMenu(){
+        ImageButton btn = findViewById(R.id.close_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainMenuScreen.this.finish();
             }
         });
     }

@@ -28,7 +28,6 @@ android:layout_height="wrap_content">
             android:id="@+id/edit_spots_relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:background="@color/menuButtonColor"
             android:padding="10dp">
 
