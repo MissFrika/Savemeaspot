@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -23,6 +26,8 @@ import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.R;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * Created by Frika on 2018-03-27.
@@ -97,15 +102,38 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
             holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+                View customView = inflater.inflate(R.layout.edit_category_popup_layout, null);
+                editPopupWindow = new PopupWindow(
+                        customView,
+                        LayoutParams.WRAP_CONTENT,
+                        LayoutParams.WRAP_CONTENT
+                );
 
+                // Set an elevation value for popup window
+                // Call requires API level 21
+                if(Build.VERSION.SDK_INT>=21){
+                    editPopupWindow.setElevation(5.0f);
                 }
-            });
+
+                ImageButton closeButton = customView.findViewById(R.id.close_button);
+
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        editPopupWindow.dismiss();
+                    }
+                });
+            }});
+
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                    AlertDialog alertDialog = confirmationWindowBuilder.create();
                    alertDialog.show();
+
+
                 }
             });
         }
@@ -117,6 +145,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 /**
                  * Metod körs om ett objekt i ViewHolder klickas på
+                 *
                  * @param v
                  */
                 @Override
@@ -149,24 +178,28 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      * @return
      */
     private AlertDialog.Builder createDeleteCategoryDialog(final int position) {
-        final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
+        AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
         confirmationDialog.setTitle(context.getText(R.string.delete_category));
         confirmationDialog.setMessage(context.getText(R.string.delete_confirmation) + " " + categoryDataset.get(position).getCategoryName() + "?");
 
         //Acceptera
         confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, int which) {
-                        AlertDialog.Builder alertDialog = createDeleteCategorySpotsDialog(position);
-                        alertDialog.show();
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Acceptera och radera kategori från databasen
+                DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
+                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
+                deleteCategory(position);
+                dialog.dismiss();
+            }
+        });
 
         //Neka
         confirmationDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 //Avbryt och stäng dialogruta
                 dialog.dismiss();
             }
@@ -174,38 +207,6 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
         return confirmationDialog;
     }
-
-
-    /**
-     * Skapa en alert-ruta för att be en användare acceptera att Spots tas bort om kategorier tas bort
-     * @param position
-     * @return
-     */
-    private AlertDialog.Builder createDeleteCategorySpotsDialog(final int position){
-
-        final AlertDialog.Builder confirmDeleteSpots = new AlertDialog.Builder(context);
-        //Acceptera att spots tas bort
-        confirmDeleteSpots.setMessage(context.getText(R.string.delete_category_spots_included) + " " + categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.category_spots_will_delete));
-        confirmDeleteSpots.setPositiveButton(context.getText(R.string.am_sure), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //Acceptera och radera kategori från databasen
-                DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
-                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
-                deleteCategory(position);
-                dialogInterface.dismiss();
-            }
-        });
-        confirmDeleteSpots.setNegativeButton(context.getText(R.string.not_sure), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        return confirmDeleteSpots;
-    }
-
-
 
 
     // Returnerar storleken på dataset (invoked by the layout manager)
