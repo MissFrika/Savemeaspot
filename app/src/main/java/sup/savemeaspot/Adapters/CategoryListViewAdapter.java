@@ -98,7 +98,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v) {
-                    //editPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+
                 }
             });
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
