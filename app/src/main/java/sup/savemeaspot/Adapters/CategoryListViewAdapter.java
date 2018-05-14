@@ -4,16 +4,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.util.List;
 
@@ -23,6 +27,8 @@ import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.R;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * Created by Frika on 2018-03-27.
@@ -98,7 +104,28 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v) {
-                    //editPopupWindow.showAtLocation(mRelativeLayout, Gravity.CENTER,0,0);
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+                View customView = inflater.inflate(R.layout.edit_category_popup_layout,null);
+                editPopupWindow = new PopupWindow(
+                        customView,
+                        LayoutParams.WRAP_CONTENT,
+                        LayoutParams.WRAP_CONTENT
+                );
+
+                // Set an elevation value for popup window
+                // Call requires API level 21
+                if(Build.VERSION.SDK_INT>=21){
+                    editPopupWindow.setElevation(5.0f);
+                }
+
+                ImageButton closeButton = customView.findViewById(R.id.close_button);
+
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        editPopupWindow.dismiss();
+                    }
+                });
                 }
             });
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
