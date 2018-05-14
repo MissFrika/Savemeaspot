@@ -102,9 +102,9 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
             holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-                View customView = inflater.inflate(R.layout.edit_category_popup_layout,null);
+                View customView = inflater.inflate(R.layout.edit_category_popup_layout, null);
                 editPopupWindow = new PopupWindow(
                         customView,
                         LayoutParams.WRAP_CONTENT,
