@@ -29,7 +29,7 @@ public class EditSpotsActivity extends AppCompatActivity {
 
         //Sätt Adapter om spotList !null
         if(spotList != null) {
-            EditSpotAdapter editSpotAdapter = new EditSpotAdapter(this.getApplicationContext(), spotList);
+            EditSpotAdapter editSpotAdapter = new EditSpotAdapter(this.getApplicationContext(), spotList, EditSpotsActivity.this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(editSpotAdapter);
         }

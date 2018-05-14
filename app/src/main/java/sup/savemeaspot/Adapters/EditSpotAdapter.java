@@ -1,17 +1,21 @@
 package sup.savemeaspot.Adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import sup.savemeaspot.Activities.SpotCollectionActivity;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.R;
@@ -25,10 +29,12 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
 
     private List<Spot> spotDataset;
     private Context context;
+    private final Activity activity;
 
-    public EditSpotAdapter (Context context, List<Spot> spot){
+    public EditSpotAdapter (Context context, List<Spot> spot, Activity activityContext){
         this.spotDataset = spot;
         this.context = context;
+        this.activity = activityContext;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
         holder.deleteSpotBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialog = createDeleteSpotDialog(position);
+                AlertDialog.Builder alertDialog = createDeleteSpotDialog(position, spotDataset);
                 alertDialog.show();
             }
         });
@@ -71,16 +77,20 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
      * @param position
      * @return
      */
-    private AlertDialog.Builder createDeleteSpotDialog(final int position){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+    private AlertDialog.Builder createDeleteSpotDialog(final int position, final List<Spot> spotDataset){
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         alertDialog.setTitle("Delete Spot");
-        alertDialog.setMessage(context.getText(R.string.delete_confirmation) + " " + spotDataset.get(position).getSpotTitle() +"?" );
+        alertDialog.setMessage(activity.getApplicationContext().getText(R.string.delete_confirmation) + " " + spotDataset.get(position).getSpotTitle() +"?" );
         //Acceptera
         alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DatabaseHelper.deleteSpot(context, spotDataset.get(position));
+                String spotName = spotDataset.get(position).getSpotTitle();
+                DatabaseHelper.deleteSpot(activity.getApplicationContext(), spotDataset.get(position));
                 dialog.dismiss();
+                deleteSpot(position);
+                Toast.makeText(activity, spotName + " has been deleted.", Toast.LENGTH_SHORT).show();
+
             }
         });
         //Neka
@@ -111,5 +121,14 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
             editSpotBtn = view.findViewById(R.id.edit_spot_button);
             deleteSpotBtn = view.findViewById(R.id.delete_spot_button);
         }
+    }
+
+    /**
+     * Deleta a spot from the dataset
+     * @param position
+     */
+    private void deleteSpot(int position){
+        spotDataset.remove(position);
+        notifyItemRemoved(position);
     }
 }
