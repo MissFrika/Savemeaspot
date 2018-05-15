@@ -14,11 +14,13 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 import sup.savemeaspot.Activities.MapsStart;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
+import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
@@ -33,11 +35,13 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
     private List<Spot> spotDataset;
     private Context context;
     private RecyclerView dropDown;
+    private List<Spot> datasetCopy;
 
-    public SpotCollectionAdapter(Context context, List<Spot> items, RecyclerView recyclerView){
+    public SpotCollectionAdapter(Context context, final List<Spot> items, RecyclerView recyclerView){
         this.context = context;
         this.spotDataset = items;
         this.dropDown = recyclerView;
+        this.datasetCopy = new ArrayList<>(items);
     }
 
     /**
@@ -104,7 +108,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
      * Visar eller döljer relativelayout
      * @param holder
      */
-    public void changeDropdownLayoutVisibility(SpotCollectionAdapter.ViewHolder holder) {
+    private void changeDropdownLayoutVisibility(SpotCollectionAdapter.ViewHolder holder) {
 
         if (holder.spotDetails.getVisibility()==View.GONE) {
             holder.spotDetails.setVisibility(View.VISIBLE);
@@ -112,6 +116,27 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         else if(holder.spotDetails.getVisibility()==View.VISIBLE){
             holder.spotDetails.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * Filter spots by search string
+     * @param text
+     */
+    public void filter(String text) {
+        //Rensa dataset
+        spotDataset.clear();
+        if (text.isEmpty()) {
+            spotDataset.addAll(datasetCopy);
+        } else {
+            text = text.toLowerCase();
+            for (Spot item : datasetCopy) {
+                Category category = DatabaseHelper.getSpotCategory(context.getApplicationContext(), item);
+                if (item.getSpotTitle().toLowerCase().contains(text) || category.getCategoryName().toLowerCase().contains(text)) {
+                    spotDataset.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     /**
