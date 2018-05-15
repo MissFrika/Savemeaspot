@@ -19,8 +19,6 @@ public class SpotCollectionActivity extends AppCompatActivity {
 
     private Context context;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
