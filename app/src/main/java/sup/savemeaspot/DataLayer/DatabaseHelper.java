@@ -128,7 +128,22 @@ public class DatabaseHelper {
         else{
             return null;
         }
+    }
 
+    /**
+     * Find and return Spot category from database
+     * @param context
+     * @param spot
+     * @return
+     */
+    public static Category getSpotCategory(Context context, Spot spot){
+        int categoryId = spot.getSpotCategory();
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries()
+                .build();
+        Category category = database.categoryDao().getSpotCategory(categoryId);
+        database.close();
+        return  category;
     }
 
     /**
@@ -193,7 +208,7 @@ public class DatabaseHelper {
     }
 
     /**
-     * Ändra
+     * Ändra en kategoris information
      * @param context
      * @param category
      * @param categoryName
@@ -204,7 +219,6 @@ public class DatabaseHelper {
                 .allowMainThreadQueries() // // TODO: Skapa en asynkron metod för att köra köra queries mot databasen VIKTIGT!! Denna måste hanteras på en annan tråd i release-versionen!
                 .build();
         database.categoryDao().editCategory(category.getCategoryId(), categoryName, categoryImage);
-
         database.close();
     }
 

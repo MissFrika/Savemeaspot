@@ -1,11 +1,14 @@
 package sup.savemeaspot.Activities;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 
 
 import java.util.List;
@@ -39,12 +42,26 @@ public class SpotCollectionActivity extends AppCompatActivity {
 
         // Set adapter om spots finns
         if(spots != null) {
-            SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots, recyclerView);
+            final SpotCollectionAdapter adapter = new SpotCollectionAdapter(context, spots, recyclerView);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
+            //SearchView lyssnar på sökmenyn och filrerar resultat
+            SearchView searchView = findViewById(R.id.search_menu);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    adapter.filter(query);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.filter(newText);
+                    return true;
+                }
+            });
         }
     }
-
 }
 
 
