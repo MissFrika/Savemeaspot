@@ -90,15 +90,10 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      * @param position
      */
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         if(holder.isCategoryCollection) {
             holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
-
-            if(categoryDataset.get(position).getIsDeletable()==0){
-                holder.catDeleteImageView.setVisibility(View.GONE);
-                holder.catEditImageView.setVisibility(View.GONE);
-            }
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
             holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,15 +111,15 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 if(Build.VERSION.SDK_INT>=21){
                     editPopupWindow.setElevation(5.0f);
                 }
-
                 ImageButton closeButton = customView.findViewById(R.id.close_button);
-
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         editPopupWindow.dismiss();
                     }
                 });
+
+                editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
             }});
 
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
@@ -133,9 +128,13 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                    AlertDialog alertDialog = confirmationWindowBuilder.create();
                    alertDialog.show();
 
-
                 }
             });
+
+            if(categoryDataset.get(position).getIsDeletable()==0){
+                holder.catDeleteImageView.setVisibility(View.GONE);
+                holder.catEditImageView.setVisibility(View.GONE);
+            }
         }
         else if (!holder.isCategoryCollection) {
 
@@ -178,19 +177,16 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      * @return
      */
     private AlertDialog.Builder createDeleteCategoryDialog(final int position) {
-        AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
         confirmationDialog.setTitle(context.getText(R.string.delete_category));
         confirmationDialog.setMessage(context.getText(R.string.delete_confirmation) + " " + categoryDataset.get(position).getCategoryName() + "?");
 
         //Acceptera
         confirmationDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Acceptera och radera kategori från databasen
-                DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
-                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
-                deleteCategory(position);
-                dialog.dismiss();
+            public void onClick(final DialogInterface dialog, int which) {
+                AlertDialog.Builder alertDialog = createDeleteCategorySpotsDialog(position);
+                alertDialog.show();
             }
         });
 
@@ -199,7 +195,6 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 //Avbryt och stäng dialogruta
                 dialog.dismiss();
             }
@@ -207,6 +202,37 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
         return confirmationDialog;
     }
+
+
+    /**
+     * Skapa en alert-ruta för att be en användare acceptera att Spots tas bort om kategorier tas bort
+     * @param position
+     * @return
+     */
+    private AlertDialog.Builder createDeleteCategorySpotsDialog(final int position){
+
+        final AlertDialog.Builder confirmDeleteSpots = new AlertDialog.Builder(context);
+        //Acceptera att spots tas bort
+        confirmDeleteSpots.setMessage(context.getText(R.string.delete_category_spots_included) + " " + categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.category_spots_will_delete));
+        confirmDeleteSpots.setPositiveButton(context.getText(R.string.am_sure), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Acceptera och radera kategori från databasen
+                DatabaseHelper.deleteCategory(context, categoryDataset.get(position));
+                Toast.makeText(context, categoryDataset.get(position).getCategoryName() + " " + context.getText(R.string.has_deleted), Toast.LENGTH_SHORT).show();
+                deleteCategory(position);
+                dialogInterface.dismiss();
+            }
+        });
+        confirmDeleteSpots.setNegativeButton(context.getText(R.string.not_sure), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        return confirmDeleteSpots;
+    }
+
 
 
     // Returnerar storleken på dataset (invoked by the layout manager)
@@ -270,7 +296,6 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout);
                 isCategoryCollection = false;
             }
-
         }
 
     }
