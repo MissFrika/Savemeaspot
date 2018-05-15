@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +25,8 @@ import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.R;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 /**
  * Adapter för att hantera ändringen av information om Spots i RecyclerViews
  * Created by Frida on 2018-05-04.
@@ -29,12 +36,15 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
 
     private List<Spot> spotDataset;
     private Context context;
+    private static PopupWindow editPopupWindow;
     private final Activity activity;
+    private static boolean popupShows = false;
 
     public EditSpotAdapter (Context context, List<Spot> spot, Activity activityContext){
         this.spotDataset = spot;
         this.context = context;
         this.activity = activityContext;
+
     }
 
     @Override
@@ -46,7 +56,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.spotTitle.setText(spotDataset.get(position).getSpotTitle());
         //OnClick listener för att ta bort Spot
         holder.deleteSpotBtn.setOnClickListener(new View.OnClickListener() {
@@ -60,9 +70,35 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
        holder.editSpotBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+               View customView = inflater.inflate(R.layout.edit_spot_popup_layout, null);
+               PopupWindow newWindow = new PopupWindow(
+                       customView,
+                       ViewGroup.LayoutParams.WRAP_CONTENT,
+                       ViewGroup.LayoutParams.WRAP_CONTENT
+               );
 
-           }
-       });
+               if(!popupShows) {
+                   editPopupWindow = newWindow;
+                   popupShows = true;
+               }
+               else{
+                   editPopupWindow.dismiss();
+                   editPopupWindow = newWindow;
+               }
+               ImageButton closeButton = customView.findViewById(R.id.edit_spot_close_button);
+               closeButton.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       editPopupWindow.dismiss();
+                       popupShows = false;
+                   }
+               });
+               if(Build.VERSION.SDK_INT>=21){
+                   editPopupWindow.setElevation(5.0f);
+               }
+               editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
+           }});
 
     }
 
@@ -111,6 +147,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
         TextView spotTitle;
         ImageView editSpotBtn;
         ImageView deleteSpotBtn;
+        RelativeLayout relativeLayout;
 
         public ViewHolder(View view, Context context, List<Spot> spot) {
             super(view);
@@ -120,6 +157,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
             spotTitle = view.findViewById(R.id.edit_spot_text_view);
             editSpotBtn = view.findViewById(R.id.edit_spot_button);
             deleteSpotBtn = view.findViewById(R.id.delete_spot_button);
+            relativeLayout = view.findViewById(R.id.edit_spots_relative_layout);
         }
     }
 

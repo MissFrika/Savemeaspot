@@ -5,6 +5,7 @@
         android:id="@+id/popup_layout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@color/menuButtonColor"
         >
 
         <TextView
@@ -12,7 +13,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This is a test"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:textColor="@color/menuButtonTextColor"
+            android:contentDescription="@string/cross_resource"
+            />
 
         <ImageButton
             android:id="@+id/close_button"

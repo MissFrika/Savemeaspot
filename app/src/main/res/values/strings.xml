@@ -12,6 +12,7 @@
     <string name="category_spots_will_delete">will be deleted. Are you sure you want to proceed?</string>
     <string name="am_sure">I am sure</string>
     <string name="not_sure">No</string>
+    <string name="cross_resource">Cross</string>
 
 
     <!--Buttons-->

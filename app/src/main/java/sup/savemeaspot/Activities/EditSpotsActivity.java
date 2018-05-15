@@ -1,5 +1,6 @@
 package sup.savemeaspot.Activities;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +19,14 @@ import sup.savemeaspot.R;
  */
 public class EditSpotsActivity extends AppCompatActivity {
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_spots);
+        //Context hämtas
+        this.context = getApplicationContext();
 
         RecyclerView recyclerView = findViewById(R.id.recycler_container_edit_spots);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
@@ -29,7 +34,7 @@ public class EditSpotsActivity extends AppCompatActivity {
 
         //Sätt Adapter om spotList !null
         if(spotList != null) {
-            EditSpotAdapter editSpotAdapter = new EditSpotAdapter(this.getApplicationContext(), spotList, EditSpotsActivity.this);
+            EditSpotAdapter editSpotAdapter = new EditSpotAdapter(context, spotList, EditSpotsActivity.this);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(editSpotAdapter);
         }
