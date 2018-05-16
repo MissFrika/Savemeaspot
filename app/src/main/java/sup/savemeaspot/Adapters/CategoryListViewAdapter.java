@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -120,6 +121,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 });
 
                 editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
+                EditText catName = customView.findViewById(R.id.popup_category_name_editText);
+                catName.setText(categoryDataset.get(position).getCategoryName());
             }});
 
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
