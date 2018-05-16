@@ -112,7 +112,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 if(Build.VERSION.SDK_INT>=21){
                     editPopupWindow.setElevation(5.0f);
                 }
-                ImageButton closeButton = customView.findViewById(R.id.close_button);
+                ImageButton closeButton = customView.findViewById(R.id.popup_category_close_button);
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
