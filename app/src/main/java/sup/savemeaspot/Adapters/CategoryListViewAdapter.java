@@ -102,8 +102,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 View customView = inflater.inflate(R.layout.edit_category_popup_layout, null);
                 editPopupWindow = new PopupWindow(
                         customView,
-                        LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT
+                        LayoutParams.MATCH_PARENT,
+                        LayoutParams.MATCH_PARENT
                 );
 
                 // Set an elevation value for popup window

@@ -2,34 +2,102 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menuBackgroundColor"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/menuBackgroundColor">
 
     <TextView
         android:id="@+id/edit_spot_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/menuButtonColor"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Test"
-        android:textSize="12pt"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Edit Spot"
+        android:padding="10dp"
+        android:paddingStart="20dp"
         android:textColor="@color/menuButtonTextColor"
-        />
+        android:textSize="12pt"
+        android:paddingLeft="20dp" />
 
     <ImageButton
         android:id="@+id/edit_spot_close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/close_icon"
-        android:background="@color/menuButtonColor"
-        android:padding="6dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/edit_spot_text_view"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/cross_resource"
-        />
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/menuButtonColor"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
+    <TextView
+        android:id="@+id/edit_spot_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/edit_spot_text_view"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="22dp"
+        android:text="TextView" />
 
+    <EditText
+        android:id="@+id/edit_spot_tile_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edit_spot_title_tv"
+        android:layout_alignStart="@+id/edit_spot_title_tv"
+        android:layout_below="@+id/edit_spot_title_tv"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
 
+    <TextView
+        android:id="@+id/edit_spot_category_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edit_spot_tile_et"
+        android:layout_alignStart="@+id/edit_spot_tile_et"
+        android:layout_below="@+id/edit_spot_tile_et"
+        android:layout_marginTop="37dp"
+        android:text="TextView" />
+
+    <Spinner
+        android:id="@+id/spinner_edit_spot_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edit_spot_category_tv"
+        android:layout_alignStart="@+id/edit_spot_category_tv"
+        android:layout_below="@+id/edit_spot_category_tv"
+        android:layout_marginTop="13dp"
+        android:layout_toLeftOf="@+id/edit_spot_close_button"
+        android:layout_toStartOf="@+id/edit_spot_close_button" />
+
+    <TextView
+        android:id="@+id/edit_spot_desc_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_edit_spot_category"
+        android:layout_alignStart="@+id/spinner_edit_spot_category"
+        android:layout_below="@+id/spinner_edit_spot_category"
+        android:layout_marginTop="44dp"
+        android:text="TextView" />
+
+    <EditText
+        android:id="@+id/edit_spot_desc_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edit_spot_desc_tv"
+        android:layout_alignStart="@+id/edit_spot_desc_tv"
+        android:layout_below="@+id/edit_spot_desc_tv"
+        android:layout_marginTop="41dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
 
 
 </RelativeLayout>
