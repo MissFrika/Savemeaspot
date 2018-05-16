@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/popup_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/menuBackgroundColor"
-    android:padding="4dp"
     >
 
     <TextView
-        android:id="@+id/popup_text_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/popup_category_title_textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:textColor="@color/menuButtonTextColor"
-        android:text="Testing" />
+        android:background="@color/menuButtonColor"
+        android:textSize="12pt"
+        android:text="Edit Category"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
+        />
 
     <ImageButton
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/popup_category_title_textView"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/close_icon"
+        android:layout_alignParentRight="true"
         android:background="@color/menuButtonColor"
-        android:padding="6dp"
-        />
+        android:padding="11dp"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 </RelativeLayout>
