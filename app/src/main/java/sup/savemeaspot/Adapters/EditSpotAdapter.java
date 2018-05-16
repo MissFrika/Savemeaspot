@@ -74,8 +74,8 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                View customView = inflater.inflate(R.layout.edit_spot_popup_layout, null);
                PopupWindow newWindow = new PopupWindow(
                        customView,
-                       ViewGroup.LayoutParams.WRAP_CONTENT,
-                       ViewGroup.LayoutParams.WRAP_CONTENT
+                       ViewGroup.LayoutParams.MATCH_PARENT,
+                       ViewGroup.LayoutParams.MATCH_PARENT
                );
 
                if(!popupShows) {
