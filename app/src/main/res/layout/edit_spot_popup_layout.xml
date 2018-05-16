@@ -30,6 +30,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_above="@id/edit_spot_text_view"
         android:background="@color/menuButtonColor"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
@@ -43,10 +44,10 @@
         android:layout_marginLeft="19dp"
         android:layout_marginStart="19dp"
         android:layout_marginTop="22dp"
-        android:text="TextView" />
+        android:text="@string/name_spot_edit" />
 
     <EditText
-        android:id="@+id/edit_spot_tile_et"
+        android:id="@+id/edit_spot_title_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/edit_spot_title_tv"
@@ -55,17 +56,17 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="" />
 
     <TextView
         android:id="@+id/edit_spot_category_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edit_spot_tile_et"
-        android:layout_alignStart="@+id/edit_spot_tile_et"
-        android:layout_below="@+id/edit_spot_tile_et"
+        android:layout_alignLeft="@+id/edit_spot_title_et"
+        android:layout_alignStart="@+id/edit_spot_title_et"
+        android:layout_below="@+id/edit_spot_title_et"
         android:layout_marginTop="37dp"
-        android:text="TextView" />
+        android:text="@string/category"/>
 
     <Spinner
         android:id="@+id/spinner_edit_spot_category"
@@ -86,7 +87,7 @@
         android:layout_alignStart="@+id/spinner_edit_spot_category"
         android:layout_below="@+id/spinner_edit_spot_category"
         android:layout_marginTop="44dp"
-        android:text="TextView" />
+        android:text="@string/add_description_tv" />
 
     <EditText
         android:id="@+id/edit_spot_desc_et"
@@ -98,6 +99,17 @@
         android:layout_marginTop="41dp"
         android:ems="10"
         android:inputType="textMultiLine" />
+
+    <ImageButton
+        android:id="@+id/save_edited_spot_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundbutton_save"
+        android:src="@android:drawable/ic_menu_save" />
 
 
 </RelativeLayout>

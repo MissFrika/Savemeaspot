@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -51,6 +52,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 0;
     private static final int PERMISSION_REQUEST_ACCESS_NETWORK_STATE = 0;
     private GoogleMap mMap;
+    private Context context;
     private boolean activityStarted = true;
     private static final int zoomLevel = 15;
     private LocationManager locationManager;
@@ -71,6 +73,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         //TODO:Flytta till MainActivity
         DatabaseHandler db = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
+        context = this;
 
         setContentView(R.layout.activity_maps_start);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -79,6 +82,9 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
         //Kontrollerar permissions
         checkPermissions();
+        //Instansiera knappar
+        openMainMenu();
+        saveSpotDialogueView();
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
@@ -229,18 +235,25 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
 
 
     /** Detta körs vid Menu-knapptryck, öppnar huvudmenyn*/
-    public void openMainMenu(View view) {
-        //Ny intent
-        Intent intent = new Intent(this, MainMenuScreen.class);
-        //Nytt koordinatobjet från nuvarande koordinater
-        double lat = currentCoordinate.getLatitude();
-        double lon = currentCoordinate.getLongitude();
+    private void openMainMenu() {
+        //Instansiera knapp
+        Button btn = findViewById(R.id.menuButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Ny intent
+                Intent intent = new Intent(getApplicationContext(), MainMenuScreen.class);
+                //Nytt koordinatobjet från nuvarande koordinater
+                double lat = currentCoordinate.getLatitude();
+                double lon = currentCoordinate.getLongitude();
 
-        //Skickar med ett koordinatobjekt, konverterat till String
-        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
-        intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
+                //Skickar med ett koordinatobjekt, konverterat till String
+                intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
+                intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
 
-        startActivity(intent);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -284,11 +297,17 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     /** Öppnar en ny dialogruta för att spara en Spot,
      * skickar med koordinater till den nya aktiviteten
      */
-    public void saveSpotDialogueView(View view) {
-        Intent intent = new Intent(this, SaveSpotCategoryActivity.class);
-        //Put extra
-        putExtraCoordinateIntent(intent);
-        startActivity(intent);
+    private void saveSpotDialogueView() {
+        Button btn = findViewById(R.id.map_Savebtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SaveSpotCategoryActivity.class);
+                //Put extra
+                putExtraCoordinateIntent(intent);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -461,6 +480,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     }
 
 
+    /**
+     * Tar ett intent om detta finns och zoomar in på en Spots koordinater
+     * @param googleMap
+     */
     private void zoomToSpot(GoogleMap googleMap){
         if(getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LAT")
                 && getIntent().hasExtra("EXTRA_MESSAGE_COORDINATES_LONG")){
