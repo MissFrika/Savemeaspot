@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -99,7 +100,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             @Override
                 public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-                View customView = inflater.inflate(R.layout.edit_category_popup_layout, null);
+                View customView = inflater.inflate(R.layout.category_popup_layout, null);
                 editPopupWindow = new PopupWindow(
                         customView,
                         LayoutParams.MATCH_PARENT,
@@ -111,7 +112,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 if(Build.VERSION.SDK_INT>=21){
                     editPopupWindow.setElevation(5.0f);
                 }
-                ImageButton closeButton = customView.findViewById(R.id.close_button);
+                ImageButton closeButton = customView.findViewById(R.id.popup_category_close_button);
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -120,6 +121,8 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 });
 
                 editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
+                EditText catName = customView.findViewById(R.id.popup_category_name_editText);
+                catName.setText(categoryDataset.get(position).getCategoryName());
             }});
 
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
