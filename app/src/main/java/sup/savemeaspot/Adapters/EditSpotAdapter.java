@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -62,6 +63,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
         holder.deleteSpotBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Ny AlertDialog instansieras
                 AlertDialog.Builder alertDialog = createDeleteSpotDialog(position, spotDataset);
                 alertDialog.show();
             }
@@ -78,6 +80,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                        ViewGroup.LayoutParams.MATCH_PARENT
                );
 
+               //Finns redan ett popup eller ej
                if(!popupShows) {
                    editPopupWindow = newWindow;
                    popupShows = true;
@@ -87,6 +90,24 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                    editPopupWindow = newWindow;
                }
                ImageButton closeButton = customView.findViewById(R.id.edit_spot_close_button);
+               //Fyll textfält med information från Spot
+               EditText spotTitle = customView.findViewById(R.id.edit_spot_title_et);
+               spotTitle.setText(spotDataset.get(position).getSpotTitle());
+               EditText spotDescription = customView.findViewById(R.id.edit_spot_desc_et);
+               spotDescription.setText(spotDataset.get(position).getSpotDescription());
+
+               //Instansiera knapp för att spara förändringar som gjorts
+               ImageButton btn = customView.findViewById(R.id.save_edited_spot_button);
+               //OnClickListener - sparaknapp
+               btn.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       Toast.makeText(context, "Changes has been saved.", Toast.LENGTH_SHORT).show();
+                       editPopupWindow.dismiss();;
+                   }
+               });
+
+               //OnClickListener stäng-knapp
                closeButton.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View view) {

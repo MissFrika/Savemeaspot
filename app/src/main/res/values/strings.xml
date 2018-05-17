@@ -13,6 +13,8 @@
     <string name="am_sure">I am sure</string>
     <string name="not_sure">No</string>
     <string name="cross_resource">Cross</string>
+    <string name="name_spot_edit">Spot name</string>
+    <string name="category">Category</string>
 
 
     <!--Buttons-->
