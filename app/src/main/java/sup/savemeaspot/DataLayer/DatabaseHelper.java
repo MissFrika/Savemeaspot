@@ -3,6 +3,7 @@ package sup.savemeaspot.DataLayer;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.DataLayer.Models.Category;
@@ -131,6 +132,20 @@ public class DatabaseHelper {
     }
 
     /**
+     * Returnerar en ArrayList av alla kategorier i databasen
+     * @param context
+     * @return
+     */
+    public static ArrayList<Category> getAllCategories(Context context) {
+        SpotDatabase database = Room.databaseBuilder(context, SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries()
+                .build();
+        ArrayList<Category> categories = (ArrayList<Category>) database.categoryDao().getAllCategories();
+        database.close();
+        return categories;
+    }
+
+    /**
      * Find and return Spot category from database
      * @param context
      * @param spot
@@ -152,9 +167,9 @@ public class DatabaseHelper {
      * @param spot
      * @param title
      * @param description
-     * @param category
+     * @param categoryId
      */
-    public static void editSpot(Context context, Spot spot, String title, String description, Category category){
+    public static void editSpot(Context context, Spot spot, String title, String description, int categoryId){
 
         Spot updatedSpot = spot;
         //Konrtollerar förändringar för alla fält
@@ -164,8 +179,8 @@ public class DatabaseHelper {
         if(description != spot.getSpotDescription()){
             updatedSpot.setSpotDescription(description);
         }
-        if(category.getCategoryId() != spot.getSpotCategory()) {
-            updatedSpot.setSpotCategory(category.getCategoryId());
+        if(categoryId != spot.getSpotCategory()) {
+            updatedSpot.setSpotCategory(categoryId);
         }
 
         //Uppdatera fält
@@ -176,8 +191,8 @@ public class DatabaseHelper {
         database.spotDao().updateSpotCategory(updatedSpot.getSpotCategory(),spot.getSpotId());
         database.spotDao().updateSpotDescription(updatedSpot.getSpotDescription(),spot.getSpotId());
         database.close();
-
     }
+
 
     /**
      * Ta bort en Spot
