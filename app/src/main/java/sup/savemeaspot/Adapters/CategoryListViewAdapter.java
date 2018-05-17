@@ -11,16 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import sup.savemeaspot.Activities.CategoryCollectionActivity;
 import sup.savemeaspot.Activities.SaveSpotCategoryActivity;
 import sup.savemeaspot.Activities.SaveTitleActivity;
 import sup.savemeaspot.DataLayer.Models.Category;
@@ -39,6 +42,9 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
     private Context context;
     private Coordinate extraCoordinates;
     private PopupWindow editPopupWindow;
+    private Category newCategory = new Category();
+    private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
+            R.drawable.heart, R.drawable.fire, R.drawable.building};
 
     /**
      * Konstruktor + koordinater
@@ -123,6 +129,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
                 EditText catName = customView.findViewById(R.id.popup_category_name_editText);
                 catName.setText(categoryDataset.get(position).getCategoryName());
+                setSpinner();
             }});
 
             holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
@@ -301,6 +308,27 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             }
         }
 
+    }
+    private void setSpinner(){
+        //Spinner med anpassad adapter
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(context, drawables);
+        customAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinner = (Spinner) editPopupWindow.getContentView().findViewById(R.id.popup_category_icon_spinner);
+        spinner.setAdapter(customAdapter);
+
+        //On Select listener
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int resourceId = drawables[i];
+                newCategory.setCategoryImg(resourceId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 }
 
