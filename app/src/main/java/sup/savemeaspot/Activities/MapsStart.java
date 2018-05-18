@@ -470,6 +470,9 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                 case R.drawable.heart :
                     drawableMarker = R.drawable.heart_marker;
                     break;
+                case R.drawable.mushroom :
+                    drawableMarker = R.drawable.mushroom_marker;
+                    break;
             }
             //Markör
             CustomMapInfoWindowAdapter infoWindowAdapter = new CustomMapInfoWindowAdapter(this, locale + ", " + country, categoryName, spotDescription);

@@ -65,7 +65,11 @@
         </activity>
         <activity android:name=".Activities.SpotCollectionActivity" />
         <activity android:name=".Activities.CategoryCollectionActivity" />
-        <activity android:name=".Activities.EditSpotsActivity"></activity>
+        <activity android:name=".Activities.EditSpotsActivity"
+            android:persistent="true"
+            android:windowSoftInputMode = "adjustPan">
+
+        </activity>
     </application>
 
 </manifest>
