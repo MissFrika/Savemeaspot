@@ -55,7 +55,8 @@
                 android:id="@+id/collection_drop_down_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/collection_relative_layout"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:background="@color/spotDetailsBackground"
                 android:padding="10dp"
                 android:visibility="gone"
@@ -66,17 +67,19 @@
                     android:id="@+id/spot_collection_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@+id/showOnMapConstraintLayout"
+                    android:layout_toStartOf="@+id/showOnMapConstraintLayout" />
                 <!--Här visas Description -->
                 <TextView
                     android:id="@+id/spot_description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@id/spot_collection_category"
                     android:layout_toLeftOf="@+id/showOnMapConstraintLayout"
                     android:layout_toStartOf="@+id/showOnMapConstraintLayout"
-                    android:background="@color/spotDetailsBackground"
-                    />
+                    android:background="@color/spotDetailsBackground" />
 
                 <!--Show on Map knapp -->
                 <android.support.constraint.ConstraintLayout
@@ -85,9 +88,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingTop="20dp"
                     android:layout_below="@+id/spot_collection_category">
 
                     <!--Knapp för att visa Spot på kartan -->
+
                     <ImageButton
                         android:id="@+id/show_map_button"
                         android:layout_width="wrap_content"
@@ -103,6 +109,7 @@
 
                     <!--Text i Show on Map knapp -->
                     <TextView
+                        android:id="@+id/collection_dropdown_showOnMap_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
