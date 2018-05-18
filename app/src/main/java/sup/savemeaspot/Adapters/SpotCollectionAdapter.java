@@ -19,6 +19,7 @@ import java.util.List;
 
 
 import sup.savemeaspot.Activities.MapsStart;
+import sup.savemeaspot.DataLayer.DatabaseHandler;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
 import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
@@ -63,10 +64,12 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
 
     @Override
     public void onBindViewHolder(final SpotCollectionAdapter.ViewHolder holder, final int position) {
+        //Hämtar ut kategori titel till nuvarande spot
+        String categoryTitle = DatabaseHelper.getSpotCategory(context, spotDataset.get(position)).getCategoryName();
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
+        holder.spotCategoryTextView.setText(categoryTitle);
         holder.spotDescriptionTextView.setText(spotDataset.get(position).getSpotDescription());
         final Spot spot = spotDataset.get(position);
-
         holder.spotTitleLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +149,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
 
         TextView collectionTextView;
         TextView spotDescriptionTextView;
+        TextView spotCategoryTextView;
         Context context;
         List<Spot> spots;
         RelativeLayout spotDetails;
@@ -157,6 +161,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
             this.spots = spots;
             this.context = context;
             spotDetails = v.findViewById(R.id.collection_drop_down_layout);
+            spotCategoryTextView = v.findViewById(R.id.spot_collection_category);
             collectionTextView = v.findViewById(R.id.collection_text_view);
             spotDescriptionTextView = v.findViewById(R.id.spot_description_text_view);
             spotTitleLayout = v.findViewById(R.id.collection_relative_layout);

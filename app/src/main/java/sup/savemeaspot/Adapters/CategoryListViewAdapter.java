@@ -110,7 +110,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 editPopupWindow = new PopupWindow(
                         customView,
                         LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT
+                        LayoutParams.MATCH_PARENT,true
                 );
 
                 // Set an elevation value for popup window
@@ -123,6 +123,14 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                     @Override
                     public void onClick(View view) {
                         editPopupWindow.dismiss();
+                    }
+                });
+
+                ImageButton saveButton = customView.findViewById(R.id.popup_category_save_button);
+                saveButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+
                     }
                 });
 
