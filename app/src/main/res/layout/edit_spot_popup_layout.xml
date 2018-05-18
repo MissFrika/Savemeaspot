@@ -111,6 +111,7 @@
         android:layout_below="@+id/edit_spot_desc_et"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp"
+        android:contentDescription="@string/cross_resource"
         android:background="@drawable/roundbutton_save"
         android:src="@android:drawable/ic_menu_save" />
 

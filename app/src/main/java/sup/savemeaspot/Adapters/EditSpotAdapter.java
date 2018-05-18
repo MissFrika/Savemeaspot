@@ -212,7 +212,6 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
             editPopupWindow.dismiss();
             editPopupWindow = newWindow;
         }
-        ImageButton closeButton = customView.findViewById(R.id.edit_spot_close_button);
         //Fyll textfält med information från Spot
         EditText spotTitle = customView.findViewById(R.id.edit_spot_title_et);
         spotTitle.setText(spotDataset.get(position).getSpotTitle());
@@ -249,7 +248,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                 }
             }
         });
-
+        ImageButton closeButton = customView.findViewById(R.id.edit_spot_close_button);
         //OnClickListener stäng-knapp
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
