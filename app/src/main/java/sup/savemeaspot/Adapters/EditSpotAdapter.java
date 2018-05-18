@@ -84,8 +84,13 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
            @Override
            public void onClick(View view) {
                if(!activity.isFinishing()) {
-                   //Öppna popup-fönster
-                   editSpotPopup(holder, position);
+                   activity.runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           //Öppna popup-fönster
+                           editSpotPopup(holder, position);
+                       }
+                   });
                }
            }});
     }

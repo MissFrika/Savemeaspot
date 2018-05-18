@@ -140,7 +140,7 @@ public class Category {
                 new Category("Fish", R.drawable.fish, 0),
                 new Category("Fruit", R.drawable.apple, 0),
                 new Category("Berry", R.drawable.cherry, 0),
-                new Category("Mushroom", R.drawable.wheat, 0)
+                new Category("Mushroom", R.drawable.mushroom, 0)
         };
     }
 }
