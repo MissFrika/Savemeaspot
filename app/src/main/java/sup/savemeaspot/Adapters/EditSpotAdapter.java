@@ -8,6 +8,8 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
@@ -81,8 +83,10 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
        holder.editSpotBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               //Öppna popup-fönster
-               editSpotPopup(holder,position);
+               if(!activity.isFinishing()) {
+                   //Öppna popup-fönster
+                   editSpotPopup(holder, position);
+               }
            }});
     }
 

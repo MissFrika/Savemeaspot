@@ -55,6 +55,7 @@
         android:layout_below="@+id/edit_spot_title_tv"
         android:layout_marginTop="15dp"
         android:maxLength="15"
+        android:focusable="true"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="" />
@@ -98,6 +99,7 @@
         android:layout_alignStart="@+id/edit_spot_desc_tv"
         android:layout_below="@+id/edit_spot_desc_tv"
         android:layout_marginTop="14dp"
+        android:focusable="true"
         android:ems="10"
         android:inputType="textMultiLine"
         android:maxLength="300" />
@@ -106,11 +108,9 @@
         android:id="@+id/save_edited_spot_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@id/edit_spot_desc_et"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/edit_spot_desc_et"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="46dp"
         android:background="@drawable/roundbutton_save"
         android:src="@android:drawable/ic_menu_save" />
 
