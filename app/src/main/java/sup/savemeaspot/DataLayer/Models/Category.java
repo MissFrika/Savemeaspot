@@ -127,7 +127,7 @@ public class Category {
 
         //Hämta Categories med visst namn.
         @Query("SELECT * FROM CATEGORY WHERE category_name LIKE :catName")
-        List<Category> getCategoryByName(String catName);
+        Category getCategoryByName(String catName);
 
         //Uppdatera data för en vald rad i Category-tabellen
         @Query("UPDATE CATEGORY SET CATEGORY_NAME = :categoryName, CATEGORY_IMG = :categoryImage WHERE CategoryID LIKE :categoryId")

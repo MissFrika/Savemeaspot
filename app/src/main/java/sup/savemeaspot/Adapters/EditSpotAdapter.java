@@ -13,6 +13,7 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import sup.savemeaspot.Activities.SpotCollectionActivity;
@@ -212,7 +214,6 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
             editPopupWindow.dismiss();
             editPopupWindow = newWindow;
         }
-        ImageButton closeButton = customView.findViewById(R.id.edit_spot_close_button);
         //Fyll textfält med information från Spot
         EditText spotTitle = customView.findViewById(R.id.edit_spot_title_et);
         spotTitle.setText(spotDataset.get(position).getSpotTitle());
@@ -220,17 +221,24 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
         spotDescription.setText(spotDataset.get(position).getSpotDescription());
         //Hämta kategorier
         final Spinner spinner = customView.findViewById(R.id.spinner_edit_spot_category);
+
         ArrayList<Category> categories = DatabaseHelper.getAllCategories(context);
 
         //Hämta ut alla titlar från kategorierna
-        ArrayList<String> arrayOfCategoryTitles = new ArrayList<>();
+        List<String> listOfCategoryTitles = new ArrayList<>();
         for(Category category : categories){
-            arrayOfCategoryTitles.add(category.getCategoryName());
+            CategoryStringWithId categoryToAdd = new CategoryStringWithId(category.getCategoryId(),category.getCategoryName());
+            listOfCategoryTitles.add(category.getCategoryName());
         }
         //Populera spinner med kategorinamn
-        ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, categories);
+        ArrayAdapter<String> categoryArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, listOfCategoryTitles);
         categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(categoryArrayAdapter);
+        //Hitta specifik kategori som skall visas
+        Category spotCategory = DatabaseHelper.getSpotCategory(context, spotDataset.get(position));
+        String categoryString = spotCategory.getCategoryName();
+        int index = categoryArrayAdapter.getPosition(categoryString);
+        spinner.setSelection(index);
 
         //Instansiera knapp för att spara förändringar som gjorts
         ImageButton btn = customView.findViewById(R.id.save_edited_spot_button);
@@ -239,8 +247,10 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 try {
+                    String selectedCategory = spinner.getSelectedItem().toString();
+                    Category categoryToSave = DatabaseHelper.getCategoryByName(context, selectedCategory);
                     //Spara ändringar
-                    saveChanges(context, customView, spotDataset.get(position), (Category) spinner.getSelectedItem());
+                    saveChanges(context, customView, spotDataset.get(position), categoryToSave);
                     Toast.makeText(context, "Changes have been saved.", Toast.LENGTH_SHORT).show();
                     editPopupWindow.dismiss();
                 }
@@ -249,7 +259,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                 }
             }
         });
-
+        ImageButton closeButton = customView.findViewById(R.id.edit_spot_close_button);
         //OnClickListener stäng-knapp
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,5 +288,27 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
             editPopupWindow.setElevation(5.0f);
         }
         editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
+    }
+
+    /**
+     * Används för att hantera kategori-spinnern
+     */
+    private static class CategoryStringWithId {
+        public String string;
+        public int id;
+
+        public CategoryStringWithId(int id, String string) {
+            this.string = string;
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return string;
+        }
     }
 }

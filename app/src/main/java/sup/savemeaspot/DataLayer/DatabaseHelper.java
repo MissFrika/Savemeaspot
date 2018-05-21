@@ -162,6 +162,21 @@ public class DatabaseHelper {
     }
 
     /**
+     * Returnerar en kategori med viss titel
+     * @param name
+     * @return
+     */
+    public static Category getCategoryByName(Context context, String name){
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(),SpotDatabase.class, "SpotDatabase")
+                .allowMainThreadQueries()
+                .build();
+        Category category = database.categoryDao().getCategoryByName(name);
+        database.close();
+
+        return category;
+    }
+
+    /**
      * Uppdatera information om en spot
      * @param context
      * @param spot
