@@ -65,6 +65,7 @@
         android:layout_alignStart="@+id/popup_category_name_editText"
         android:layout_below="@+id/popup_category_top_textView"
         android:layout_marginTop="14dp"
+        android:textSize="8pt"
         android:text="Category Name" />
 
     <TextView
@@ -74,7 +75,8 @@
         android:layout_alignLeft="@+id/popup_category_icon_spinner"
         android:layout_alignStart="@+id/popup_category_icon_spinner"
         android:layout_below="@+id/popup_category_name_editText"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="23dp"
+        android:textSize="8pt"
         android:text="Category Icon" />
 
     <ImageButton
