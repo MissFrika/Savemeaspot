@@ -67,7 +67,8 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         //Hämtar ut kategori titel till nuvarande spot
         String categoryTitle = DatabaseHelper.getSpotCategory(context, spotDataset.get(position)).getCategoryName();
         holder.collectionTextView.setText(spotDataset.get(position).getSpotTitle());
-        holder.spotCategoryTextView.setText(categoryTitle);
+        String inCategory = context.getText(R.string.in_category)+ " " + categoryTitle;
+        holder.spotCategoryTextView.setText(inCategory);
         holder.spotDescriptionTextView.setText(spotDataset.get(position).getSpotDescription());
         final Spot spot = spotDataset.get(position);
         holder.spotTitleLayout.setOnClickListener(new View.OnClickListener() {
