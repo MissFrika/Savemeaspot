@@ -70,6 +70,8 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //Instansiera databas
+        DatabaseHandler db = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
         context = this;
 
@@ -494,8 +496,10 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             double latitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LAT");
             double longitude = extras.getDouble("EXTRA_MESSAGE_COORDINATES_LONG");
 
+            //Flytta kamera till latlng
             LatLng latLng = new LatLng(latitude,longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+            //Aktiviteten körs inte från Launch, autouppdatera inte plats
             activityStarted = false;
         }
     }

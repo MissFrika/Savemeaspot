@@ -49,6 +49,7 @@ public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView localityTV = view.findViewById(R.id.info_window_real_location);
         TextView coordinatesTV = view.findViewById(R.id.info_window_coordinates);
 
+        //Anger innehållet i varje textview
         spotTitleTV.setText(marker.getTitle());
         spotDescriptionTV.setText(description);
         spotCategoryTV.setText(category);

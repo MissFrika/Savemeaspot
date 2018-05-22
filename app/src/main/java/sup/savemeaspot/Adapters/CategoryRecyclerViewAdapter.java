@@ -1,10 +1,12 @@
 package sup.savemeaspot.Adapters;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,6 +44,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     private Context context;
     private Coordinate extraCoordinates;
     private PopupWindow editPopupWindow;
+    private final Activity activity;
     private Category newCategory = new Category();
     private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
             R.drawable.heart, R.drawable.fire, R.drawable.building};
@@ -52,10 +55,11 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
      * @param items
      * @param extraCoordinates
      */
-    public CategoryRecyclerViewAdapter(Context context, List<Category> items, Coordinate extraCoordinates) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> items, Coordinate extraCoordinates, Activity activity) {
 
         this.categoryDataset = items;
         this.context = context;
+        this.activity = activity;
         this.extraCoordinates = extraCoordinates;
     }
 
@@ -64,19 +68,23 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
      * @param context
      * @param items
      */
-    public CategoryRecyclerViewAdapter(Context context, List<Category> items) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> items, Activity activity) {
 
         this.categoryDataset = items;
         this.context = context;
+        this.activity = activity;
     }
 
 
-    // Create new views (invoked by the layout manager)
+    /**
+     *  Skapa nya vyer (anropas av layout manager)
+     */
+
     @Override
     public CategoryRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //Är context från aktiviteten SaveSpotCategoryActivity
         if (context instanceof SaveSpotCategoryActivity) {
-            // create a new view
+            //Skapa ny vy
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_view_layout_category, parent, false);
             ViewHolder viewHolder = new ViewHolder(v, context, categoryDataset);
@@ -139,6 +147,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                                 DatabaseHelper.editCategory(context, categoryDataset.get(position), categoryTitle, newCategory.getCategoryImg());
                                 Toast.makeText(context, "Changes have been saved.", Toast.LENGTH_SHORT).show();
                                 editPopupWindow.dismiss();
+                                activity.recreate();
                             }
                             catch (Exception ex){
                                 Log.d("ex", ex.getMessage());

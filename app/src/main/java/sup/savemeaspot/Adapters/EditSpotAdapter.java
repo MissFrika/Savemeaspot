@@ -253,6 +253,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                     saveChanges(context, customView, spotDataset.get(position), categoryToSave);
                     Toast.makeText(context, "Changes have been saved.", Toast.LENGTH_SHORT).show();
                     editPopupWindow.dismiss();
+                    activity.recreate();
                 }
                 catch (Exception ex){
                     Toast.makeText(context, ex.getMessage(),Toast.LENGTH_SHORT).show();

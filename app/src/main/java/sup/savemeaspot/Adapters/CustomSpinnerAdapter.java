@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import sup.savemeaspot.R;
 
 /**
- * En anpassad adapter för Spinner. Används för att fylla
+ * En anpassad adapter för Spinner. Används för att fylla spinners med Drawables
  * Created by Frida on 2018-04-18.
  */
 
@@ -49,11 +49,19 @@ public class CustomSpinnerAdapter extends ArrayAdapter<Integer> {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
+        //Ange drawable för varje position i spinnern
         mViewHolder.mIcon.setImageResource(spinnerImages[position]);
 
         return convertView;
     }
 
+    /**
+     * DropDownView, populera dropdown menyn i en spinner
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder mViewHolder = new ViewHolder();
@@ -67,6 +75,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<Integer> {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
+        //Ange drawable för varje position i spinnern
         mViewHolder.mIcon.setImageResource(spinnerImages[position]);
         return convertView;
     }

@@ -57,14 +57,14 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
                 coordinatesToSave = getIncomingCoordinateExtras(getIntent());
 
             } catch (NullPointerException e) {
-                //Something went wrong;
+                //Någonting gick snett
             }
         }
 
         recyclerView = findViewById(R.id.recycler_container_save);
 
         SpotDatabase database = Room.inMemoryDatabaseBuilder(this.getApplicationContext(), SpotDatabase.class)
-                .allowMainThreadQueries() //DO NOT !!!
+                .allowMainThreadQueries()
                 .build();
         try {
             List<Category> aCat = database.getDatabase(this).categoryDao().getAllCategories();
@@ -74,7 +74,7 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
 
         }
         // Specifierar en adapter för RecyclerView
-        adapter = new CategoryRecyclerViewAdapter(this, categories, coordinatesToSave);
+        adapter = new CategoryRecyclerViewAdapter(this, categories, coordinatesToSave, SaveSpotCategoryActivity.this);
         //LayoutManager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

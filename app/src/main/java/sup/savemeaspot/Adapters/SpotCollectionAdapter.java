@@ -157,6 +157,7 @@ public class SpotCollectionAdapter extends RecyclerView.Adapter<SpotCollectionAd
         RelativeLayout spotTitleLayout;
         ImageButton showOnMapButton;
 
+
         public ViewHolder(View v, Context context, List<Spot> spots){
             super(v);
             this.spots = spots;

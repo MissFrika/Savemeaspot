@@ -42,7 +42,7 @@ public class CategoryCollectionActivity extends AppCompatActivity {
             e.getMessage();
         }
         // Specifierar en adapter för RecyclerView
-        adapter = new CategoryRecyclerViewAdapter(this, categories);
+        adapter = new CategoryRecyclerViewAdapter(this, categories, CategoryCollectionActivity.this);
         //LayoutManager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

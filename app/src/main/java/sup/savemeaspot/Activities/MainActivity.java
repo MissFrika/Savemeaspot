@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Instansiera databas
-        DatabaseHandler db = new DatabaseHandler(this);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
         if(checkGoogleService()) {
