@@ -70,8 +70,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //TODO:Flytta till MainActivity
-        DatabaseHandler db = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
         context = this;
 
@@ -313,30 +311,31 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     /**
      * Extra intent-messages för Coordinate
      */
-    private Intent putExtraCoordinateIntent(Intent intent){
+    private void putExtraCoordinateIntent(Intent intent){
         //Nytt koordinatobjet från nuvarande koordinater
         double lat = currentCoordinate.getLatitude();
         double lon = currentCoordinate.getLongitude();
         String locality;
         String country;
+        //Om lokal adress ej finns
         if (currentCoordinate.getLocalAddress() != null) {
              locality = currentCoordinate.getLocalAddress();
         }
         else{
             locality = "Unknown";
         }
+        //Om land ej finns
         if(currentCoordinate.getCountryName() != null){
             country = currentCoordinate.getCountryName();
         }
         else{
             country = "Unknown";
         }
-        //Skickar med ett koordinatobjekt, konverterat till String
+        //Skickar med information om ett koordinatobjekt
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LAT", lat);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LONG", lon);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_LOCAL", locality);
         intent.putExtra("EXTRA_MESSAGE_COORDINATES_COUNTRY", country);
-        return intent;
     }
 
     /**

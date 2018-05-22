@@ -2,22 +2,14 @@ package sup.savemeaspot.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 
 import java.util.List;
 
-import sup.savemeaspot.Adapters.CategoryListViewAdapter;
-import sup.savemeaspot.Adapters.CustomSpinnerAdapter;
+import sup.savemeaspot.Adapters.CategoryRecyclerViewAdapter;
 import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 import sup.savemeaspot.R;
@@ -28,7 +20,7 @@ public class CategoryCollectionActivity extends AppCompatActivity {
     private static RecyclerView recyclerView;
     private Context context;
 
-    private static CategoryListViewAdapter adapter;
+    private static CategoryRecyclerViewAdapter adapter;
     private static RecyclerView.LayoutManager layoutManager;
 
 
@@ -50,7 +42,7 @@ public class CategoryCollectionActivity extends AppCompatActivity {
             e.getMessage();
         }
         // Specifierar en adapter för RecyclerView
-        adapter = new CategoryListViewAdapter(this, categories);
+        adapter = new CategoryRecyclerViewAdapter(this, categories);
         //LayoutManager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

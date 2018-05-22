@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import sup.savemeaspot.Adapters.CategoryListViewAdapter;
+import sup.savemeaspot.Adapters.CategoryRecyclerViewAdapter;
 import sup.savemeaspot.Adapters.CustomSpinnerAdapter;
 import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
@@ -32,7 +32,7 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
     private List<Category> categories;
     private static RecyclerView recyclerView;
     private Context context;
-    private static CategoryListViewAdapter adapter;
+    private static CategoryRecyclerViewAdapter adapter;
     private static RecyclerView.LayoutManager layoutManager;
     //Ikoner
     private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
@@ -74,7 +74,7 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
 
         }
         // Specifierar en adapter för RecyclerView
-        adapter = new CategoryListViewAdapter(this, categories, coordinatesToSave);
+        adapter = new CategoryRecyclerViewAdapter(this, categories, coordinatesToSave);
         //LayoutManager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
