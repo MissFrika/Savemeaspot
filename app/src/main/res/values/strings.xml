@@ -81,5 +81,6 @@
         <item>Penny Bun</item>
         <item>Shaggy Ink Cap</item>
     </string-array>
+    <string name="title_activity_category_spinner_adapter">CategorySpinnerAdapter</string>
 
 </resources>

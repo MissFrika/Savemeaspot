@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -106,7 +108,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             @Override
                 public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-                View customView = inflater.inflate(R.layout.category_popup_layout, null);
+                final View customView = inflater.inflate(R.layout.category_popup_layout, null);
                 editPopupWindow = new PopupWindow(
                         customView,
                         LayoutParams.MATCH_PARENT,
@@ -127,9 +129,15 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 });
 
                 ImageButton saveButton = customView.findViewById(R.id.popup_category_save_button);
+
                 saveButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
+                        EditText categoryTitleToSave = customView.findViewById(R.id.popup_category_name_editText);
+                        String categoryTitle = categoryTitleToSave.getText().toString();
+                        Spinner spinner = customView.findViewById(R.id.popup_category_icon_spinner);
+                        int drawable = spinner.getSelectedItemPosition();
+
 
                     }
                 });
