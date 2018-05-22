@@ -84,7 +84,8 @@ public class Spot {
         //Hämtar alla Spots med en viss angiven titel
         @Query("SELECT * FROM SPOT WHERE SPOT_TITLE LIKE :title")
         List<Spot> getSpotByTitle(String title);
-        //Hämtar alls spots med en viss kategori
+
+        //Hämtar alla Spots med en viss kategori
         @Query("SELECT * FROM SPOT WHERE SPOT_CATEGORY LIKE :categoryId")
         List<Spot> getSpotsByCategory(int categoryId);
 

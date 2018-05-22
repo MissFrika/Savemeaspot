@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import sup.savemeaspot.Activities.CategoryCollectionActivity;
 import sup.savemeaspot.Activities.SaveSpotCategoryActivity;
 import sup.savemeaspot.Activities.SaveTitleActivity;
 import sup.savemeaspot.DataLayer.Models.Category;
@@ -37,7 +37,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by Frika on 2018-03-27.
  */
 
-public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListViewAdapter.ViewHolder> {
+public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRecyclerViewAdapter.ViewHolder> {
     private List<Category> categoryDataset;
     private Context context;
     private Coordinate extraCoordinates;
@@ -52,7 +52,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      * @param items
      * @param extraCoordinates
      */
-    public CategoryListViewAdapter(Context context, List<Category> items, Coordinate extraCoordinates) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> items, Coordinate extraCoordinates) {
 
         this.categoryDataset = items;
         this.context = context;
@@ -64,7 +64,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
      * @param context
      * @param items
      */
-    public CategoryListViewAdapter(Context context, List<Category> items) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> items) {
 
         this.categoryDataset = items;
         this.context = context;
@@ -73,7 +73,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
 
     // Create new views (invoked by the layout manager)
     @Override
-    public CategoryListViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoryRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //Är context från aktiviteten SaveSpotCategoryActivity
         if (context instanceof SaveSpotCategoryActivity) {
             // create a new view
@@ -106,7 +106,7 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
             @Override
                 public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-                View customView = inflater.inflate(R.layout.category_popup_layout, null);
+                final View customView = inflater.inflate(R.layout.category_popup_layout, null);
                 editPopupWindow = new PopupWindow(
                         customView,
                         LayoutParams.MATCH_PARENT,
@@ -130,7 +130,23 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
                 saveButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-
+                        //Hämta titel från EditText-fält
+                        EditText categoryTitleToSave = customView.findViewById(R.id.popup_category_name_editText);
+                        String categoryTitle = categoryTitleToSave.getText().toString();
+                        if(!categoryTitle.isEmpty()){
+                            try {
+                                //Spara ändringar i kategorin till databasen
+                                DatabaseHelper.editCategory(context, categoryDataset.get(position), categoryTitle, newCategory.getCategoryImg());
+                                Toast.makeText(context, "Changes have been saved.", Toast.LENGTH_SHORT).show();
+                                editPopupWindow.dismiss();
+                            }
+                            catch (Exception ex){
+                                Log.d("ex", ex.getMessage());
+                            }
+                        }
+                        else{
+                            Toast.makeText(context, "Category name can not be empty.",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -317,6 +333,10 @@ public class CategoryListViewAdapter extends RecyclerView.Adapter<CategoryListVi
         }
 
     }
+
+    /**
+     * Sätt spinner till editPopupWindow
+     */
     private void setSpinner(){
         //Spinner med anpassad adapter
         CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(context, drawables);

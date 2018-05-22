@@ -47,15 +47,22 @@
         <activity
             android:name=".Activities.MapsStart"
             android:label="Save Me a Spot" />
-        <activity android:name=".Activities.MainMenuScreen" />
+        <activity android:name=".Activities.MainMenuScreen"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".Activities.SaveSpotCategoryActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activities.SaveTitleActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activities.MainActivity"
+            android:screenOrientation="portrait"
             android:label="Save Me a Spot">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,12 +70,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SpotCollectionActivity" />
-        <activity android:name=".Activities.CategoryCollectionActivity" />
+        <activity android:name=".Activities.SpotCollectionActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".Activities.CategoryCollectionActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".Activities.EditSpotsActivity"
             android:persistent="true"
-            android:windowSoftInputMode = "adjustPan">
-
+            android:windowSoftInputMode = "adjustPan"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
         </activity>
     </application>
 

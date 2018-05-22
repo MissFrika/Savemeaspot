@@ -251,5 +251,4 @@ public class DatabaseHelper {
         database.categoryDao().editCategory(category.getCategoryId(), categoryName, categoryImage);
         database.close();
     }
-
 }

@@ -69,12 +69,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:textSize="15sp"
                     android:layout_toLeftOf="@+id/showOnMapConstraintLayout"
                     android:layout_toStartOf="@+id/showOnMapConstraintLayout" />
                 <!--Här visas Description -->
                 <TextView
                     android:id="@+id/spot_description_text_view"
                     android:layout_width="match_parent"
+                    android:textStyle="italic"
+                    android:textSize="12sp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/spot_collection_category"
                     android:layout_toLeftOf="@+id/showOnMapConstraintLayout"
