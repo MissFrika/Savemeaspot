@@ -282,7 +282,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
                          dialogInterface.dismiss();
                     }
                 });
-
+                alert.show();
             }
         });
         if(Build.VERSION.SDK_INT>=21){
