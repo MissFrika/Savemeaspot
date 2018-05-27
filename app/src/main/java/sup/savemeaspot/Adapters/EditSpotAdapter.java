@@ -163,6 +163,7 @@ public class EditSpotAdapter extends RecyclerView.Adapter<EditSpotAdapter.ViewHo
     private void deleteSpot(int position){
         spotDataset.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
     }
 
     /**

@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import sup.savemeaspot.Adapters.CustomMapInfoWindowAdapter;
@@ -85,6 +87,7 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         //Instansiera knappar
         openMainMenu();
         saveSpotDialogueView();
+        refreshSpotButton();
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
@@ -311,6 +314,32 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
     }
 
     /**
+     * Rensa kartan och lägg till alla Spots igen
+     */
+    private void refreshSpotButton(){
+        ImageButton btn = findViewById(R.id.refreshMapButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    mMap.clear();
+                    List<Spot> spots;
+                    if (DatabaseHelper.checkIfSpotsExist(getApplicationContext())) {
+                        spots = DatabaseHelper.getAllSpots(getApplicationContext());
+
+                        for (final Spot spot : spots) {
+                            addSpotMarker(mMap, spot);
+                        }
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+        }
+        });
+    }
+
+    /**
      * Extra intent-messages för Coordinate
      */
     private void putExtraCoordinateIntent(Intent intent){
@@ -376,8 +405,12 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
         try{
             List<Spot> spots;
             if (DatabaseHelper.checkIfSpotsExist(getApplicationContext())) {
-
-                spots = DatabaseHelper.getAllSpots(getApplicationContext());
+                if(checkIncomingSpotIntent() != null){
+                    spots = checkIncomingSpotIntent();
+                }
+                else {
+                    spots = DatabaseHelper.getAllSpots(getApplicationContext());
+                }
 
                 for (final Spot spot : spots) {
                     addSpotMarker(mMap, spot);
@@ -502,5 +535,18 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             //Aktiviteten körs inte från Launch, autouppdatera inte plats
             activityStarted = false;
         }
+    }
+
+    /**
+     * Kontrollera om intent skickas från CategoryCollection
+     * @return
+     */
+    private ArrayList<Spot> checkIncomingSpotIntent(){
+        ArrayList<Spot> spots = null;
+        if(getIntent().hasExtra("EXTRA_MESSAGE_SPOTS_IN_CATEGORY")){
+            Bundle extras = getIntent().getExtras();
+            spots = (ArrayList<Spot>) extras.get("EXTRA_MESSAGE_SPOTS_IN_CATEGORY");
+        }
+        return spots;
     }
 }

@@ -19,7 +19,7 @@ import static android.arch.persistence.room.ForeignKey.RESTRICT;
  */
 @Entity(tableName = "Spot", foreignKeys = {@ForeignKey(entity = Category.class, parentColumns = "categoryId", childColumns = "spot_category", onDelete = CASCADE, onUpdate = RESTRICT),
         @ForeignKey(entity = Coordinate.class, parentColumns = "coordinateId", childColumns = "spot_coordinate", onDelete = CASCADE, onUpdate = RESTRICT)})
-public class Spot {
+public class Spot implements java.io.Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "spotId")
     private int SpotId;

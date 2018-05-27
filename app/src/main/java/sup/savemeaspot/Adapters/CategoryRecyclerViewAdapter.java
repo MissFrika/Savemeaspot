@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,13 +25,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import sup.savemeaspot.Activities.MapsStart;
 import sup.savemeaspot.Activities.SaveSpotCategoryActivity;
 import sup.savemeaspot.Activities.SaveTitleActivity;
 import sup.savemeaspot.DataLayer.Models.Category;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
+import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.R;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -110,6 +114,36 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
+
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Visar knappen om den är dold
+                    if(holder.showOnMapButton.getVisibility() == View.GONE){
+                        holder.showOnMapButton.setVisibility(View.VISIBLE);
+
+                    }
+                    //Döljer knappen om den är synlig
+                    else if(holder.showOnMapButton.getVisibility() == View.VISIBLE){
+                        holder.showOnMapButton.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            //Öppnar aktiviteten MapsStart och skickar med ett Intent som kan hanteras
+            holder.showOnMapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Skapa intent
+                    Intent intent = new Intent(context, MapsStart.class);
+                    ArrayList<Spot> spotsInCategory = (ArrayList<Spot>)DatabaseHelper.getSpotsByCategory(context, categoryDataset.get(position));
+                    intent.putExtra("EXTRA_MESSAGE_SPOTS_IN_CATEGORY", spotsInCategory);
+
+                    activity.startActivity(intent);
+                }
+            });
+
+
             holder.catEditImageView.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View view) {
@@ -304,6 +338,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     public void deleteCategory(int position){
         categoryDataset.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
     }
 
     // Provide a reference to the views for each data item
@@ -316,6 +351,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         ImageView catDeleteImageView;
         ImageView catEditImageView;
         RelativeLayout relativeLayout;
+        Button showOnMapButton;
         List<Category> categories;
         Context context;
         //False om adaptern ej används i CategoryCollectionActivity
@@ -331,6 +367,8 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                 catDeleteImageView = v.findViewById(R.id.delete_category_icon);
                 catEditImageView = v.findViewById(R.id.edit_category_icon);
                 relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout_category_collection);
+                showOnMapButton = v.findViewById(R.id.show_spots_category_button);
+
                 isCategoryCollection = true;
             }
             else if(v.findViewById(R.id.relativeLayout) != null){
