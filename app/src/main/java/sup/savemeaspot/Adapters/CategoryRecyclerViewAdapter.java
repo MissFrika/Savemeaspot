@@ -51,7 +51,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     private final Activity activity;
     private Category newCategory = new Category();
     private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
-            R.drawable.heart, R.drawable.fire, R.drawable.building};
+            R.drawable.heart,R.drawable.star, R.drawable.fire, R.drawable.building, R.drawable.bus, R.drawable.boat, R.drawable.plane, R.drawable.train};
 
     /**
      * Konstruktor + koordinater

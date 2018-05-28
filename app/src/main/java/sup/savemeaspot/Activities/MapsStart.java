@@ -507,7 +507,22 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                 case R.drawable.mushroom :
                     drawableMarker = R.drawable.mushroom_marker;
                     break;
-            }
+                case R.drawable.star :
+                    drawableMarker = R.drawable.star_marker;
+                    break;
+                case R.drawable.bus :
+                    drawableMarker = R.drawable.bus_marker;
+                    break;
+                case R.drawable.train :
+                    drawableMarker = R.drawable.train_marker;
+                    break;
+                case R.drawable.boat :
+                    drawableMarker = R.drawable.boat_marker;
+                    break;
+                case R.drawable.plane :
+                    drawableMarker = R.drawable.plane_marker;
+                    break;
+                }
             //Markör, skapa nytt objekt med snippetinfo
             //GSON-biblioteket konverterar ett javaobjekt till JSON
             Gson gson = new Gson();
