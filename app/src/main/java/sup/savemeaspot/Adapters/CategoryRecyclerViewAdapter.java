@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -115,6 +116,22 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
             final AlertDialog.Builder confirmationWindowBuilder = createDeleteCategoryDialog(position);
 
+            //Delete-knapp
+            holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog alertDialog = confirmationWindowBuilder.create();
+                    alertDialog.show();
+
+                }
+            });
+
+            //Gör synlig om kategorin är borttagningsbar
+            if(categoryDataset.get(position).getIsDeletable()==0){
+                holder.catDeleteImageView.setVisibility(View.GONE);
+                holder.catEditImageView.setVisibility(View.GONE);
+            }
+
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -193,25 +210,17 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                     }
                 });
 
-                editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
                 EditText catName = customView.findViewById(R.id.popup_category_name_editText);
                 catName.setText(categoryDataset.get(position).getCategoryName());
-                setSpinner();
+                //SetSpinner
+                int categoryDrawable = categoryDataset.get(position).getCategoryImg();
+                setSpinner(editPopupWindow, categoryDrawable);
+
+                //Where to show dialog
+                editPopupWindow.showAtLocation(holder.relativeLayout, Gravity.CENTER,0,0);
+
             }});
 
-            holder.catDeleteImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   AlertDialog alertDialog = confirmationWindowBuilder.create();
-                   alertDialog.show();
-
-                }
-            });
-
-            if(categoryDataset.get(position).getIsDeletable()==0){
-                holder.catDeleteImageView.setVisibility(View.GONE);
-                holder.catEditImageView.setVisibility(View.GONE);
-            }
         }
         else if (!holder.isCategoryCollection) {
 
@@ -383,12 +392,21 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     /**
      * Sätt spinner till editPopupWindow
      */
-    private void setSpinner(){
+    private void setSpinner(PopupWindow editPopupWindow, int drawable){
         //Spinner med anpassad adapter
         CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(context, drawables);
         customAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) editPopupWindow.getContentView().findViewById(R.id.popup_category_icon_spinner);
         spinner.setAdapter(customAdapter);
+        //För att kunna hitta positionen av drawablen i spinnern krävs en array av int
+        ArrayAdapter<String> arrayAdapter;
+        ArrayList<String> listOfdrawables = new ArrayList<>();
+        for (int i: drawables) {
+            listOfdrawables.add(String.valueOf(i));
+        }
+        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, listOfdrawables);
+        int index = arrayAdapter.getPosition(String.valueOf(drawable));
+        spinner.setSelection(index);
 
         //On Select listener
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
