@@ -50,7 +50,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     private PopupWindow editPopupWindow;
     private final Activity activity;
     private Category newCategory = new Category();
-    private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
+    private final int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
             R.drawable.heart,R.drawable.star, R.drawable.fire, R.drawable.building, R.drawable.bus, R.drawable.boat, R.drawable.plane, R.drawable.train};
 
     /**
@@ -368,7 +368,6 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                 catEditImageView = v.findViewById(R.id.edit_category_icon);
                 relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout_category_collection);
                 showOnMapButton = v.findViewById(R.id.show_spots_category_button);
-
                 isCategoryCollection = true;
             }
             else if(v.findViewById(R.id.relativeLayout) != null){

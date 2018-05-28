@@ -35,8 +35,8 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
     private static CategoryRecyclerViewAdapter adapter;
     private static RecyclerView.LayoutManager layoutManager;
     //Ikoner
-    private int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
-            R.drawable.heart, R.drawable.fire, R.drawable.building};
+    private final int[] drawables = new int[]{R.drawable.apple,R.drawable.cherry, R.drawable.fish, R.drawable.wheat, R.drawable.water,
+            R.drawable.heart,R.drawable.star, R.drawable.fire, R.drawable.building, R.drawable.bus, R.drawable.boat, R.drawable.plane, R.drawable.train};
 
 
     @Override
