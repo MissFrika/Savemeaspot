@@ -60,8 +60,8 @@ public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         //Anger innehållet i varje textview
         spotTitleTV.setText(marker.getTitle());
+        spotCategoryTV.setText(markerInfo.getCategory());
         spotDescriptionTV.setText(markerInfo.getDescription());
-        spotCategoryTV.setText(markerInfo.getDescription());
         localityTV.setText(markerInfo.getLocale() +", " + markerInfo.getCountry());
         coordinatesTV.setText(marker.getPosition().latitude + ", " + marker.getPosition().longitude);
 
