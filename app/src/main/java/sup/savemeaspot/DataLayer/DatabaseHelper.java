@@ -169,13 +169,14 @@ public class DatabaseHelper {
      */
     public static List<Spot> getSpotsByCategory(Context context, Category category){
         List<Spot> spotsInCategory;
-        SpotDatabase database = Room.databaseBuilder(context, SpotDatabase.class, "SpotDatabase")
+        SpotDatabase database = Room.databaseBuilder(context.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                 .allowMainThreadQueries()
                 .build();
         spotsInCategory = database.spotDao().getSpotsByCategory(category.getCategoryId());
         database.close();
         return spotsInCategory;
     }
+
 
     /**
      * Returnerar en kategori med viss titel

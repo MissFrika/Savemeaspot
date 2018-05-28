@@ -217,6 +217,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
             holder.catNameTextView.setText(categoryDataset.get(position).getCategoryName());
             holder.catImageView.setImageResource(categoryDataset.get(position).getCategoryImg());
+
             //OnClickListener för view
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 /**
@@ -327,7 +328,6 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     // Insert a new item to the RecyclerView on a predefined position
     public void insertCategory(Category category) {
         categoryDataset.add(category);
-
         notifyItemInserted(categoryDataset.size());
     }
 

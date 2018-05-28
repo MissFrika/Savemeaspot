@@ -28,10 +28,10 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
 
     private Coordinate coordinatesToSave = new Coordinate();
     private Category categoryToSave = new Category();
-    private Category newCategory = new Category();
     private List<Category> categories;
     private static RecyclerView recyclerView;
     private Context context;
+    private int resourceId;
     private static CategoryRecyclerViewAdapter adapter;
     private static RecyclerView.LayoutManager layoutManager;
     //Ikoner
@@ -132,8 +132,7 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    int resourceId = drawables[i];
-                    newCategory.setCategoryImg(resourceId);
+                    resourceId = drawables[i];
                 }
 
                 @Override
@@ -154,21 +153,23 @@ public class SaveSpotCategoryActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     TextView categoryField = findViewById(R.id.addNewCategory);
                     if(!categoryField.getText().toString().isEmpty()){
+                        Category newCategory = new Category();
                         newCategory.setCategoryName(categoryField.getText().toString());
                         newCategory.setIsDeletable(1);
+                        newCategory.setCategoryImg(resourceId);
 
                         try{
                             DatabaseHelper.insertCategory(context, newCategory);
-                            categoryField.setText("");
                             //Dataset ändrad
                             SpotDatabase database = Room.databaseBuilder(SaveSpotCategoryActivity.this.getApplicationContext(), SpotDatabase.class, "SpotDatabase")
                                     .allowMainThreadQueries() //DO NOT !!!
                                     .build();
                             int lastIdInsert = database.categoryDao().getLastRecordCategory();
                             database.close();
-                            newCategory.setCategoryId(lastIdInsert);
-                            adapter.insertCategory(newCategory);
+                            Category addedCategory = new Category(lastIdInsert, newCategory.getCategoryName(), newCategory.getCategoryImg(),newCategory.getIsDeletable());
+                            adapter.insertCategory(addedCategory);
                             Toast.makeText(context, "Category: " + newCategory.getCategoryName() + " has been created", Toast.LENGTH_SHORT).show();
+                            categoryField.setText("");
                         }
                         catch(Exception e){
                             Toast.makeText(context, "Could not save to database", Toast.LENGTH_SHORT).show();
