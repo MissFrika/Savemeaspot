@@ -6,7 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by Frida on 2018-05-28.
  */
 
-public class MarkerInfo {
+public class MarkerInfo implements java.io.Serializable {
 
     private String title;
     private String description;
@@ -16,6 +16,15 @@ public class MarkerInfo {
     private String country;
     private int drawable;
 
+
+    public MarkerInfo() {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.latLng = latLng;
+        this.drawable = drawable;
+
+    }
     //Getters & Setters
     public String getTitle() {
         return title;
@@ -63,14 +72,5 @@ public class MarkerInfo {
         this.latLng = latLng;
     }
 
-
-    public MarkerInfo(String title, String description, String category,LatLng latLng, String locale, String country, int drawable) {
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.latLng = latLng;
-        this.drawable = drawable;
-
-    }
 
 }

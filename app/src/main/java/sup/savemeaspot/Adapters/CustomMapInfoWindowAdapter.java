@@ -58,12 +58,11 @@ public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         Gson gson = new Gson();
         MarkerInfo markerInfo = gson.fromJson(marker.getSnippet(), MarkerInfo.class);
 
-
         //Anger innehållet i varje textview
         spotTitleTV.setText(marker.getTitle());
         spotDescriptionTV.setText(markerInfo.getDescription());
-        spotCategoryTV.setText(markerInfo.getCategory());
-        localityTV.setText(markerInfo.getLocale() + ", " + markerInfo.getCountry());
+        spotCategoryTV.setText(markerInfo.getDescription());
+        localityTV.setText(markerInfo.getLocale() +", " + markerInfo.getCountry());
         coordinatesTV.setText(marker.getPosition().latitude + ", " + marker.getPosition().longitude);
 
         return view;

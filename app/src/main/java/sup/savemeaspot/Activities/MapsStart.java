@@ -470,8 +470,6 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             //Koordinater
             Coordinate coordinate = DatabaseHelper.getSpotCoordinates(getApplicationContext(), spot);
             LatLng latlng = new LatLng(coordinate.getLatitude(),coordinate.getLongitude());
-            String locale = coordinate.getLocalAddress();
-            String country = coordinate.getCountryName();
 
             //Kontrollera typ av kategori för att ändra markörens ikon
             int drawableMarker = R.drawable.map_marker_default;
@@ -513,8 +511,14 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
             //Markör, skapa nytt objekt med snippetinfo
             //GSON-biblioteket konverterar ett javaobjekt till JSON
             Gson gson = new Gson();
-            String markerInfo = gson.toJson(new MarkerInfo(spotTitle,spotDescription,categoryName,latlng,locale, country, drawableMarker));
-            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title(spotTitle).snippet(markerInfo).icon(BitmapDescriptorFactory.fromResource(drawableMarker));
+            MarkerInfo markerInfo = new MarkerInfo();
+            markerInfo.setTitle(spotTitle);
+            markerInfo.setCategory(categoryName);
+            markerInfo.setDescription(spotDescription);
+            markerInfo.setLocale(coordinate.getLocalAddress());
+            markerInfo.setCountry(coordinate.getCountryName());
+            String markerInfoString = gson.toJson(markerInfo);
+            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title(spotTitle).snippet(markerInfoString).icon(BitmapDescriptorFactory.fromResource(drawableMarker));
             Marker marker = googleMap.addMarker(markerOptions);
             googleMap.setInfoWindowAdapter(new CustomMapInfoWindowAdapter(this, marker));
         }
