@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
+import sup.savemeaspot.DataLayer.Models.MarkerInfo;
+import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.R;
 
 /**
@@ -24,9 +27,11 @@ public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private String locality;
     private String category;
     private String description;
+    private Marker marker;
 
-    public CustomMapInfoWindowAdapter(Activity context, String locality, String category, String description){
+    public CustomMapInfoWindowAdapter(Activity context, Marker marker){
         this.context = context;
+        this.marker = marker;
         this.locality = locality;
         this.category = category;
         this.description = description;
@@ -49,11 +54,16 @@ public class CustomMapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView localityTV = view.findViewById(R.id.info_window_real_location);
         TextView coordinatesTV = view.findViewById(R.id.info_window_coordinates);
 
+        //GSON konverterar JSON-objekt till Java-objekt
+        Gson gson = new Gson();
+        MarkerInfo markerInfo = gson.fromJson(marker.getSnippet(), MarkerInfo.class);
+
+
         //Anger innehållet i varje textview
         spotTitleTV.setText(marker.getTitle());
-        spotDescriptionTV.setText(description);
-        spotCategoryTV.setText(category);
-        localityTV.setText(locality);
+        spotDescriptionTV.setText(markerInfo.getDescription());
+        spotCategoryTV.setText(markerInfo.getCategory());
+        localityTV.setText(markerInfo.getLocale() + ", " + markerInfo.getCountry());
         coordinatesTV.setText(marker.getPosition().latitude + ", " + marker.getPosition().longitude);
 
         return view;

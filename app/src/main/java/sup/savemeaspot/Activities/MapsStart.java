@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ import sup.savemeaspot.Adapters.CustomMapInfoWindowAdapter;
 import sup.savemeaspot.DataLayer.Models.Coordinate;
 import sup.savemeaspot.DataLayer.DatabaseHandler;
 import sup.savemeaspot.DataLayer.DatabaseHelper;
+import sup.savemeaspot.DataLayer.Models.MarkerInfo;
 import sup.savemeaspot.DataLayer.Models.Spot;
 import sup.savemeaspot.DataLayer.SpotDatabase;
 import sup.savemeaspot.R;
@@ -508,11 +510,13 @@ public class MapsStart extends FragmentActivity implements OnMapReadyCallback {
                     drawableMarker = R.drawable.mushroom_marker;
                     break;
             }
-            //Markör
-            CustomMapInfoWindowAdapter infoWindowAdapter = new CustomMapInfoWindowAdapter(this, locale + ", " + country, categoryName, spotDescription);
-            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title(spotTitle).icon(BitmapDescriptorFactory.fromResource(drawableMarker));
+            //Markör, skapa nytt objekt med snippetinfo
+            //GSON-biblioteket konverterar ett javaobjekt till JSON
+            Gson gson = new Gson();
+            String markerInfo = gson.toJson(new MarkerInfo(spotTitle,spotDescription,categoryName,latlng,locale, country, drawableMarker));
+            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title(spotTitle).snippet(markerInfo).icon(BitmapDescriptorFactory.fromResource(drawableMarker));
             Marker marker = googleMap.addMarker(markerOptions);
-            googleMap.setInfoWindowAdapter(infoWindowAdapter);
+            googleMap.setInfoWindowAdapter(new CustomMapInfoWindowAdapter(this, marker));
         }
     }
 

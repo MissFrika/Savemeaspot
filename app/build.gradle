@@ -32,6 +32,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation "com.android.support:support-v13:26.1.0"
+    implementation 'com.google.code.gson:gson:2.8.4'
+
 
     // Room (use 1.1.0-alpha3 for latest alpha)
     implementation "android.arch.persistence.room:runtime:1.0.0"
